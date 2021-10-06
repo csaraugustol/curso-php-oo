@@ -1,0 +1,31 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+<div class="container">
+
+    <main role="main" class="container">
+
+        <div class="jumbotron">
+
+            <h1>Bem vindo ao Institucional do VEX</h1>
+
+            <p class="lead">Projeto criado no curso de PHP Orientado a Objetos da Code Experts Learning.</p>
+
+            <a class="btn btn-lg btn-primary" target="blank" href="https://codeexperts.com.br/" role="button">Saiba mais &raquo;</a>
+        </div>
+
+        <div class="col-md-12">
+            <?php foreach ($this->products as $product) : ?>
+
+                <div class="col-md-4">
+                    <img src="http://via.placeholder.com/350x150?text=<?= $product['name']; ?>" alt="" class="img-responsive">
+                    <h3><a href="<?= HOME ?>/product/<?= $product['id'] ?>"><?= $product['name']; ?></a></h3>
+                    <p><?= $product['description']; ?></p>
+                    <p>R$ <?= number_format($product['price'], 2, ',', '.'); ?></p>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
+
+    </main>
+
+</div>
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>
