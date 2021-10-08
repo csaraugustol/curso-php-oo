@@ -1,0 +1,17 @@
+<?php if (\GGP\Session\Session::hasUserSession('success')) : ?>
+    <div class="alert alert-sucess">
+        <?= \GGP\Session\Flash::returnMessageSession('success'); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (\GGP\Session\Session::hasUserSession('warning')) : ?>
+    <div class="alert alert-warning">
+        <?= \GGP\Session\Flash::returnMessageSession('warning'); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (\GGP\Session\Session::hasUserSession('danger')) : ?>
+    <div class="alert alert-danger">
+        <?= \GGP\Session\Flash::returnMessageSession('danger'); ?>
+    </div>
+<?php endif; ?>
