@@ -1,0 +1,17 @@
+<?php if (\Blog\Session\Session::hasUserSession('success')) : ?>
+    <div class="alert alert-success">
+        <?= \Blog\Session\Flash::returnMessageSession('success'); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (\Blog\Session\Session::hasUserSession('warning')) : ?>
+    <div class="alert alert-warning">
+        <?= \Blog\Session\Flash::returnMessageSession('warning'); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (\Blog\Session\Session::hasUserSession('danger')) : ?>
+    <div class="alert alert-danger">
+        <?= \Blog\Session\Flash::returnMessageSession('danger'); ?>
+    </div>
+<?php endif; ?>

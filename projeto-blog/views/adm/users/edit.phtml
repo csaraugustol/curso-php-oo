@@ -1,0 +1,36 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="container">
+    <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
+    <h1>Editar Usuário</h1>
+    <hr>
+    <form method="POST" action="<?= HOME; ?>/users/edit/<?=$this->user['id'];?>">
+        <div class="form-group">
+            <label for="first_name">Nome</label>
+            <input type="text" class="form-control" id="first_name" value="<?=$this->user['first_name'];?>" name="first_name">
+        </div>
+        <div class="form-group">
+            <label for="last_name">Sobrenome</label>
+            <input type="text" class="form-control" id="last_name" value="<?=$this->user['last_name'];?>" name="last_name">
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" value="<?=$this->user['username'];?>" name="username">
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="text" class="form-control" id="email" value="<?=$this->user['email'];?>" name="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="text" class="form-control" id="password" placeholder="Insira nova senha" name="password">
+        </div>
+        <div class="form-group">
+            <label for="password_confirm">Confirmar Senha</label>
+            <input type="text" class="form-control" id="password_confirm" placeholder="Confirmar nova senha" name="password_confirm">
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Alteração</button>
+    </form>
+</div>
+
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>
