@@ -13,7 +13,6 @@ use LojaVirtual\Authenticator\CheckUserLogged;
 
 class CategoriesController
 {
-
     use CheckUserLogged;
 
     public function __construct()

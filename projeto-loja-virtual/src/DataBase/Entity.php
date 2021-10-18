@@ -30,7 +30,7 @@ abstract class Entity
     //Retorna uma busca pelo id
     public function findById(int $id, $fields = '*'): array
     {
-        return current($this->filterWithConditions(['id' => $id], '', $fields));
+        return $this->filterWithConditions(['id' => $id], '', $fields);
     }
 
     //Método para busca filtrada de uma entidade
@@ -52,17 +52,21 @@ abstract class Entity
 
         $sqlFilter .= $where;
 
-        $objetc = $this->bind($sqlFilter, $conditions);
-        $objetc->execute();
+        $object = $this->bind($sqlFilter, $conditions);
+        $object->execute();
 
-        if (!$objetc->rowCount()) {
+        if (!$object->rowCount()) {
             throw new Exception('Não obteve valor para consulta!');
         }
 
-        return $objetc->fetchAll(PDO::FETCH_ASSOC);
+        if ($object->rowCount() == 1) {
+            return $object->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return $object->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insert($data): int
+    public function insert($data): array
     {
 
         $binds = array_keys($data);
@@ -76,7 +80,7 @@ abstract class Entity
 
         $insert->execute();
 
-        return $this->connection->lastInsertId();
+        return $this->findById($this->connection->lastInsertId());
     }
 
     public function update($data): bool

@@ -20,9 +20,9 @@ class Authenticator
 
     public function login(array $credentials)
     {
-        $user = current($this->user->filterWithConditions([
+        $user = $this->user->filterWithConditions([
             'email' => $credentials['email'],
-        ]));
+        ]);
 
         if (!$user) {
             return false;

@@ -11,8 +11,7 @@ class User extends Entity
     public static $filters = [
         'first_name'       => FILTER_SANITIZE_STRING,
         'last_name'        => FILTER_SANITIZE_STRING,
-        'username'         => FILTER_SANITIZE_STRING,
-        'email'            => FILTER_SANITIZE_STRING,
+        'email'            => FILTER_SANITIZE_EMAIL,
         'password'         => FILTER_SANITIZE_STRING,
         'password_confirm' => FILTER_SANITIZE_STRING
     ];

@@ -17,33 +17,49 @@ class Product extends Entity
         'content'     => FILTER_SANITIZE_STRING,
     ];
 
-    public function returnProductWithImages($productId)
+    public function returnProductWithImages($product, $isSlug = false)
     {
-         $sql = 'select
+        $sqlQuery = 'select
         p.*, pi.id as image_id, pi.image
         from
         products p
-        inner join
-        products_images pi on pi.product_id = p.id
-        where p.id = :productId';
+        left join
+        products_images pi on pi.product_id = p.id';
 
-       // $sql = 'select p.*, pi.id as image_id, pi.image from products inner join products_images pi on pi.product_id = p.id where p.id = :productId';
+        if ($isSlug) {
+            $sqlQuery .= " where p.slug = :product";
+        } else {
+            $sqlQuery .= " where p.id = :product";
+        }
 
-        $select = $this->connection->prepare($sql);
-        $select->bindValue(':productId', $productId, PDO::PARAM_INT);
+        $select = $this->connection->prepare($sqlQuery);
+        $select->bindValue(':product', $product, $isSlug ? PDO::PARAM_STR : PDO::PARAM_INT);
         $select->execute();
 
         $productData = [];
         foreach ($select->fetchAll(PDO::FETCH_ASSOC) as $product) {
-            $productData['id'] = $product['id'];
-            $productData['name'] = $product['name'];
+            $productData['id']          = $product['id'];
+            $productData['name']        = $product['name'];
             $productData['description'] = $product['description'];
-            $productData['content'] = $product['content'];
-            $productData['price'] = $product['price'];
-            $productData['is_active'] = $product['is_active'];
-            $productData['images'][] = ['id' => $product['image_id'], 'image' => $product['image']];
+            $productData['content']     = $product['content'];
+            $productData['price']       = $product['price'];
+            $productData['is_active']   = $product['is_active'];
+            $productData['slug']        = $product['slug'];
+            $productData['images'][]    = ['id' => $product['image_id'], 'image' => $product['image']];
         }
 
         return $productData;
+    }
+
+    public function returnAllProductsWithThumb()
+    {
+        $sqlQuery = '
+            SELECT products.*,
+            (SELECT image FROM products_images WHERE product_id = products.id LIMIT 1) AS image FROM products
+        ';
+
+        $product = $this->connection->query($sqlQuery);
+
+        return $product->fetchAll(PDO::FETCH_ASSOC);
     }
 }
