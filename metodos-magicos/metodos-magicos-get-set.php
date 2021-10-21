@@ -20,5 +20,3 @@ $product->name = "Nome do Produto";
 print $product->name;
 $product->price = 19.99;
 print $product->price;
-
-//var_dump($product->props);

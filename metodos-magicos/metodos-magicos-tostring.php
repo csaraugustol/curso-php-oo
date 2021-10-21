@@ -1,7 +1,5 @@
 <?php
 
-use Product as GlobalProduct;
-
 class Product
 {
     public $props = [];
@@ -21,5 +19,4 @@ class Product
 $product = new Product();
 $product->name = 'Lasanha';
 $product->price = 19.99;
-
 print $product;

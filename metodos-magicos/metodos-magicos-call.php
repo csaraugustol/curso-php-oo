@@ -16,7 +16,5 @@ class Product
 }
 
 print Product::getConnection();
-
 $product = new Product();
-
 $product->save('Coxinha', 4.99);
