@@ -56,11 +56,6 @@ $secondProduct = new Product();
 $secondProduct->setName('Pastel de Carne');
 $secondProduct->setPrice(4.95);
 
-//print 'O produto \'' . $firstProduct->getName() . '\' custa R$' .
-//$firstProduct->getPrice() . ' reais.';
-
 $cart = new Cart();
 $cart->addProduct($firstProduct);
 $cart->addProduct($secondProduct);
-
-var_dump($cart->getItens());
