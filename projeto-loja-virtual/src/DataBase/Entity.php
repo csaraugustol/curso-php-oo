@@ -7,8 +7,8 @@ use Exception;
 
 abstract class Entity
 {
-    protected $connection;
     protected $table;
+    protected $connection;
     protected $timestamps = true;
 
     //Recebe a conexão do banco de dados por parânmetro
@@ -66,6 +66,7 @@ abstract class Entity
         return $object->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //Método para inserir dados no banco
     public function insert($data): array
     {
 
@@ -83,6 +84,7 @@ abstract class Entity
         return $this->findById($this->connection->lastInsertId());
     }
 
+    //Método para atualizar dados no banco
     public function update($data): bool
     {
         if (!array_key_exists('id', $data)) {
@@ -107,6 +109,7 @@ abstract class Entity
         return $update->execute();
     }
 
+    //Método para deletar dados do banco
     public function delete($id): bool
     {
         if (is_array($id)) {
@@ -123,6 +126,7 @@ abstract class Entity
         return $delete->execute();
     }
 
+    //Prepara os dados para inserção em query
     private function bind($sqlInsert, $data)
     {
         $bind = $this->connection->prepare($sqlInsert);

@@ -1,15 +1,13 @@
 <?php require VIEWS_PATH . '/includes/header.phtml'; ?>
-<div class="row">
 
+<div class="row">
     <div class="col-md-12">
         <?php require VIEWS_PATH . '/includes/messages.phtml'; ?>
     </div>
-
     <div class="col-12">
         <h2><?= $this->product['name']; ?></h2>
         <hr>
     </div>
-
 </div>
 <div class="row">
     <div class="col-6">
@@ -43,22 +41,19 @@
         </p>
         <p>
         <form action="<?= HOME; ?>/cart/add" method="post">
-
             <input type="hidden" name="name" value="<?= $this->product['name']; ?>">
             <input type="hidden" name="price" value="<?= $this->product['price']; ?>">
             <input type="hidden" name="slug" value="<?= $this->product['slug']; ?>">
-
             <div class="form-group col-3">
                 <label>Quantidade</label>
                 <input type="number" name="qtd" value="1" class="form-control">
             </div>
-
             <button class="btn btn-lg btn-danger" type="submit">
                 Adicionar no carrinho
             </button>
-
         </form>
         </p>
     </div>
 </div>
+
 <?php require VIEWS_PATH . '/includes/footer.phtml'; ?>

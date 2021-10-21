@@ -10,11 +10,10 @@ class ProductController
 {
     public function view($slug)
     {
-
+        $product = (new Product(Connection::getInstance()))->returnProductWithImages($slug, true);
+        $lgPhoto = isset($product['images']) && count($product['images']) ? array_shift($product['images']) : false;
         $view = new View('site/single.phtml');
-        $view->product = (new Product(Connection::getInstance()))->returnProductWithImages($slug, true);
-        $lgPhoto = isset($view->product['images']) && count($view->product['images'])
-        ? array_shift($view->product['images']) : false;
+        $view->product = $product;
         $view->lgPhoto = $lgPhoto;
         return $view->render();
     }

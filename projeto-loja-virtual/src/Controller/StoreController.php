@@ -26,7 +26,7 @@ class StoreController
             }
 
             Flash::sendMessageSession("success", "Usuário logado com suceso!");
-            return header("Location: " . HOME . '/cart/checkout');
+            return header("Location: " . HOME . '/checkout');
         }
 
         $view = new View('site/login.phtml');

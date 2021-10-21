@@ -6,6 +6,7 @@ class Upload
 {
     private $folder = '';
 
+    //Método para criar a pasta de imagens caso ela não exista
     public function setFolder($folder)
     {
         if (!is_dir($folder)) {
@@ -15,6 +16,7 @@ class Upload
         $this->folder = $folder;
     }
 
+    //Método que faz o upload das imagens no banco
     public function doUpload($files = [])
     {
         $arrayImagesName = [];
@@ -30,6 +32,7 @@ class Upload
         return $arrayImagesName;
     }
 
+    //Método para renomear imagem e evitar nomes repetidos na base
     private function renameImage($imageName)
     {
         return sha1($imageName . uniqid() . time());

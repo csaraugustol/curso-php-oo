@@ -1,26 +1,25 @@
-<?php require VIEWS_PATH . 'includes/header.phtml';?>
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
 <div class="container">
     <div class="col-md-12">
         <div class="col-md-7 pull-left">
             <div class="row">
-                <h1><?=$this->category;?></h1>
+                <h1><?= $this->category; ?></h1>
                 <hr>
             </div>
-	        <?php foreach($this->posts as $post): ?>
+            <?php foreach ($this->posts as $post) : ?>
                 <div class="row">
                     <h2>
-                        <a href="<?=HOME . '/post/' . $post['slug'];?>">
-					        <?=$post['title'];?>
+                        <a href="<?= HOME . '/post/' . $post['slug']; ?>">
+                            <?= $post['title']; ?>
                         </a>
                     </h2>
-                    <small>Criado em <?=date('d/M/Y H:i:s', strtotime($post['created_at']));?></small>
+                    <small>Criado em <?= date('d/M/Y H:i:s', strtotime($post['created_at'])); ?></small>
                     <p>
-				        <?=$post['description'];?>
+                        <?= $post['description']; ?>
                     </p>
                 </div>
-	        <?php endforeach;?>
+            <?php endforeach; ?>
         </div>
-
         <div class="col-md-4 pull-right">
             <div class="row">
                 <h3>Sidebar</h3>
@@ -37,4 +36,4 @@
         </div>
     </div>
 </div>
-<?php require VIEWS_PATH . 'includes/footer.phtml';?>
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>

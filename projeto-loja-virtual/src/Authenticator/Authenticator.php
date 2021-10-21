@@ -18,6 +18,7 @@ class Authenticator
         $this->user = $user;
     }
 
+    //Verifica o login e senha do usuário
     public function login(array $credentials)
     {
         $user = $this->user->filterWithConditions([
@@ -36,6 +37,7 @@ class Authenticator
         return true;
     }
 
+    //Retira o usuário da sessão
     public function logout()
     {
         if (Session::hasUserSession('user')) {

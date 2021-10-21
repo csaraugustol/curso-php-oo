@@ -9,9 +9,10 @@ trait CheckUserLogged
     //Método para verificar se existe um usuário autenticado
     public function checkAuthenticator()
     {
-        if (Session::hasUserSession('user')) {
+        return Session::hasUserSession('user');
+        /*-if (Session::hasUserSession('user')) {
             return true;
         }
-        return false;
+        return false;*/
     }
 }

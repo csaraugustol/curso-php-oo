@@ -17,6 +17,7 @@ class Product extends Entity
         'content'     => FILTER_SANITIZE_STRING,
     ];
 
+    //Método para fazer a busca das imagens relacionadas ao produto
     public function returnProductWithImages($product, $isSlug = false)
     {
         $sqlQuery = 'select
@@ -51,6 +52,7 @@ class Product extends Entity
         return $productData;
     }
 
+    //Método para retornar a primeira imagem do produto para exibição no site
     public function returnAllProductsWithThumb()
     {
         $sqlQuery = '

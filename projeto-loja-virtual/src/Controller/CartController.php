@@ -19,7 +19,8 @@ class CartController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $product = $_POST;
-
+            Session::removeUserSession('pagseguro_session');
+            Session::removeUserSession('cart');
             $cart = Session::verifyExistsKey('cart');
 
             if (!is_null($cart)) {
@@ -33,6 +34,13 @@ class CartController
             Flash::sendMessageSession('success', 'Produto adicionado ao carrinho!');
             return header('Location: ' . HOME . '/product/view/' . $product['slug']);
         }
+    }
+
+    public function cancel()
+    {
+        Session::removeUserSession('cart');
+        Flash::sendMessageSession('success', 'Você limpou o carrinho!');
+        return header('Location: ' . HOME . '/cart');
     }
 
     public function remove($slug)
@@ -51,13 +59,5 @@ class CartController
 
         Session::addUserSession('cart', $cart);
         return header('Location: ' . HOME . '/cart');
-    }
-
-    public function checkout()
-    {
-        if (!Session::hasUserSession('user')) {
-            return header('Location: ' . HOME . '/store/login');
-        }
-        var_dump(Session::verifyExistsKey('user')); die;
     }
 }
