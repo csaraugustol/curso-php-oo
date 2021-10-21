@@ -2,13 +2,13 @@
 
 namespace GGP\DataBase;
 
-use Exception;
 use PDO;
+use Exception;
 
 abstract class Entity
 {
-    private $connection;
     protected $table;
+    private $connection;
 
     //Recebe a conexão do banco de dados por parânmetro
     public function __construct(PDO $connection)
@@ -19,11 +19,11 @@ abstract class Entity
     //Retorna uma lista de uma entidade
     public function findAll($fields = '*'): array
     {
-        $findAll = 'SELECT ' . $fields . ' FROM ' . $this->table;
+        $sqlFindAll = 'SELECT ' . $fields . ' FROM ' . $this->table;
 
-        $products = $this->connection->query($findAll);
+        $queryResponse = $this->connection->query($sqlFindAll);
 
-        return $products->fetchAll(PDO::FETCH_ASSOC);
+        return $queryResponse->fetchAll(PDO::FETCH_ASSOC);
     }
 
     //Retorna uma busca pelo id
@@ -56,6 +56,7 @@ abstract class Entity
         return $objetc->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //Método para inserção do banco de dados
     public function insert($data): bool
     {
         $binds = array_keys($data);
@@ -68,6 +69,7 @@ abstract class Entity
         return $insert->execute();
     }
 
+    //Método para atualizar banco de dados
     public function update($data): bool
     {
         if (!array_key_exists('id', $data)) {
@@ -92,6 +94,7 @@ abstract class Entity
         return $update->execute();
     }
 
+    //Método para deletar um elemento no banco de dados
     public function delete(int $id): bool
     {
         $sqlDelete = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
@@ -101,6 +104,7 @@ abstract class Entity
         return $delete->execute();
     }
 
+    //Método para preparar querys para consulta
     private function bind($sqlInsert, $data)
     {
         $bind = $this->connection->prepare($sqlInsert);
