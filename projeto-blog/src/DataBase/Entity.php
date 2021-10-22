@@ -16,7 +16,7 @@ abstract class Entity
         $this->connection = $connection;
     }
 
-    //Retorna uma lista de uma entidade
+    //Retorna uma lista de uma entidade no banco
     public function findAll($fields = '*'): array
     {
         $findAll = 'SELECT ' . $fields . ' FROM ' . $this->table;
@@ -26,7 +26,7 @@ abstract class Entity
         return $findResult->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Retorna uma busca pelo id
+    //Retorna uma busca de uma entidade pelo id no banco
     public function findById(int $id, $fields = '*'): array
     {
         return current($this->filterWithConditions(['id' => $id], '', $fields));
@@ -61,6 +61,7 @@ abstract class Entity
         return $objetc->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //Método para inserção de dados no banco
     public function insert($data): bool
     {
         $binds = array_keys($data);
@@ -73,6 +74,7 @@ abstract class Entity
         return $insert->execute();
     }
 
+    //Método para atualizar dados no banco
     public function update($data): bool
     {
         if (!array_key_exists('id', $data)) {
@@ -97,6 +99,7 @@ abstract class Entity
         return $update->execute();
     }
 
+    //Método para apagar dados no banco
     public function delete(int $id): bool
     {
         $sqlDelete = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
@@ -106,6 +109,7 @@ abstract class Entity
         return $delete->execute();
     }
 
+    //Método para preparar a query
     private function bind($sqlInsert, $data)
     {
         $bind = $this->connection->prepare($sqlInsert);

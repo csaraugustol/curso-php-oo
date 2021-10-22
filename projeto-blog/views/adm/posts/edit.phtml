@@ -10,14 +10,11 @@
                 <label for="category_id">Categoria</label>
                 <select name="category_id">
                     <option value="#">Selecione uma categoria</option>
-
                     <?php foreach ($this->categories as $category) : ?>
                         <option value="<?= $category['id']; ?>" <?php if ($this->post['category_id'] == $category['id']) : ?>selected<?php endif; ?>>
                             <?= $category['name']; ?></option>
                     <?php endforeach; ?>
-
                 </select>
-
                 <label class="ml-4" for="type">Tipo</label>
                 <select name="type">
                     <option value="#">Selecione um tipo</option>
@@ -26,16 +23,13 @@
                     <option value="post" <?php if ($this->post['type'] == 'post') : ?>selected<?php endif; ?>>Post
                     </option>
                 </select>
-
                 <label class="ml-4" for="type">Usuário</label>
                 <select name="user_id">
                     <option value="#">Selecione o autor</option>
-
                     <?php foreach ($this->users as $user) : ?>
                         <option value="<?= $user['id']; ?>" <?php if ($this->post['user_id'] == $user['id']) : ?>selected<?php endif; ?>>
                             <?= $user['first_name'] . ' ' . $user['last_name']; ?></option>
                     <?php endforeach; ?>
-
                 </select>
             </div>
         </div>

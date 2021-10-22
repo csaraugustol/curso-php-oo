@@ -2,7 +2,6 @@
 
 <div class="container">
     <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
-
     <div class="col-md-12">
         <div class="nav nav-pills">
             <?php foreach ($this->categories as $category) : ?>
@@ -14,16 +13,12 @@
             <?php endforeach; ?>
         </div>
     </div>
-<hr>
+    <hr>
     <div class="jumbotron">
-
         <h1>Posts</h1>
-
         <p class="lead">Projeto criado no curso de PHP Orientado a Objetos da Code Experts Learning.</p>
-
         <a class="btn btn-lg btn-primary" target="blank" href="https://codeexperts.com.br/" role="button">Saiba mais &raquo;</a>
     </div>
-
     <div class="col-md-12">
         <?php foreach ($this->posts as $post) : ?>
             <div class="col-md-4">
@@ -37,7 +32,6 @@
             </div>
         <?php endforeach; ?>
     </div>
-
 </div>
 
 <?php require VIEWS_PATH . 'includes/footer.phtml'; ?>

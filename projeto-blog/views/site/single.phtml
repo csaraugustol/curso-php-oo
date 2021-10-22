@@ -1,25 +1,10 @@
 <?php require VIEWS_PATH . 'includes/header.phtml'; ?>
 
 <div class="col-md-7 pull-left">
-
     <h2><?= $this->post['title']; ?></h2>
     <small>Criado em <?= date('d/m/Y H:i:s', strtotime($this->post['created_at'])); ?></small>
     <hr>
     <p><?= $this->post['description']; ?></p>
-
 </div>
 
-<!--<div class="col-md-4 pull-right">
-
-    <div class="row">
-        <h3>Sidebar</h3>
-        <hr>
-    </div>
-    <div class="row content">
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Nemo porro sint fuga consequuntur ducimus, sit optio et!
-            Neque ratione, sequi at, laborum itaque ea distinctio,
-            deserunt quidem iste eius sed?</p>
-    </div>
-</div>-->
 <?php require VIEWS_PATH . 'includes/footer.phtml'; ?>
