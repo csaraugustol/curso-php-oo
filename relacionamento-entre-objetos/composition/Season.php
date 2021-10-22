@@ -1,8 +1,19 @@
 <?php
 
+namespace composition;
+
+use composition\Episode;
+
 class Season
 {
+    /**
+     * @var Episode
+     */
     private $episode;
+
+    /**
+     * @var string
+     */
     private $seasonTitle;
 
     public function __construct($seasonTitle)
@@ -11,13 +22,13 @@ class Season
         $this->seasonTitle = $seasonTitle;
     }
 
-    public function setEpisode($title, $description)
+    public function setEpisode($title, $description): void
     {
         $this->episode->setTitle($title);
         $this->episode->setDescription($description);
     }
 
-    public function getEpisode()
+    public function getEpisode(): Episode
     {
         return $this->episode;
     }

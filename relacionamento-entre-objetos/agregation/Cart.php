@@ -2,7 +2,7 @@
 
 namespace agregation;
 
-use Product;
+use agregation\Product;
 
 class Cart
 {
@@ -11,7 +11,7 @@ class Cart
      */
     private $products;
 
-    public function addProduct(Product $product)
+    public function addProduct(Product $product): void
     {
         $this->products[] = $product;
     }

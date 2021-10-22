@@ -1,5 +1,7 @@
 <?php
 
+use composition\Season;
+
 require __DIR__ . '/Season.php';
 require __DIR__ . '/Episode.php';
 

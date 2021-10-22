@@ -1,10 +1,18 @@
 <?php
 
+namespace associoation;
+
 class Publishing
 {
+    /**
+     * @var int
+     */
     private $id;
-    private $name;
 
+    /**
+     * @var [type]
+     */
+    private $name;
 
     public function getId()
     {

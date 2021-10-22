@@ -1,5 +1,8 @@
 <?php
 
+use agregation\Cart;
+use agregation\Product;
+
 require __DIR__ . '/Product.php';
 require __DIR__ . '/Cart.php';
 
