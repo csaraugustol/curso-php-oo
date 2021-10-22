@@ -1,7 +1,14 @@
 <?php
 
+namespace agregation;
+
+use Product;
+
 class Cart
 {
+    /**
+     * @var array
+     */
     private $products;
 
     public function addProduct(Product $product)
@@ -9,7 +16,13 @@ class Cart
         $this->products[] = $product;
     }
 
-    public function getProducts()
+    /**
+     * Obtem os produtos que estão no carrinho
+     * de compras
+     *
+     * @return array
+     */
+    public function getProducts(): array
     {
         return $this->products;
     }
