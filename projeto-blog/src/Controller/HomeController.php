@@ -9,7 +9,12 @@ use Blog\DataBase\Connection;
 
 class HomeController
 {
-    //Método de exibição da view 'home'
+    /**
+     * Lista todos os posts para
+     * leitura de um usuário
+     *
+     * @return string
+     */
     public function index()
     {
         $connection = Connection::getInstance();

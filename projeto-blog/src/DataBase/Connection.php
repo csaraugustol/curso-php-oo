@@ -8,11 +8,11 @@ class Connection
 {
     private static $instance = null;
 
-    private function __construct()
-    {
-    }
-
-    //Método de conexão com o banco de dados
+    /**
+     * Retorna conexão com o branco de dados
+     *
+     * @return PDO
+     */
     public static function getInstance()
     {
         if (is_null(self::$instance)) {

@@ -10,7 +10,12 @@ use Blog\DataBase\Connection;
 
 class PostController
 {
-    //Método de exibição de um único post
+    /**
+     * Exibe um post da listagem geral
+     *
+     * @param string $slug
+     * @return string
+     */
     public function index($slug)
     {
         try {

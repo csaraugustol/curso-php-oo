@@ -10,26 +10,33 @@ use Blog\Authenticator\Authenticator;
 
 class AuthController
 {
-    //Método para refetuar login
+    /**
+     * Método para refetuar login
+     *
+     * @return string
+     */
     public function login()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $user = new User(Connection::getInstance());
-            $authenticator = new Authenticator($user);
-
-            if (!$authenticator->login($_POST)) {
-                Flash::sendMessageSession("danger", "Usuário ou senha incorretos!");
-                return header("Location: " . HOME . '/auth/login');
-            }
-
-            return header("Location: " . HOME . '/home');
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $view = new View('auth/index.phtml');
+            return $view->render();
         }
 
-        $view = new View('auth/index.phtml');
-        return $view->render();
+        $user = new User(Connection::getInstance());
+        $authenticator = new Authenticator($user);
+
+        if (!$authenticator->login($_POST)) {
+            Flash::sendMessageSession("danger", "Usuário ou senha incorretos!");
+            return header("Location: " . HOME . '/auth/login');
+        }
+        return header("Location: " . HOME . '/home');
     }
 
-    //Método para sair do sistema
+    /**
+     * Método para encerrar uma sessão
+     *
+     * @return void
+     */
     public function logout()
     {
         $authenticator = (new Authenticator())->logout();

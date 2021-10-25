@@ -16,8 +16,10 @@ class CategoriesController
 {
     use CheckUserLogged;
 
-    //Método para verificar se o usuário está  autenticado
-    //e pode acessar o sistema
+    /**
+     * Verifica se o usuário está autenticado
+     * e pode acessar o sistema
+     */
     public function __construct()
     {
         if (!$this->checkAuthenticator()) {
@@ -26,7 +28,11 @@ class CategoriesController
         }
     }
 
-    //Método para listar categorias
+    /**
+     * Lista categorias
+     *
+     * @return string
+     */
     public function index()
     {
         $view = new View('adm/categories/index.phtml');
@@ -34,32 +40,37 @@ class CategoriesController
         return $view->render();
     }
 
-    //Método para criar categoria
+    /**
+     * Cria nova categoria
+     *
+     * @return string
+     */
     public function new()
     {
         try {
             $connection = Connection::getInstance();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $data = $_POST;
-                Sanitizer::sanitizeData($data, Category::$filters);
-                if (!Validator::validateRequiredFields($data)) {
-                    Flash::sendMessageSession('warning', 'Preencha todos os campos!');
-                    return header('Location: ' . HOME . '/categories/new');
-                }
-
-                $category = new Category($connection);
-                $data['slug'] = (new SlugGenerator())->generate($data['name']);
-                if (!$category->insert($data)) {
-                    Flash::sendMessageSession('danger', 'Erro ao criar categoria!');
-                    return header('Location: ' . HOME . '/categories/new');
-                }
-
-                Flash::sendMessageSession('success', 'Categoria criada com sucesso!');
-                return header('Location: ' . HOME . '/categories');
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('adm/categories/new.phtml');
+                return $view->render();
             }
-            $view = new View('adm/categories/new.phtml');
-            return $view->render();
+
+            $data = $_POST;
+            Sanitizer::sanitizeData($data, Category::$filters);
+            if (!Validator::validateRequiredFields($data)) {
+                Flash::sendMessageSession('warning', 'Preencha todos os campos!');
+                return header('Location: ' . HOME . '/categories/new');
+            }
+
+            $category = new Category($connection);
+            $data['slug'] = (new SlugGenerator())->generate($data['name']);
+            if (!$category->insert($data)) {
+                Flash::sendMessageSession('danger', 'Erro ao criar categoria!');
+                return header('Location: ' . HOME . '/categories/new');
+            }
+
+            Flash::sendMessageSession('success', 'Categoria criada com sucesso!');
+            return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
             if (APP_DEBUG) {
                 Flash::sendMessageSession('danger', $exception->getMessage());
@@ -71,35 +82,40 @@ class CategoriesController
         }
     }
 
-    //Método para editar categoria
+    /**
+     * Edição de uma categoria
+     *
+     * @param int $id
+     * @return string
+     */
     public function edit($id = null)
     {
         try {
             $connection = Connection::getInstance();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $data = $_POST;
-
-                Sanitizer::sanitizeData($data, Category::$filters);
-                $data['id'] = (int) $id;
-
-                if (!Validator::validateRequiredFields($data)) {
-                    Flash::sendMessageSession('warning', 'Preencha todos os campos!');
-                    return header('Location: ' . HOME . '/categories/edit/' . $id);
-                }
-
-                $category = new Category($connection);
-                if (!$category->update($data)) {
-                    Flash::sendMessageSession('danger', 'Erro ao atualizar categoria!');
-                    return header('Location: ' . HOME . '/categories/new');
-                }
-
-                Flash::sendMessageSession('success', 'Categoria atualizada com sucesso!');
-                return header('Location: ' . HOME . '/categories');
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('adm/categories/edit.phtml');
+                $view->category = (new Category($connection))->findById($id);
+                return $view->render();
             }
-            $view = new View('adm/categories/edit.phtml');
-            $view->category = (new Category($connection))->findById($id);
-            return $view->render();
+            $data = $_POST;
+
+            Sanitizer::sanitizeData($data, Category::$filters);
+            $data['id'] = (int) $id;
+
+            if (!Validator::validateRequiredFields($data)) {
+                Flash::sendMessageSession('warning', 'Preencha todos os campos!');
+                return header('Location: ' . HOME . '/categories/edit/' . $id);
+            }
+
+            $category = new Category($connection);
+            if (!$category->update($data)) {
+                Flash::sendMessageSession('danger', 'Erro ao atualizar categoria!');
+                return header('Location: ' . HOME . '/categories/new');
+            }
+
+            Flash::sendMessageSession('success', 'Categoria atualizada com sucesso!');
+            return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
             if (APP_DEBUG) {
                 Flash::sendMessageSession('danger', $exception->getMessage());
@@ -111,7 +127,12 @@ class CategoriesController
         }
     }
 
-    //Método para remover uma cactegoria
+    /**
+     * Remove uma categoria
+     *
+     * @param int $id
+     * @return string
+     */
     public function remove($id = null)
     {
         try {
@@ -121,7 +142,7 @@ class CategoriesController
                 return header('Location: ' . HOME . '/categories/new');
             }
 
-            Flash::sendMessageSession('success', 'Categoria removida com sucesso!');
+            Flash::sendMessageSession('warning', 'Categoria removida com sucesso!');
             return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
             if (APP_DEBUG) {

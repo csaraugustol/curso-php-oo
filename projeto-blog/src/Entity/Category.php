@@ -10,6 +10,6 @@ class Category extends Entity
 
     public static $filters = [
         'name'        => FILTER_SANITIZE_STRING,
-        'description' => FILTER_SANITIZE_STRING
+        'description' => FILTER_SANITIZE_STRING,
     ];
 }

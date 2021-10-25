@@ -11,7 +11,13 @@ use Blog\DataBase\Connection;
 
 class CategoryController
 {
-    //Método de exibição dos posts relacionados a uma categoria
+    /**
+     * Exibe um post relacionado a uma categoria
+     * para a leitura de um usuário
+     *
+     * @param string $slug
+     * @return string
+     */
     public function index($slug)
     {
         try {

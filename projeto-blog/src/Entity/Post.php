@@ -14,6 +14,6 @@ class Post extends Entity
         'content'     => FILTER_SANITIZE_STRING,
         'type'        => FILTER_SANITIZE_STRING,
         'user_id'     => FILTER_SANITIZE_NUMBER_INT,
-        'category_id' => FILTER_SANITIZE_NUMBER_INT
+        'category_id' => FILTER_SANITIZE_NUMBER_INT,
     ];
 }

@@ -18,8 +18,10 @@ class PostsController
 {
     use CheckUserLogged;
 
-    //Método para verificar se o usuário está  autenticado
-    //e pode acessar o sistema
+    /**
+     * Verifica se o usuário está autenticado
+     * e pode acessar o sistema
+     */
     public function __construct()
     {
         if (!$this->checkAuthenticator()) {
@@ -28,7 +30,11 @@ class PostsController
         }
     }
 
-    //Método para listar posts
+    /**
+     * Exibe todos os posts para o usuário que está logado
+     *
+     * @return string
+     */
     public function index()
     {
         $view = new View('adm/posts/index.phtml');
@@ -36,89 +42,100 @@ class PostsController
         return $view->render();
     }
 
-    //Método para criar post
+    /**
+     * Cria um novo post
+     *
+     * @return string
+     */
     public function new()
     {
         try {
             $connection = Connection::getInstance();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $data = $_POST;
-
-                Sanitizer::sanitizeData($data, Post::$filters);
-                if (!Validator::validateRequiredFields($data)) {
-                    Flash::sendMessageSession('warning', 'Preencha todos os campos!');
-                    return header('Location: ' . HOME . '/posts/new');
-                }
-
-                $post = new Post($connection);
-                $data['slug'] = (new SlugGenerator())->generate($data['title']);
-                if (!$post->insert($data)) {
-                    Flash::sendMessageSession('danger', 'Erro ao criar postagem!');
-                    return header('Location: ' . HOME . '/posts/new');
-                }
-
-                Flash::sendMessageSession('success', 'Postagem criada com sucesso!');
-                return header('Location: ' . HOME . '/posts');
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('adm/posts/new.phtml');
+                $view->users = (new User($connection))->findAll('id, first_name, last_name');
+                $view->categories = (new Category($connection))->findAll('id, name');
+                return $view->render();
             }
-            $view = new View('adm/posts/new.phtml');
-            $view->users = (new User($connection))->findAll('id, first_name, last_name');
-            $view->categories = (new Category($connection))->findAll('id, name');
-            return $view->render();
+
+            $data = $_POST;
+            Sanitizer::sanitizeData($data, Post::$filters);
+            if (!Validator::validateRequiredFields($data)) {
+                Flash::sendMessageSession('warning', 'Preencha todos os campos!');
+                return header('Location: ' . HOME . '/posts/new');
+            }
+
+            $post = new Post($connection);
+            $data['slug'] = (new SlugGenerator())->generate($data['title']);
+            if (!$post->insert($data)) {
+                Flash::sendMessageSession('danger', 'Erro ao criar postagem!');
+                return header('Location: ' . HOME . '/posts/new');
+            }
+
+            Flash::sendMessageSession('success', 'Postagem criada com sucesso!');
+            return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
             if (APP_DEBUG) {
                 Flash::sendMessageSession('danger', $exception->getMessage());
                 return header('Location: ' . HOME . '/posts');
             }
-
             Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
             return header('Location: ' . HOME . '/posts');
         }
     }
 
-    //Método para editar post
+    /**
+     * Edição de um post
+     *
+     * @param int $id
+     * @return string
+     */
     public function edit($id = null)
     {
         try {
             $connection = Connection::getInstance();
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $data = $_POST;
-
-                Sanitizer::sanitizeData($data, Post::$filters);
-                $data['id'] = (int) $id;
-
-                if (!Validator::validateRequiredFields($data)) {
-                    Flash::sendMessageSession('warning', 'Preencha todos os campos!');
-                    return header('Location: ' . HOME . '/posts/edit/' . $id);
-                }
-
-                $post = new Post($connection);
-                if (!$post->update($data)) {
-                    Flash::sendMessageSession('danger', 'Erro ao atualizar postagem!');
-                    return header('Location: ' . HOME . '/posts/new');
-                }
-
-                Flash::sendMessageSession('success', 'Postagem atualizada com sucesso!');
-                return header('Location: ' . HOME . '/posts');
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('adm/posts/edit.phtml');
+                $view->categories = (new Category($connection))->findAll();
+                $view->users = (new User($connection))->findAll();
+                $view->post = (new Post($connection))->findById($id);
+                return $view->render();
             }
-            $view = new View('adm/posts/edit.phtml');
-            $view->categories = (new Category($connection))->findAll();
-            $view->users = (new User($connection))->findAll();
-            $view->post = (new Post($connection))->findById($id);
-            return $view->render();
+
+            $data = $_POST;
+            Sanitizer::sanitizeData($data, Post::$filters);
+            $data['id'] = (int) $id;
+
+            if (!Validator::validateRequiredFields($data)) {
+                Flash::sendMessageSession('warning', 'Preencha todos os campos!');
+                return header('Location: ' . HOME . '/posts/edit/' . $id);
+            }
+
+            $post = new Post($connection);
+            if (!$post->update($data)) {
+                Flash::sendMessageSession('danger', 'Erro ao atualizar postagem!');
+                return header('Location: ' . HOME . '/posts/new');
+            }
+            Flash::sendMessageSession('success', 'Postagem atualizada com sucesso!');
+            return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
             if (APP_DEBUG) {
                 Flash::sendMessageSession('danger', $exception->getMessage());
                 return header('Location: ' . HOME . '/posts');
             }
-
             Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
             return header('Location: ' . HOME . '/posts');
         }
     }
 
-    //Método para remover post
+    /**
+     * Remove um post
+     *
+     * @param int $id
+     * @return string
+     */
     public function remove($id = null)
     {
         try {

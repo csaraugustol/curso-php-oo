@@ -4,7 +4,6 @@ namespace Blog\View;
 
 class View
 {
-
     private $view;
     private $data = [];
 
@@ -23,7 +22,11 @@ class View
         return $this->data[$index];
     }
 
-    //Faz a view ser renderizada
+    /**
+     * Executa as renderizações das páginas
+     *
+     * @return string
+     */
     public function render()
     {
         ob_start();

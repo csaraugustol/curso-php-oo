@@ -15,7 +15,13 @@ class Authenticator
         $this->user = $user;
     }
 
-    //Método para verificar usuário e realizar login
+    /**
+     * Método para validar login e senha do usuário
+     * e permitir acesso ao sistema
+     *
+     * @param array $credentials
+     * @return bool
+     */
     public function login(array $credentials)
     {
         $user = current($this->user->filterWithConditions([
@@ -35,7 +41,11 @@ class Authenticator
         return true;
     }
 
-    //Método para remover usuário da sessão e sair do sistema
+    /**
+     * Método para remover usuário da sessão e sair do sistema
+     *
+     * @return string
+     */
     public function logout()
     {
         if (Session::hasUserSession('user')) {

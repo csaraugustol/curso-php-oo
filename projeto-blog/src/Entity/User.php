@@ -14,6 +14,6 @@ class User extends Entity
         'username'         => FILTER_SANITIZE_STRING,
         'email'            => FILTER_SANITIZE_STRING,
         'password'         => FILTER_SANITIZE_STRING,
-        'password_confirm' => FILTER_SANITIZE_STRING
+        'password_confirm' => FILTER_SANITIZE_STRING,
     ];
 }
