@@ -16,7 +16,7 @@ class Season
      */
     private $seasonTitle;
 
-    public function __construct($seasonTitle)
+    public function __construct(string $seasonTitle)
     {
         $this->episode = new Episode();
         $this->seasonTitle = $seasonTitle;

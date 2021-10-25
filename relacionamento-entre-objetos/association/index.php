@@ -1,5 +1,8 @@
 <?php
 
+use associoation\Book;
+use associoation\Publishing;
+
 require __DIR__ . '/Publishing.php';
 require __DIR__ . '/Book.php';
 
