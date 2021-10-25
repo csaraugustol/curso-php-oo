@@ -11,6 +11,12 @@ class Cart
      */
     private $products;
 
+    /**
+     *Adiciona produtos a um carrinho
+     *de compras
+     *
+     * @var array
+     */
     public function addProduct(Product $product): void
     {
         $this->products[] = $product;
