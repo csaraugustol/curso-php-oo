@@ -4,14 +4,14 @@ namespace Blog\Authenticator;
 
 use Blog\Session\Session;
 
-trait CheckUserLogged
+class CheckUserLogged // Classe e coloca os metodos como privados
 {
     /**
      * Método para verificar se existe um usuário autenticado
      *
      * @return bool
      */
-    public function checkAuthenticator()
+    public static function checkAuthenticator(): bool
     {
         if (Session::hasUserSession('user')) {
             return true;
@@ -21,10 +21,11 @@ trait CheckUserLogged
 
     /**
      * Método para verificar se existe um usuário autenticado
+     * para permitir acesso aos endpoints
      *
      * @return bool
      */
-    public function checkController()
+    public static function checkController(): bool
     {
         if (Session::hasUserSession('user')) {
             return true;

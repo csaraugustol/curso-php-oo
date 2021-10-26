@@ -23,17 +23,20 @@ class CategoryController
         try {
             $connection = Connection::getInstance();
             $category = current((new Category($connection))
-            ->filterWithConditions(['slug' => $slug]));
+                ->filterWithConditions(['slug' => $slug]));
 
             $view = new View('site/category.phtml');
             $view->posts = (new Post($connection))
-            ->filterWithConditions(['category_id' => $category['id']]);
+                ->filterWithConditions(['category_id' => $category['id']]);
             $view->category = $category['name'];
             return $view->render();
-        } catch (Exception $e) {
-            Flash::sendMessageSession('warning', 'Nenhum Post para a categoria '
-             . $category['name'] . ' foi encontrado!');
-            header('Location: ' . HOME);
+        } catch (Exception $exception) {
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Nenhum Post para a categoria ' . $category['name'] . ' foi encontrado!',
+                'warning'
+            );
+            return header('Location: ' . HOME);
         }
     }
 }

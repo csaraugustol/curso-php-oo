@@ -24,7 +24,7 @@ class Session
      * @param string $value
      * @return void
      */
-    public static function addUserSession($keySession, $value)
+    public static function addUserSession(string $keySession, string $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;
@@ -36,7 +36,7 @@ class Session
      * @param string $keySession
      * @return void
      */
-    public static function removeUserSession($keySession): void
+    public static function removeUserSession(string $keySession): void
     {
         self::sessionStart();
         if (isset($_SESSION[$keySession])) {
@@ -60,9 +60,9 @@ class Session
      * Verifica usuário na sessão
      *
      * @param string $keySession
-     * @return boolean
+     * @return bool
      */
-    public static function hasUserSession($keySession)
+    public static function hasUserSession(string $keySession): bool
     {
         self::sessionStart();
         return isset($_SESSION[$keySession]);

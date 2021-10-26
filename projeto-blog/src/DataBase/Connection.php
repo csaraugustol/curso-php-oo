@@ -13,7 +13,7 @@ class Connection
      *
      * @return PDO
      */
-    public static function getInstance()
+    public static function getInstance(): PDO
     {
         if (is_null(self::$instance)) {
             self::$instance = new PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASSWORD);

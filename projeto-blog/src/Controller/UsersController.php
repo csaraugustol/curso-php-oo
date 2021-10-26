@@ -10,24 +10,9 @@ use Blog\DataBase\Connection;
 use Blog\Security\PasswordHash;
 use Blog\Security\Validator\Sanitizer;
 use Blog\Security\Validator\Validator;
-use Blog\Authenticator\CheckUserLogged;
 
 class UsersController
 {
-    use CheckUserLogged;
-
-    /**
-     * Verifica se o usuário está autenticado
-     * e pode acessar o sistema
-     */
-    public function __construct()
-    {
-        if (!$this->checkAuthenticator()) {
-            Flash::sendMessageSession("danger", "Faça o login para acesar!");
-            return header("Location: " . HOME . '/auth/login');
-        }
-    }
-
     /**
      * Exibe todos os usuários
      *
@@ -84,12 +69,10 @@ class UsersController
             Flash::sendMessageSession('success', 'Usuário criado com sucesso!');
             return header('Location: ' . HOME . '/users');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/users');
-            }
-
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar criação do usuário. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/users');
         }
     }
@@ -146,12 +129,10 @@ class UsersController
             Flash::sendMessageSession('success', 'Usuário atualizado com sucesso!');
             return header('Location: ' . HOME . '/users');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/users');
-            }
-
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar edição do usuário. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/users');
         }
     }
@@ -174,12 +155,10 @@ class UsersController
             Flash::sendMessageSession('success', 'Usuário removido com sucesso!');
             return header('Location: ' . HOME . '/users');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/users');
-            }
-
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar remoção do usuário. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/users');
         }
     }

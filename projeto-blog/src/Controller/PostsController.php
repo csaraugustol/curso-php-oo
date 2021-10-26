@@ -12,24 +12,9 @@ use Blog\DataBase\Connection;
 use Ausi\SlugGenerator\SlugGenerator;
 use Blog\Security\Validator\Sanitizer;
 use Blog\Security\Validator\Validator;
-use Blog\Authenticator\CheckUserLogged;
 
 class PostsController
 {
-    use CheckUserLogged;
-
-    /**
-     * Verifica se o usuário está autenticado
-     * e pode acessar o sistema
-     */
-    public function __construct()
-    {
-        if (!$this->checkAuthenticator()) {
-            Flash::sendMessageSession("danger", "Faça o login para acesar!");
-            return header("Location: " . HOME . '/auth/login');
-        }
-    }
-
     /**
      * Exibe todos os posts para o usuário que está logado
      *
@@ -76,11 +61,10 @@ class PostsController
             Flash::sendMessageSession('success', 'Postagem criada com sucesso!');
             return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/posts');
-            }
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar criação do post. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/posts');
         }
     }
@@ -121,11 +105,10 @@ class PostsController
             Flash::sendMessageSession('success', 'Postagem atualizada com sucesso!');
             return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/posts');
-            }
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar edição do post. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/posts');
         }
     }
@@ -148,12 +131,10 @@ class PostsController
             Flash::sendMessageSession('success', 'Postagem removida com sucesso!');
             return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/posts');
-            }
-
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar remoção do post. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/posts');
         }
     }

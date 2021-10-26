@@ -26,10 +26,12 @@ class Validator
      *
      * @param string $password
      * @param string $passwordConfirm
-     * @return boolean
+     * @return bool
      */
-    public static function validatePasswordConfirm($password, $passwordConfirm): bool
-    {
+    public static function validatePasswordConfirm(
+        string $password,
+        string $passwordConfirm
+    ): bool {
         return $password === $passwordConfirm;
     }
 
@@ -37,7 +39,7 @@ class Validator
      * Verifica se a senha atende o tamanho minímo desejado
      *
      * @param string $password
-     * @return boolean
+     * @return bool
      */
     public static function validatePasswordMinStringLenght($password): bool
     {

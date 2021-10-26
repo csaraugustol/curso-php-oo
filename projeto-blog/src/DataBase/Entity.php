@@ -4,11 +4,12 @@ namespace Blog\DataBase;
 
 use PDO;
 use Exception;
+use PDOStatement;
 
 abstract class Entity
 {
-    private $connection;
     protected $table;
+    private $connection;
 
     /**
      * Recebe a conexão do banco de dados
@@ -27,7 +28,7 @@ abstract class Entity
      * @param string $fields
      * @return array
      */
-    public function findAll($fields = '*'): array
+    public function findAll(string $fields = '*'): array
     {
         $findAll = 'SELECT ' . $fields . ' FROM ' . $this->table;
         $findResult = $this->connection->query($findAll);
@@ -42,7 +43,7 @@ abstract class Entity
      * @param string $fields
      * @return array
      */
-    public function findById(int $id, $fields = '*'): array
+    public function findById(int $id, string $fields = '*'): array
     {
         return current($this->filterWithConditions(['id' => $id], '', $fields));
     }
@@ -56,18 +57,18 @@ abstract class Entity
      * @param string $fields
      * @return array
      */
-    public function filterWithConditions(array $conditions, $operator = ' AND ', $fields = '*'): array
-    {
+    public function filterWithConditions(
+        array $conditions,
+        string $operator = ' AND ',
+        string $fields = '*'
+    ): array {
         $sqlFilter = 'SELECT ' . $fields . ' FROM ' . $this->table . ' WHERE ';
         $binds = array_keys($conditions);
         $where = null;
 
         foreach ($binds as $bind) {
-            if (is_null($where)) {
-                $where .= $bind . ' = :' . $bind;
-            } else {
+            is_null($where) ? $where .= $bind . ' = :' . $bind :
                 $where .= $operator . $bind . ' = :' . $bind;
-            }
         }
 
         $sqlFilter .= $where;
@@ -84,9 +85,9 @@ abstract class Entity
      * Recebe os dados do formulário para registro no banco
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      */
-    public function insert($data): bool
+    public function insert(array $data): bool
     {
         $binds = array_keys($data);
         $sqlInsert = 'INSERT INTO ' . $this->table . '(' . implode(', ', $binds) .
@@ -99,9 +100,9 @@ abstract class Entity
      * Recebe os dados do formulário para atualizar no banco
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      */
-    public function update($data): bool
+    public function update(array $data): bool
     {
         if (!array_key_exists('id', $data)) {
             throw new Exception("É preciso informar um ID válido para realização do update.");
@@ -113,7 +114,8 @@ abstract class Entity
 
         foreach ($binds as $value) {
             if ($value !== 'id') {
-                $setValue .= is_null($setValue) ? $value . ' = :' . $value : ', ' . $value . ' = :' . $value;
+                $setValue .= is_null($setValue) ? $value . ' = :' . $value :
+                 ', ' . $value . ' = :' . $value;
             }
         }
         $sqlUpdate .= $setValue . ', updated_at = NOW() WHERE id = :id';
@@ -141,7 +143,7 @@ abstract class Entity
      * @param array $data
      * @return PDOStatement
      */
-    private function bind($sqlInsert, $data)
+    private function bind(string $sqlInsert, array $data): PDOStatement
     {
         $bind = $this->connection->prepare($sqlInsert);
         foreach ($data as $key => $value) {

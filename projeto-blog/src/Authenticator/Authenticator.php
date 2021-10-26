@@ -10,6 +10,11 @@ class Authenticator
 {
     private $user;
 
+    /**
+     * Construtor da autenticação
+     *
+     * @param User|null $user
+     */
     public function __construct(User $user = null)
     {
         $this->user = $user;
@@ -22,7 +27,7 @@ class Authenticator
      * @param array $credentials
      * @return bool
      */
-    public function login(array $credentials)
+    public function login(array $credentials): bool
     {
         $user = current($this->user->filterWithConditions([
             'email' => $credentials['email']
@@ -44,9 +49,9 @@ class Authenticator
     /**
      * Método para remover usuário da sessão e sair do sistema
      *
-     * @return string
+     * @return void
      */
-    public function logout()
+    public function logout(): void
     {
         if (Session::hasUserSession('user')) {
             Session::removeUserSession('user');

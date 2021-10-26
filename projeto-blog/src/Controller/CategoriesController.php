@@ -10,24 +10,9 @@ use Blog\DataBase\Connection;
 use Ausi\SlugGenerator\SlugGenerator;
 use Blog\Security\Validator\Sanitizer;
 use Blog\Security\Validator\Validator;
-use Blog\Authenticator\CheckUserLogged;
 
 class CategoriesController
 {
-    use CheckUserLogged;
-
-    /**
-     * Verifica se o usuário está autenticado
-     * e pode acessar o sistema
-     */
-    public function __construct()
-    {
-        if (!$this->checkAuthenticator()) {
-            Flash::sendMessageSession("danger", "Faça o login para acesar!");
-            return header("Location: " . HOME . '/auth/login');
-        }
-    }
-
     /**
      * Lista categorias
      *
@@ -72,12 +57,10 @@ class CategoriesController
             Flash::sendMessageSession('success', 'Categoria criada com sucesso!');
             return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/categories');
-            }
-
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar criação da categoria. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/categories');
         }
     }
@@ -117,12 +100,10 @@ class CategoriesController
             Flash::sendMessageSession('success', 'Categoria atualizada com sucesso!');
             return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/categories');
-            }
-
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar edição da categoria. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/categories');
         }
     }
@@ -145,12 +126,10 @@ class CategoriesController
             Flash::sendMessageSession('warning', 'Categoria removida com sucesso!');
             return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('danger', $exception->getMessage());
-                return header('Location: ' . HOME . '/categories');
-            }
-
-            Flash::sendMessageSession('danger', 'Ocorreu um erro interno. Entre em contato com o administrador!');
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao executar remoção da categoria. Contate o administrador!'
+            );
             return header('Location: ' . HOME . '/categories');
         }
     }

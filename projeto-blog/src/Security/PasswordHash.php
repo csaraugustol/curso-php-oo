@@ -10,7 +10,7 @@ class PasswordHash
      * @param string $password
      * @return string
      */
-    public static function hashPassword($password)
+    public static function hashPassword(string $password): string
     {
         return password_hash($password, PASSWORD_ARGON2I);
     }
@@ -22,8 +22,10 @@ class PasswordHash
      * @param string $passwordHashed
      * @return string
      */
-    public static function checkPassword($password, $passwordHashed)
-    {
+    public static function checkPassword(
+        string $password,
+        string $passwordHashed
+    ): string {
         return password_verify($password, $passwordHashed);
     }
 }

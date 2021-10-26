@@ -11,7 +11,7 @@ class Sanitizer
      * @param array $sanitizerFilters
      * @return array
      */
-    public static function sanitizeData($data, $sanitizerFilters)
+    public static function sanitizeData(array $data, array $sanitizerFilters)
     {
         return filter_var_array($data, $sanitizerFilters);
     }

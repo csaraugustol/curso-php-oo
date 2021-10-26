@@ -27,7 +27,7 @@ class View
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         ob_start();
         require VIEWS_PATH . $this->view;

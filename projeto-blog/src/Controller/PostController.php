@@ -11,7 +11,7 @@ use Blog\DataBase\Connection;
 class PostController
 {
     /**
-     * Exibe um post da listagem geral
+     * Exibe detalhes de um post da listagem geral
      *
      * @param string $slug
      * @return string
@@ -23,9 +23,12 @@ class PostController
             $view = new View('site/single.phtml');
             $view->post = current($post->filterWithConditions(['slug' => $slug]));
             return $view->render();
-        } catch (Exception $e) {
-            Flash::sendMessageSession('warning', 'Postagem não encontrada!');
-            header('Location: ' . HOME);
+        } catch (Exception $exception) {
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Postagem não encontrada!'
+            );
+            return header('Location: ' . HOME);
         }
     }
 }
