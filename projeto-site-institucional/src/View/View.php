@@ -23,8 +23,12 @@ class View
         return $this->data[$index];
     }
 
-    //Faz a view ser renderizada
-    public function render()
+    /**
+     * Retorna a rederização das páginas
+     *
+     * @return string
+     */
+    public function render(): string
     {
         ob_start();
         require VIEWS_PATH . $this->view;
