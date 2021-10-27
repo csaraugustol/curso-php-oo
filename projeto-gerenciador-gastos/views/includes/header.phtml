@@ -17,11 +17,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <?php if (\GGP\Session\Session::hasUserSession('user')) : ?>
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="<?= HOME; ?>/">Home<span class="sr-only">(current)</span></a>
                     </li>
+                    <?php if (!\GGP\Session\Session::hasUserSession('user')) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= HOME; ?>/auth/login">Login<span class="sr-only">(current)</span></a>
+                    </li>
+                    <?php elseif (\GGP\Session\Session::hasUserSession('user')) : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= HOME; ?>/expenses">Despesas</a>
                     </li>
