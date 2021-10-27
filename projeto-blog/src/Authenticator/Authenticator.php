@@ -2,7 +2,9 @@
 
 namespace Blog\Authenticator;
 
+use Exception;
 use Blog\Entity\User;
+use Blog\Session\Flash;
 use Blog\Session\Session;
 use Blog\Security\PasswordHash;
 
@@ -29,21 +31,28 @@ class Authenticator
      */
     public function login(array $credentials): bool
     {
-        $user = current($this->user->filterWithConditions([
-            'email' => $credentials['email']
-        ]));
+        try {
+            $user = current($this->user->filterWithConditions([
+                'email' => $credentials['email']
+            ]));
 
-        if (!$user) {
+            if (!$user) {
+                return false;
+            }
+
+            if (!PasswordHash::checkPassword($credentials['password'], $user['password'])) {
+                return false;
+            }
+            unset($user['password']);
+            Session::addUserSession('user', $user);
+            return true;
+        } catch (Exception $exception) {
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Verifique suas credênciais. Caso persista, entre em contato com o administrador!',
+            );
             return false;
         }
-
-        if (!PasswordHash::checkPassword($credentials['password'], $user['password'])) {
-            return false;
-        }
-
-        unset($user['password']);
-        Session::addUserSession('user', $user);
-        return true;
     }
 
     /**
@@ -56,7 +65,6 @@ class Authenticator
         if (Session::hasUserSession('user')) {
             Session::removeUserSession('user');
         }
-
         Session::clearUserSession();
     }
 }

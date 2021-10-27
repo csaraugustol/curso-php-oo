@@ -4,7 +4,7 @@ namespace Blog\Authenticator;
 
 use Blog\Session\Session;
 
-class CheckUserLogged // Classe e coloca os metodos como privados
+class CheckUserLogged
 {
     /**
      * Método para verificar se existe um usuário autenticado
