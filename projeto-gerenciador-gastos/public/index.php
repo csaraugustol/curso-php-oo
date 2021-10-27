@@ -1,5 +1,6 @@
 <?php
 
+use GGP\Authenticator\CheckUserLogged;
 use GGP\View\View;
 use GGP\Session\Flash;
 
@@ -21,9 +22,12 @@ if (!class_exists($controller = $path . ucfirst($controller) . 'Controller')) {
 }
 
 if (in_array($controller, [$path . 'ExpensesController'])) {
-    Flash::sendMessageSession('danger', 'Faça o login para acessar as informações!');
-    print (new View('auth/index.phtml'))->render();
-    die;
+    $isLogged = CheckUserLogged::checkController();
+    if (!$isLogged) {
+        Flash::sendMessageSession('danger', 'Faça o login para acessar as informações!');
+        print (new View('auth/index.phtml'))->render();
+        die;
+    }
 }
 
 //Verfica se existe método, se não, chama a index

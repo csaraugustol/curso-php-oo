@@ -8,23 +8,46 @@ class View
     private $view;
     private $data = [];
 
+    /**
+     * Rebece a view solicitada por parâmetro
+     *
+     * @param string $view
+     */
     public function __construct($view)
     {
         $this->view = $view;
     }
 
-    public function __set($index, $value)
+    /**
+     * Recebe o índice e um array para carregar
+     * os dados em tela
+     *
+     * @param string $index
+     * @param array $value
+     * @return void
+     */
+    public function __set(string $index, array $value): void
     {
         $this->data[$index] = $value;
     }
 
-    public function __get($index)
+    /**
+     * Retorna o array para listagem na view
+     *
+     * @param string $index
+     * @return array
+     */
+    public function __get(string $index): array
     {
         return $this->data[$index];
     }
 
-    //Faz a view ser renderizada
-    public function render()
+    /**
+     * Executa as renderizações das páginas
+     *
+     * @return string
+     */
+    public function render(): string
     {
         ob_start();
         require VIEWS_PATH . $this->view;

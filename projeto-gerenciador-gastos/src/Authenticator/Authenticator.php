@@ -2,7 +2,9 @@
 
 namespace GGP\Authenticator;
 
+use Exception;
 use GGP\Entity\User;
+use GGP\Session\Flash;
 use GGP\Session\Session;
 
 class Authenticator
@@ -14,33 +16,46 @@ class Authenticator
         $this->user = $user;
     }
 
-    //Método para verificar usuário e realizar login
-    public function login(array $credentials)
+    /**
+     * Verifica login e senha do usuário
+     *
+     * @param array $credentials
+     * @return bool
+     */
+    public function login(array $credentials): bool
     {
-        $user = current($this->user->filterWithConditions([
-            'email' => $credentials['email']
-        ]));
-
-        if (!$user) {
+        try {
+            $user = current($this->user->filterWithConditions([
+                'email' => $credentials['email']
+            ]));
+            if (!$user) {
+                return false;
+            }
+            if ($user['password'] != $credentials['password']) {
+                return false;
+            }
+            unset($user['password']);
+            Session::addUserSession('user', $user);
+            return true;
+        } catch (Exception $exception) {
+            Flash::returnMessageExceptionError(
+                $exception,
+                'Verifique suas credênciais. Caso persista, entre em contato com o administrador!',
+            );
             return false;
         }
-
-        if ($user['password'] != $credentials['password']) {
-            return false;
-        }
-
-        unset($user['password']);
-        Session::addUserSession('user', $user);
-        return true;
     }
 
-    //Método para remover usuário da sessão e sair do sistema
+    /**
+     * Remove usuário da sessão e sai do sistema
+     *
+     * @return void
+     */
     public function logout()
     {
         if (Session::hasUserSession('user')) {
             Session::removeUserSession('user');
         }
-
         Session::clearUserSession();
     }
 }

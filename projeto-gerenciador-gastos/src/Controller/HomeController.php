@@ -6,8 +6,12 @@ use GGP\View\View;
 
 class HomeController
 {
-    //Método de exibição da view 'home'
-    public function index()
+    /**
+     * Retorna página inicial do sistema
+     *
+     * @return string
+     */
+    public function index(): string
     {
         $view = new View('site/index.phtml');
         return $view->render();

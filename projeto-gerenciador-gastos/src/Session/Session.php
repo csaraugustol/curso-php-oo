@@ -4,8 +4,12 @@ namespace GGP\Session;
 
 class Session
 {
-    //Método para iniciar a sessão
-    public static function sessionStart()
+    /**
+     * Inicia a sessão
+     *
+     * @return void
+     */
+    public static function sessionStart(): void
     {
         if (session_status() != PHP_SESSION_NONE) {
             return;
@@ -13,43 +17,68 @@ class Session
         session_start();
     }
 
-    //Método para adicionar usuário na sessão
-    public static function addUserSession($keySession, $value)
+    /**
+     * Adiciona usuário na sessão
+     *
+     * @param string $keySession
+     * @param string $value
+     * @return void
+     */
+    public static function addUserSession($keySession, $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;
     }
 
-    //Método para remover usuário da sessão
-    public static function removeUserSession($keySession)
+    /**
+     * Remove um usuário da sessão
+     *
+     * @param string $keySession
+     * @return void
+     */
+    public static function removeUserSession(string $keySession): void
     {
         self::sessionStart();
-
         if (isset($_SESSION[$keySession])) {
             unset($_SESSION[$keySession]);
         }
     }
 
-    //Método para limpar usuário sessão
-    public static function clearUserSession()
+    /**
+     * Limpa um usuário na sessão
+     *
+     * @return void
+     */
+    public static function clearUserSession(): void
     {
         self::sessionStart();
         session_destroy();
         $_SESSION = [];
     }
 
-    //Método para verificar usuário na sessão
-    public static function hasUserSession($keySession)
+    /**
+     * Verifica se existe usuário na sessão
+     *
+     * @param string $keySession
+     * @return bool
+     */
+    public static function hasUserSession(string $keySession): bool
     {
         self::sessionStart();
         return isset($_SESSION[$keySession]);
     }
 
-    //Método para verificar se existe alguma chave na sessão
-    public static function verifyExistsKey($keySession)
+    /**
+     * Undocumented function
+     *
+     * @param string $keySession
+     * @return string
+     */
+    public static function verifyExistsKey(string $keySession): string
     {
+       // var_dump($keySession);
+       // die;
         self::sessionStart();
-
         return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : null;
     }
 }

@@ -4,10 +4,15 @@ namespace GGP\Authenticator;
 
 use GGP\Session\Session;
 
-trait CheckUserLogged
+class CheckUserLogged
 {
-    //Método para verificar se existe um usuário autenticado
-    public function checkAuthenticator()
+    /**
+     * Método para verificar se existe um usuário autenticado
+     * para permitir acesso aos endpoints
+     *
+     * @return bool
+     */
+    public static function checkController(): bool
     {
         if (Session::hasUserSession('user')) {
             return true;
