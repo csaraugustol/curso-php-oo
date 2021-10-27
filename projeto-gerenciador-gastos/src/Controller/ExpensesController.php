@@ -4,27 +4,13 @@ namespace GGP\Controller;
 
 use GGP\View\View;
 use GGP\Entity\User;
-use GGP\Session\Flash;
 use GGP\Entity\Expense;
 use GGP\Entity\Category;
 use GGP\Session\Session;
 use GGP\DataBase\Connection;
-use GGP\Authenticator\CheckUserLogged;
 
 class ExpensesController
 {
-    use CheckUserLogged;
-
-    //Método para verificar se o usuário está  autenticado
-    //e pode acessar o sistema
-    public function __construct()
-    {
-        if (!$this->checkAuthenticator()) {
-            Flash::sendMessageSession("danger", "Faça o login para acesar!");
-            return header("Location: " . HOME . '/auth/login');
-        }
-    }
-
     //Método de listagem de despesas
     public function index()
     {

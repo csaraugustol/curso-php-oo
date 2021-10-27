@@ -1,6 +1,7 @@
 <?php
 
 use GGP\View\View;
+use GGP\Session\Flash;
 
 require __DIR__ . '/../bootstrap.php';
 
@@ -11,9 +12,17 @@ $controller = isset($url[0]) && $url[0] ? $url[0] : 'home';
 $action     = isset($url[1]) && $url[1] ? $url[1] : 'index';
 $param      = isset($url[2]) && $url[2] ? $url[2] : null;
 
+$path = "GGP\Controller\\";
+
 //Verifica se a classe existe
-if (!class_exists($controller = "GGP\Controller\\" . ucfirst($controller) . 'Controller')) {
+if (!class_exists($controller = $path . ucfirst($controller) . 'Controller')) {
     print (new View('404.phtml'))->render();
+    die;
+}
+
+if (in_array($controller, [$path . 'ExpensesController'])) {
+    Flash::sendMessageSession('danger', 'Faça o login para acessar as informações!');
+    print (new View('auth/index.phtml'))->render();
     die;
 }
 

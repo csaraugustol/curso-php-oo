@@ -2,6 +2,7 @@
 
 namespace GGP\Controller;
 
+use Exception;
 use GGP\View\View;
 use GGP\Entity\User;
 use GGP\Session\Flash;
@@ -10,10 +11,18 @@ use GGP\Authenticator\Authenticator;
 
 class AuthController
 {
-    public function login()
+    /**
+     * Efetua login do usuário
+     *
+     * @return string
+     */
+    public function login(): string
     {
-        //Método para refetuar login
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('auth/index.phtml');
+                return $view->render();
+            }
             $user = new User(Connection::getInstance());
             $authenticator = new Authenticator($user);
 
@@ -24,13 +33,19 @@ class AuthController
 
             Flash::sendMessageSession("success", "Usuário logado com sucesso!");
             return header("Location: " . HOME . '/expenses');
+        } catch (Exception $exception) {
+            Flash::returnMessageExceptionError(
+                $exception,
+                'Verifique as credênciais. Caso persista o erro, contate o administrador!'
+            );
         }
-
-        $view = new View('auth/index.phtml');
-        return $view->render();
     }
 
-    //Método para sair do sistema
+    /**
+     * Efetua logout do usuário do sistema
+     *
+     * @return string
+     */
     public function logout()
     {
         $authenticator = (new Authenticator())->logout();

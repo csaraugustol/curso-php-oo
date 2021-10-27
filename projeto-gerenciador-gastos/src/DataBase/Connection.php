@@ -8,15 +8,15 @@ class Connection
 {
     private static $instance = null;
 
-    private function __construct()
-    {
-    }
-
-    //Método de conexão com o banco de dados
-    public static function getInstance()
+    /**
+     * Retorna conexão com o banco de dados
+     *
+     * @return PDO
+     */
+    public static function getInstance(): PDO
     {
         if (is_null(self::$instance)) {
-            self::$instance = new PDO('mysql:dbname=;host=localhost', '', '');
+            self::$instance = new PDO('mysql:dbname=my_expenses;host=localhost', 'indb', '230700');
             self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$instance->exec('SET NAMES UTF8');
         }
