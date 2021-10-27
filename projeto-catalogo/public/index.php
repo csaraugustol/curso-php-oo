@@ -1,6 +1,6 @@
 <?php
 
-use Instituicao\View\View;
+use Catalogo\View\View;
 
 require __DIR__ . '/../bootstrap.php';
 
@@ -12,7 +12,7 @@ $action     = isset($url[1]) && $url[1] ? $url[1] : 'index';
 $param      = isset($url[2]) && $url[2] ? $url[2] : null;
 
 //Verifica se a classe existe
-if (!class_exists($controller = "Instituicao\Controller\\" . ucfirst($controller) . 'Controller')) {
+if (!class_exists($controller = "Catalogo\Controller\\" . ucfirst($controller) . 'Controller')) {
     print (new View('404.phtml'))->render();
     die;
 }

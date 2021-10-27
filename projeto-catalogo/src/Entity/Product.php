@@ -1,8 +1,8 @@
 <?php
 
-namespace Instituicao\Entity;
+namespace Catalogo\Entity;
 
-use Instituicao\DataBase\Entity;
+use Catalogo\DataBase\Entity;
 
 class Product extends Entity
 {

@@ -1,14 +1,19 @@
 <?php
 
-namespace Instituicao\Controller;
+namespace Catalogo\Controller;
 
-use Instituicao\View\View;
-use Instituicao\Entity\Product;
-use Instituicao\DataBase\Connection;
+use Catalogo\View\View;
+use Catalogo\Entity\Product;
+use Catalogo\DataBase\Connection;
 
 class HomeController
 {
-    public function index()
+    /**
+     * Retorna página principal
+     *
+     * @return string
+     */
+    public function index(): string
     {
         $connection = Connection::getInstance();
         $view = new View('site/index.phtml');
