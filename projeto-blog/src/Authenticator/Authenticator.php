@@ -10,6 +10,11 @@ use Blog\Security\PasswordHash;
 
 class Authenticator
 {
+    /**
+     * Usuário para atenticação
+     *
+     * @var User
+     */
     private $user;
 
     /**
@@ -43,6 +48,7 @@ class Authenticator
             if (!PasswordHash::checkPassword($credentials['password'], $user['password'])) {
                 return false;
             }
+
             unset($user['password']);
             Session::addUserSession('user', $user);
             return true;
@@ -51,6 +57,7 @@ class Authenticator
                 $exception,
                 'Verifique suas credênciais. Caso persista, entre em contato com o administrador!',
             );
+
             return false;
         }
     }

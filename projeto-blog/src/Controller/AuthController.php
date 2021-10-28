@@ -14,7 +14,7 @@ class AuthController
     /**
      * Método para refetuar login
      *
-     * @return string
+     * @return redirect
      */
     public function login()
     {
@@ -31,20 +31,22 @@ class AuthController
                 Flash::sendMessageSession("danger", "Usuário ou senha incorretos!");
                 return header("Location: " . HOME . '/auth/login');
             }
-            return header("Location: " . HOME . '/home');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Verifique suas credênciais. Caso persista, entre em contato com o administrador!',
             );
+
             return header("Location: " . HOME . '/auth/login');
         }
+
+        return header("Location: " . HOME . '/home');
     }
 
     /**
      * Método para encerrar uma sessão
      *
-     * @return string
+     * @return redirect
      */
     public function logout()
     {

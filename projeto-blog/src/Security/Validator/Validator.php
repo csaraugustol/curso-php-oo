@@ -18,6 +18,7 @@ class Validator
                 break;
             }
         }
+
         return true;
     }
 
@@ -41,7 +42,7 @@ class Validator
      * @param string $password
      * @return bool
      */
-    public static function validatePasswordMinStringLenght($password): bool
+    public static function validatePasswordMinStringLenght(string $password): bool
     {
         return strlen($password) >= 6;
     }

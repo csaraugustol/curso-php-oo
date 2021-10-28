@@ -20,6 +20,7 @@ class Connection
             self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$instance->exec('SET NAMES ' . DB_CHARSET);
         }
+
         return self::$instance;
     }
 }

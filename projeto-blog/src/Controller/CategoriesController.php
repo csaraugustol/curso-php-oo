@@ -16,19 +16,29 @@ class CategoriesController
     /**
      * Lista categorias
      *
-     * @return string
+     * @return redirect
      */
     public function index()
     {
-        $view = new View('adm/categories/index.phtml');
-        $view->categories = (new Category(Connection::getInstance()))->findAll();
+        try {
+            $view = new View('adm/categories/index.phtml');
+            $view->categories = (new Category(Connection::getInstance()))->findAll();
+        } catch (Exception $exception) {
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao carregar dados das categorias!',
+            );
+
+            return header('Location: ' . HOME . '/categories');
+        }
+
         return $view->render();
     }
 
     /**
      * Cria nova categoria
      *
-     * @return string
+     * @return redirect
      */
     public function new()
     {
@@ -55,23 +65,25 @@ class CategoriesController
             }
 
             Flash::sendMessageSession('success', 'Categoria criada com sucesso!');
-            return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar criação da categoria. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/categories');
         }
+
+        return header('Location: ' . HOME . '/categories');
     }
 
     /**
      * Edição de uma categoria
      *
-     * @param int $id
-     * @return string
+     * @param int|null $id
+     * @return redirect
      */
-    public function edit($id = null)
+    public function edit(int $id = null)
     {
         try {
             $connection = Connection::getInstance();
@@ -81,8 +93,8 @@ class CategoriesController
                 $view->category = (new Category($connection))->findById($id);
                 return $view->render();
             }
-            $data = $_POST;
 
+            $data = $_POST;
             Sanitizer::sanitizeData($data, Category::$filters);
             $data['id'] = (int) $id;
 
@@ -98,23 +110,25 @@ class CategoriesController
             }
 
             Flash::sendMessageSession('success', 'Categoria atualizada com sucesso!');
-            return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar edição da categoria. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/categories');
         }
+
+        return header('Location: ' . HOME . '/categories');
     }
 
     /**
      * Remove uma categoria
      *
-     * @param int $id
-     * @return string
+     * @param int|null $id
+     * @return redirect
      */
-    public function remove($id = null)
+    public function remove(int $id = null)
     {
         try {
             $category = (new Category(Connection::getInstance()));
@@ -124,13 +138,15 @@ class CategoriesController
             }
 
             Flash::sendMessageSession('warning', 'Categoria removida com sucesso!');
-            return header('Location: ' . HOME . '/categories');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar remoção da categoria. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/categories');
         }
+
+        return header('Location: ' . HOME . '/categories');
     }
 }

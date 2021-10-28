@@ -16,19 +16,29 @@ class UsersController
     /**
      * Exibe todos os usuários
      *
-     * @return string
+     * @return redirect
      */
     public function index()
     {
-        $view = new View('adm/users/index.phtml');
-        $view->users = (new User(Connection::getInstance()))->findAll();
+        try {
+            $view = new View('adm/users/index.phtml');
+            $view->users = (new User(Connection::getInstance()))->findAll();
+        }catch (Exception $exception){
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao carregar dados dos usuários!',
+            );
+
+            return header('Location: ' . HOME . '/users');
+        }
+
         return $view->render();
     }
 
     /**
      * Cria um novo usuário
      *
-     * @return string
+     * @return redirect
      */
     public function new()
     {
@@ -48,7 +58,10 @@ class UsersController
             }
 
             if (!Validator::validatePasswordMinStringLenght($data['password'])) {
-                Flash::sendMessageSession('warning', 'A senha deve conter no minímo 6 caracteres!');
+                Flash::sendMessageSession(
+                    'warning',
+                    'A senha deve conter no minímo 6 caracteres!'
+                );
                 return header('Location: ' . HOME . '/users/new');
             }
 
@@ -66,24 +79,27 @@ class UsersController
                 Flash::sendMessageSession('danger', 'Erro ao criar usuário!');
                 return header('Location: ' . HOME . '/users/new');
             }
+
             Flash::sendMessageSession('success', 'Usuário criado com sucesso!');
-            return header('Location: ' . HOME . '/users');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar criação do usuário. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/users');
         }
+
+        return header('Location: ' . HOME . '/users');
     }
 
     /**
      * Edição de um usuário
      *
-     * @param int $id
+     * @param int|null $id
      * @return string
      */
-    public function edit($id = null)
+    public function edit(int $id = null)
     {
         try {
             $connection = Connection::getInstance();
@@ -105,7 +121,9 @@ class UsersController
 
             $user = new User($connection);
 
-            //Condição para criptografar senha
+            /**
+             * Condição para criptografar senha
+             */
             if ($data['password']) {
                 if (!Validator::validatePasswordMinStringLenght($data['password'])) {
                     Flash::sendMessageSession('warning', 'A senha deve conter no minímo 6 caracteres!');
@@ -127,23 +145,25 @@ class UsersController
             }
 
             Flash::sendMessageSession('success', 'Usuário atualizado com sucesso!');
-            return header('Location: ' . HOME . '/users');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar edição do usuário. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/users');
         }
+
+        return header('Location: ' . HOME . '/users');
     }
 
     /**
      * Remove um usuário
      *
-     * @param int $id
+     * @param int|null $id
      * @return string
      */
-    public function remove($id = null)
+    public function remove(int $id = null)
     {
         try {
             $user = (new User(Connection::getInstance()));
@@ -153,13 +173,15 @@ class UsersController
             }
 
             Flash::sendMessageSession('success', 'Usuário removido com sucesso!');
-            return header('Location: ' . HOME . '/users');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar remoção do usuário. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/users');
         }
+
+        return header('Location: ' . HOME . '/users');
     }
 }

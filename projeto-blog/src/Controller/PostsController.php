@@ -18,19 +18,29 @@ class PostsController
     /**
      * Exibe todos os posts para o usuário que está logado
      *
-     * @return string
+     * @return redirect
      */
     public function index()
     {
-        $view = new View('adm/posts/index.phtml');
-        $view->posts = (new Post(Connection::getInstance()))->findAll();
+        try {
+            $view = new View('adm/posts/index.phtml');
+            $view->posts = (new Post(Connection::getInstance()))->findAll();
+        } catch (Exception $exception) {
+            Flash::returnErrorExceptionMessage(
+                $exception,
+                'Erro ao carregar dados dos posts!',
+            );
+
+            header('Location: ' . HOME . '/posts');
+        }
+
         return $view->render();
     }
 
     /**
      * Cria um novo post
      *
-     * @return string
+     * @return redirect
      */
     public function new()
     {
@@ -39,8 +49,11 @@ class PostsController
 
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 $view = new View('adm/posts/new.phtml');
-                $view->users = (new User($connection))->findAll('id, first_name, last_name');
-                $view->categories = (new Category($connection))->findAll('id, name');
+                $view->users = (new User($connection))
+                    ->findAll('id, first_name, last_name');
+                $view->categories = (new Category($connection))
+                    ->findAll('id, name');
+
                 return $view->render();
             }
 
@@ -59,7 +72,6 @@ class PostsController
             }
 
             Flash::sendMessageSession('success', 'Postagem criada com sucesso!');
-            return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
@@ -67,15 +79,17 @@ class PostsController
             );
             return header('Location: ' . HOME . '/posts');
         }
+
+        return header('Location: ' . HOME . '/posts');
     }
 
     /**
      * Edição de um post
      *
-     * @param int $id
-     * @return string
+     * @param int|null $id
+     * @return redirect
      */
-    public function edit($id = null)
+    public function edit(int $id = null)
     {
         try {
             $connection = Connection::getInstance();
@@ -102,24 +116,27 @@ class PostsController
                 Flash::sendMessageSession('danger', 'Erro ao atualizar postagem!');
                 return header('Location: ' . HOME . '/posts/new');
             }
+
             Flash::sendMessageSession('success', 'Postagem atualizada com sucesso!');
-            return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar edição do post. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/posts');
         }
+
+        return header('Location: ' . HOME . '/posts');
     }
 
     /**
      * Remove um post
      *
-     * @param int $id
-     * @return string
+     * @param int|null $id
+     * @return redirect
      */
-    public function remove($id = null)
+    public function remove(int $id = null)
     {
         try {
             $post = (new Post(Connection::getInstance()));
@@ -129,13 +146,15 @@ class PostsController
             }
 
             Flash::sendMessageSession('success', 'Postagem removida com sucesso!');
-            return header('Location: ' . HOME . '/posts');
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao executar remoção do post. Contate o administrador!'
             );
+
             return header('Location: ' . HOME . '/posts');
         }
+
+        return header('Location: ' . HOME . '/posts');
     }
 }

@@ -32,6 +32,7 @@ abstract class Entity
     {
         $findAll = 'SELECT ' . $fields . ' FROM ' . $this->table;
         $findResult = $this->connection->query($findAll);
+
         return $findResult->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -59,7 +60,7 @@ abstract class Entity
      */
     public function filterWithConditions(
         array $conditions,
-        string $operator = ' AND ',
+        string $operator = 'AND',
         string $fields = '*'
     ): array {
         $sqlFilter = 'SELECT ' . $fields . ' FROM ' . $this->table . ' WHERE ';
@@ -68,7 +69,7 @@ abstract class Entity
 
         foreach ($binds as $bind) {
             is_null($where) ? $where .= $bind . ' = :' . $bind :
-                $where .= $operator . $bind . ' = :' . $bind;
+                $where .=  ' ' . $operator . ' ' . $bind . ' = :' . $bind;
         }
 
         $sqlFilter .= $where;
@@ -78,6 +79,7 @@ abstract class Entity
         if (!$object->rowCount()) {
             throw new Exception('Não obteve valor para consulta!');
         }
+
         return $object->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -93,6 +95,7 @@ abstract class Entity
         $sqlInsert = 'INSERT INTO ' . $this->table . '(' . implode(', ', $binds) .
             ', created_at, updated_at) VALUES(:' . implode(', :', $binds) . ', NOW(), NOW())';
         $insert = $this->bind($sqlInsert, $data);
+
         return $insert->execute();
     }
 
@@ -120,6 +123,7 @@ abstract class Entity
         }
         $sqlUpdate .= $setValue . ', updated_at = NOW() WHERE id = :id';
         $update = $this->bind($sqlUpdate, $data);
+
         return $update->execute();
     }
 
@@ -133,6 +137,7 @@ abstract class Entity
     {
         $sqlDelete = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
         $delete = $this->bind($sqlDelete, ['id' => $id]);
+
         return $delete->execute();
     }
 
@@ -150,6 +155,7 @@ abstract class Entity
             gettype($value) == 'int' ? $bind->bindValue(':' . $key, $value, PDO::PARAM_INT)
                 : $bind->bindValue(':' . $key, $value, PDO::PARAM_STR);
         }
+
         return $bind;
     }
 }

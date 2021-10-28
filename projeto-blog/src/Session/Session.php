@@ -24,7 +24,7 @@ class Session
      * @param string $value
      * @return void
      */
-    public static function addUserSession($keySession, $value): void
+    public static function addUserSession(string $keySession, $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;
@@ -74,7 +74,7 @@ class Session
      * @param string $keySession
      * @return string
      */
-    public static function verifyExistsKey($keySession): string
+    public static function verifyExistsKey(string $keySession): string
     {
         self::sessionStart();
 

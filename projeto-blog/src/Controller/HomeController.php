@@ -15,7 +15,7 @@ class HomeController
      * Lista todos os posts para
      * leitura de um usuário
      *
-     * @return string
+     * @return redirect
      */
     public function index()
     {
@@ -24,6 +24,7 @@ class HomeController
             $view = new View('site/index.phtml');
             $view->posts = (new Post($connection))->findAll();
             $view->categories = (new Category($connection))->findAll('name, slug');
+
             return $view->render();
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
@@ -31,6 +32,7 @@ class HomeController
                 'Nenhum Post encontrado!',
                 'warning'
             );
+
             return header('Location: ' . HOME);
         }
     }

@@ -13,7 +13,7 @@ class Flash
      * @param string $message
      * @return void
      */
-    public static function sendMessageSession($keySession, $message): void
+    public static function sendMessageSession(string $keySession, string $message): void
     {
         Session::addUserSession($keySession, $message);
     }

@@ -16,9 +16,9 @@ class CategoryController
      * para a leitura de um usuário
      *
      * @param string $slug
-     * @return string
+     * @return redirect
      */
-    public function index($slug)
+    public function index(string $slug)
     {
         try {
             $connection = Connection::getInstance();
@@ -29,6 +29,7 @@ class CategoryController
             $view->posts = (new Post($connection))
                 ->filterWithConditions(['category_id' => $category['id']]);
             $view->category = $category['name'];
+
             return $view->render();
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
@@ -36,6 +37,7 @@ class CategoryController
                 'Nenhum Post para a categoria ' . $category['name'] . ' foi encontrado!',
                 'warning'
             );
+
             return header('Location: ' . HOME);
         }
     }

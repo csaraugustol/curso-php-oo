@@ -14,21 +14,23 @@ class PostController
      * Exibe detalhes de um post da listagem geral
      *
      * @param string $slug
-     * @return string
+     * @return redirect
      */
-    public function index($slug)
+    public function index(string $slug)
     {
         try {
             $post = new Post(Connection::getInstance());
             $view = new View('site/single.phtml');
             $view->post = current($post->filterWithConditions(['slug' => $slug]));
-            return $view->render();
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Postagem não encontrada!'
             );
+
             return header('Location: ' . HOME);
         }
+
+        return $view->render();
     }
 }
