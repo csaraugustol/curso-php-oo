@@ -6,6 +6,11 @@ use PDO;
 
 class Connection
 {
+    /**
+     * Undocumented variable
+     *
+     * @var PDO
+     */
     private static $instance = null;
 
     /**

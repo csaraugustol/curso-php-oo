@@ -9,8 +9,18 @@ use GGP\Session\Session;
 
 class Authenticator
 {
+    /**
+     * Usuário para autenticar
+     *
+     * @var User
+     */
     private $user;
 
+    /**
+     * Usuário para validar autenticação
+     *
+     * @param User|null $user
+     */
     public function __construct(User $user = null)
     {
         $this->user = $user;

@@ -14,15 +14,16 @@ class AuthController
     /**
      * Efetua login do usuário
      *
-     * @return string
+     * @return redirect
      */
-    public function login(): string
+    public function login()
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 $view = new View('auth/index.phtml');
                 return $view->render();
             }
+
             $user = new User(Connection::getInstance());
             $authenticator = new Authenticator($user);
 
@@ -32,13 +33,16 @@ class AuthController
             }
 
             Flash::sendMessageSession("success", "Usuário logado com sucesso!");
-            return header("Location: " . HOME . '/expenses');
         } catch (Exception $exception) {
             Flash::returnMessageExceptionError(
                 $exception,
                 'Verifique as credênciais. Caso persista o erro, contate o administrador!'
             );
+
+            return header("Location: " . HOME . '/auth/login');
         }
+
+        return header("Location: " . HOME . '/expenses');
     }
 
     /**
