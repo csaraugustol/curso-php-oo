@@ -14,7 +14,7 @@ class CheckUserLogged
      */
     public static function checkController(): bool
     {
-        if (Session::hasUserSession('user')) {
+        if (Session::hasKeySession('user')) {
             return true;
         }
         return false;

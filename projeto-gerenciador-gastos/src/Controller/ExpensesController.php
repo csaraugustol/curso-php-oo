@@ -96,7 +96,7 @@ class ExpensesController
             $expense = new Expense($connection);
             $expense->update($data);
 
-            Flash::sendMessageSession("success", "Despesa atualizada com sucesso!");
+            Flash::sendMessageSession("warning", "Despesa atualizada com sucesso!");
         } catch (Exception $exception) {
             Flash::returnMessageExceptionError(
                 $exception,
@@ -121,7 +121,7 @@ class ExpensesController
             $expense = new Expense(Connection::getInstance());
             $expense->delete($id);
 
-            Flash::sendMessageSession("success", "Despesa deletada com sucesso!");
+            Flash::sendMessageSession("danger", "Despesa deletada com sucesso!");
         } catch (Exception $exception) {
             Flash::returnMessageExceptionError(
                 $exception,

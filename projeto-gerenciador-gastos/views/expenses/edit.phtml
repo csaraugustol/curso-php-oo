@@ -3,6 +3,9 @@
 <div class="container">
     <h1>Editar despesa</h1>
     <hr>
+    <div class="col-md-12">
+        <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
+    </div>
     <form method="POST" action="<?= HOME; ?>/expenses/edit/<?= $this->expense['id']; ?>">
         <div class="form-group">
             <label for="category_id">Categoria</label>

@@ -21,7 +21,7 @@ class Connection
     public static function getInstance(): PDO
     {
         if (is_null(self::$instance)) {
-            self::$instance = new PDO('mysql:dbname=my_expenses;host=localhost', 'indb', '230700');
+            self::$instance = new PDO('mysql:dbname=;host=', '', '');
             self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$instance->exec('SET NAMES UTF8');
         }
