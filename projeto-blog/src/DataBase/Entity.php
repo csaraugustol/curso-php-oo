@@ -8,7 +8,18 @@ use PDOStatement;
 
 abstract class Entity
 {
+    /**
+     * Nome tabela
+     *
+     * @var string
+     */
     protected $table;
+
+    /**
+     * Conexão banco
+     *
+     * @var PDO
+     */
     private $connection;
 
     /**

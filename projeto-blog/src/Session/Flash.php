@@ -24,7 +24,7 @@ class Flash
      * @param string $keySession
      * @return string
      */
-    public static function returnMessageSession($keySession): string
+    public static function returnMessageSession(string $keySession): string
     {
         $message = Session::verifyExistsKey($keySession);
         Session::removeUserSession($keySession);
