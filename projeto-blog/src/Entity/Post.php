@@ -6,8 +6,18 @@ use Blog\DataBase\Entity;
 
 class Post extends Entity
 {
+    /**
+     * Nome tabela
+     *
+     * @var string
+     */
     protected $table = 'posts';
 
+    /**
+     * Filtragem Sanitazer
+     *
+     * @var array
+     */
     public static $filters = [
         'title'       => FILTER_SANITIZE_STRING,
         'description' => FILTER_SANITIZE_STRING,

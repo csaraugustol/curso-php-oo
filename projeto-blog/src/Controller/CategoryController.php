@@ -28,9 +28,8 @@ class CategoryController
             $view = new View('site/category.phtml');
             $view->posts = (new Post($connection))
                 ->filterWithConditions(['category_id' => $category['id']]);
-            $view->category = $category['name'];
 
-            return $view->render();
+                $view->category = $category;
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
@@ -40,5 +39,7 @@ class CategoryController
 
             return header('Location: ' . HOME);
         }
+
+        return $view->render();
     }
 }

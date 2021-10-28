@@ -6,8 +6,18 @@ use Blog\DataBase\Entity;
 
 class User extends Entity
 {
+    /**
+     * Nome tabela
+     *
+     * @var string
+     */
     protected $table = 'users';
 
+    /**
+     * Filtragem Sanitazer
+     *
+     * @var array
+     */
     public static $filters = [
         'first_name'       => FILTER_SANITIZE_STRING,
         'last_name'        => FILTER_SANITIZE_STRING,

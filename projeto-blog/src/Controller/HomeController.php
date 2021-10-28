@@ -24,8 +24,6 @@ class HomeController
             $view = new View('site/index.phtml');
             $view->posts = (new Post($connection))->findAll();
             $view->categories = (new Category($connection))->findAll('name, slug');
-
-            return $view->render();
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
@@ -35,5 +33,7 @@ class HomeController
 
             return header('Location: ' . HOME);
         }
+
+        return $view->render();
     }
 }

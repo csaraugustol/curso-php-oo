@@ -23,7 +23,7 @@ class UsersController
         try {
             $view = new View('adm/users/index.phtml');
             $view->users = (new User(Connection::getInstance()))->findAll();
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,
                 'Erro ao carregar dados dos usuários!',
@@ -97,7 +97,7 @@ class UsersController
      * Edição de um usuário
      *
      * @param int|null $id
-     * @return string
+     * @return redirect
      */
     public function edit(int $id = null)
     {
@@ -161,7 +161,7 @@ class UsersController
      * Remove um usuário
      *
      * @param int|null $id
-     * @return string
+     * @return redirect
      */
     public function remove(int $id = null)
     {
