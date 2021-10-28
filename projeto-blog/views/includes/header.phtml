@@ -20,7 +20,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= HOME; ?>/home">Home</a>
                 </li>
-                <?php if (\Blog\Session\Session::hasUserSession('user')) : ?>
+                <?php if (\Blog\Session\Session::hasKeySession('user')) : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= HOME; ?>/categories">Categorias</a>
                     </li>

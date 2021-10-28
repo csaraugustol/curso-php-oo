@@ -69,9 +69,9 @@ class Authenticator
      */
     public function logout(): void
     {
-        if (Session::hasUserSession('user')) {
-            Session::removeUserSession('user');
+        if (Session::hasKeySession('user')) {
+            Session::removeKeySession('user');
         }
-        Session::clearUserSession();
+        Session::clearKeySession();
     }
 }

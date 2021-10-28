@@ -31,25 +31,25 @@ class Session
     }
 
     /**
-     * Adiciona usuário na sessão
+     * Adiciona chave na sessão
      *
      * @param string $keySession
      * @param string $value
      * @return void
      */
-    public static function addUserSession(string $keySession, string $value): void
+    public static function addKeySession(string $keySession, string $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;
     }
 
     /**
-     * Remove usuário da sessão
+     * Remove chave da sessão
      *
      * @param string $keySession
      * @return void
      */
-    public static function removeUserSession(string $keySession): void
+    public static function removeKeySession(string $keySession): void
     {
         self::sessionStart();
         if (isset($_SESSION[$keySession])) {
@@ -58,11 +58,11 @@ class Session
     }
 
     /**
-     * Limpa usuário da sessão
+     * Limpa chave da sessão
      *
      * @return void
      */
-    public static function clearUserSession(): void
+    public static function clearKeySession(): void
     {
         self::sessionStart();
         session_destroy();
@@ -70,12 +70,12 @@ class Session
     }
 
     /**
-     * Verifica usuário na sessão
+     * Verifica chave na sessão
      *
      * @param string $keySession
      * @return bool
      */
-    public static function hasUserSession(string $keySession): bool
+    public static function hasKeySession(string $keySession): bool
     {
         self::sessionStart();
         return isset($_SESSION[$keySession]);
