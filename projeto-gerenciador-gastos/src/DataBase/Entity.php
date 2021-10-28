@@ -42,6 +42,7 @@ abstract class Entity
     {
         $sqlFindAll = 'SELECT ' . $fields . ' FROM ' . $this->table;
         $queryResponse = $this->connection->query($sqlFindAll);
+
         return $queryResponse->fetchAll(PDO::FETCH_ASSOC);
     }
 

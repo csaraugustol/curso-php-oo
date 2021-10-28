@@ -45,13 +45,15 @@ class Authenticator
                 return false;
             }
             unset($user['password']);
-            Session::addUserSession('user', $user);
+            Session::addUserLoggedSession('user', $user);
+
             return true;
         } catch (Exception $exception) {
             Flash::returnMessageExceptionError(
                 $exception,
                 'Verifique suas credênciais. Caso persista, entre em contato com o administrador!',
             );
+
             return false;
         }
     }
@@ -61,7 +63,7 @@ class Authenticator
      *
      * @return void
      */
-    public function logout()
+    public function logout(): void
     {
         if (Session::hasUserSession('user')) {
             Session::removeUserSession('user');

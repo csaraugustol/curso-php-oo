@@ -5,7 +5,18 @@ namespace GGP\View;
 class View
 {
 
+    /**
+     * Caminho para URL
+     *
+     * @var string
+     */
     private $view;
+
+    /**
+     * Array carregamento dados
+     *
+     * @var array
+     */
     private $data = [];
 
     /**
@@ -13,7 +24,7 @@ class View
      *
      * @param string $view
      */
-    public function __construct($view)
+    public function __construct(string $view)
     {
         $this->view = $view;
     }

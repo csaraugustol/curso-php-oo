@@ -18,12 +18,26 @@ class Session
     }
 
     /**
+     * Adiciona usuário logado na sessão
+     *
+     * @param string $keySession
+     * @param array $value
+     * @return void
+     */
+    public static function addUserLoggedSession(string $keySession, array $value): void
+    {
+        self::sessionStart();
+        $_SESSION[$keySession] = $value;
+    }
+
+    /**
      * Adiciona usuário na sessão
      *
      * @param string $keySession
+     * @param string $value
      * @return void
      */
-    public static function addUserSession(string $keySession, $value): void
+    public static function addUserSession(string $keySession, string $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;
@@ -68,12 +82,24 @@ class Session
     }
 
     /**
-     * Undocumented function
+     * Retorna string que está na sessão
      *
      * @param string $keySession
      * @return string
      */
     public static function verifyExistsKey(string $keySession): string
+    {
+        self::sessionStart();
+        return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : null;
+    }
+
+    /**
+     * Retorna usuário da sessão
+     *
+     * @param string $keySession
+     * @return array
+     */
+    public static function returnUserSession(string $keySession): array
     {
         self::sessionStart();
         return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : null;

@@ -7,7 +7,7 @@ use GGP\DataBase\Entity;
 class Category extends Entity
 {
     /**
-     * nome tabela
+     * Nome tabela
      *
      * @var string
      */

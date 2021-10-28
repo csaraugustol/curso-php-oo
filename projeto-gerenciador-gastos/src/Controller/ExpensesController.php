@@ -24,7 +24,7 @@ class ExpensesController
             $view = new View('expenses/index.phtml');
             $view->expenses = (new Expense(Connection::getInstance()))
                 ->filterWithConditions(
-                    ['user_id' => Session::verifyExistsKey('user')['id']]
+                    ['user_id' => Session::returnUserSession('user')['id']]
                 );
         } catch (Exception $exception) {
             Flash::returnMessageExceptionError(
@@ -53,8 +53,9 @@ class ExpensesController
                 $view->users = (new User($connection))->findAll();
                 return $view->render();
             }
+
             $data = $_POST;
-            $data['user_id'] = Session::verifyExistsKey('user')['id'];
+            $data['user_id'] = Session::returnUserSession('user')['id'];
             $expense = new Expense($connection);
             $expense->insert($data);
 

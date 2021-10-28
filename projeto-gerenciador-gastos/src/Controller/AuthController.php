@@ -48,7 +48,7 @@ class AuthController
     /**
      * Efetua logout do usuário do sistema
      *
-     * @return string
+     * @return redirect
      */
     public function logout()
     {

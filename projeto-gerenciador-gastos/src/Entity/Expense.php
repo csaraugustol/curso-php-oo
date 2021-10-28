@@ -7,7 +7,7 @@ use GGP\DataBase\Entity;
 class Expense extends Entity
 {
     /**
-     * nome tabela
+     * Nome tabela
      *
      * @var string
      */
