@@ -129,7 +129,7 @@ abstract class Entity
         foreach ($binds as $value) {
             if ($value !== 'id') {
                 $setValue .= is_null($setValue) ? $value . ' = :' . $value :
-                 ', ' . $value . ' = :' . $value;
+                    ', ' . $value . ' = :' . $value;
             }
         }
         $sqlUpdate .= $setValue . ', updated_at = NOW() WHERE id = :id';

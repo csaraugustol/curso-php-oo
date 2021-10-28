@@ -29,7 +29,7 @@ class CategoryController
             $view->posts = (new Post($connection))
                 ->filterWithConditions(['category_id' => $category['id']]);
 
-                $view->category = $category;
+            $view->category = $category;
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
                 $exception,

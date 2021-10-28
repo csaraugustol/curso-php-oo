@@ -77,7 +77,6 @@ class Session
     public static function verifyExistsKey(string $keySession): string
     {
         self::sessionStart();
-
         return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : null;
     }
 }
