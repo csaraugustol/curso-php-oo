@@ -1,8 +1,8 @@
 <?php
 
-use GGP\Authenticator\CheckUserLogged;
 use GGP\View\View;
 use GGP\Session\Flash;
+use GGP\Authenticator\CheckUserLogged;
 
 require __DIR__ . '/../bootstrap.php';
 
@@ -15,12 +15,17 @@ $param      = isset($url[2]) && $url[2] ? $url[2] : null;
 
 $path = "GGP\Controller\\";
 
-//Verifica se a classe existe
+/**
+ * Verifica se a classe existe
+ */
 if (!class_exists($controller = $path . ucfirst($controller) . 'Controller')) {
     print (new View('404.phtml'))->render();
     die;
 }
 
+/**
+ * Realiza a autenticação
+ */
 if (in_array($controller, [$path . 'ExpensesController'])) {
     $isLogged = CheckUserLogged::checkController();
     if (!$isLogged) {
@@ -30,7 +35,9 @@ if (in_array($controller, [$path . 'ExpensesController'])) {
     }
 }
 
-//Verfica se existe método, se não, chama a index
+/**
+ * Verfica se existe método, se não, chama a index
+ */
 if (!method_exists($controller, $action)) {
     $action = 'index';
     $param = $url[1];

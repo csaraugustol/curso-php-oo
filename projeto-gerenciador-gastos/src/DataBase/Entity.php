@@ -67,7 +67,7 @@ abstract class Entity
      */
     public function filterWithConditions(
         array $conditions,
-        string $operator = ' AND ',
+        string $operator = 'AND',
         string $fields = '*'
     ): array {
         $sqlFilter = 'SELECT ' . $fields . ' FROM ' . $this->table . ' WHERE ';
@@ -76,7 +76,7 @@ abstract class Entity
 
         foreach ($binds as $bind) {
             is_null($where) ? $where .= $bind . ' = :' . $bind :
-                $where .= $operator . $bind . ' = :' . $bind;
+                $where .= ' ' . $operator . ' ' . $bind . ' = :' . $bind;
         }
         $sqlFilter .= $where;
         $object = $this->bind($sqlFilter, $conditions);

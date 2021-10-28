@@ -21,10 +21,9 @@ class Session
      * Adiciona usuário na sessão
      *
      * @param string $keySession
-     * @param string $value
      * @return void
      */
-    public static function addUserSession($keySession, $value): void
+    public static function addUserSession(string $keySession, $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;
@@ -76,8 +75,6 @@ class Session
      */
     public static function verifyExistsKey(string $keySession): string
     {
-       // var_dump($keySession);
-       // die;
         self::sessionStart();
         return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : null;
     }
