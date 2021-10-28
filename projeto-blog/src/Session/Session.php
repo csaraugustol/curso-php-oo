@@ -18,13 +18,26 @@ class Session
     }
 
     /**
+     * Adiciona usuário logado na sessão
+     *
+     * @param string $keySession
+     * @param array $value
+     * @return void
+     */
+    public static function addUserLoggedSession(string $keySession, array $value): void
+    {
+        self::sessionStart();
+        $_SESSION[$keySession] = $value;
+    }
+
+    /**
      * Adiciona usuário na sessão
      *
      * @param string $keySession
      * @param string $value
      * @return void
      */
-    public static function addUserSession(string $keySession, $value): void
+    public static function addUserSession(string $keySession, string $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;

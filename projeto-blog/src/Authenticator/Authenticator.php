@@ -50,7 +50,7 @@ class Authenticator
             }
 
             unset($user['password']);
-            Session::addUserSession('user', $user);
+            Session::addUserLoggedSession('user', $user);
             return true;
         } catch (Exception $exception) {
             Flash::returnErrorExceptionMessage(
