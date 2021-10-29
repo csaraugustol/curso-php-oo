@@ -16,7 +16,7 @@ $param      = isset($url[2]) && $url[2] ? $url[2] : null;
 $path = "GGP\Controller\\";
 
 /**
- * Verifica se a classe existe
+ * Verifica se o Controller existe
  */
 if (!class_exists($controller = $path . ucfirst($controller) . 'Controller')) {
     print (new View('404.phtml'))->render();
@@ -36,7 +36,7 @@ if (in_array($controller, [$path . 'ExpensesController'])) {
 }
 
 /**
- * Verfica se existe método, se não, chama a index
+ * Verifica se existe método, se não, chama a index
  */
 if (!method_exists($controller, $action)) {
     $action = 'index';
