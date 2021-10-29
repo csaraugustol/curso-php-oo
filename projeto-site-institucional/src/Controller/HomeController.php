@@ -9,9 +9,9 @@ class HomeController
     /**
      * Retorna a página inicial do site
      *
-     * @return string
+     * @return redirect
      */
-    public function index(): string
+    public function index()
     {
         $view = new View('site/index.phtml');
         return $view->render();

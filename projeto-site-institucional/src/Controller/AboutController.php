@@ -9,7 +9,7 @@ class AboutController
     /**
      * Retorna view 'sobre'
      *
-     * @return string
+     * @return redirect
      */
     public function index()
     {

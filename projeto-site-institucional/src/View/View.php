@@ -4,7 +4,18 @@ namespace Instituicao\View;
 
 class View
 {
+    /**
+     * Caminho da URl
+     *
+     * @var string
+     */
     private $view;
+
+    /**
+     * Dados recebidos
+     *
+     * @var array
+     */
     private $data = [];
 
     /**
