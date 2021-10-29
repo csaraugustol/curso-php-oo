@@ -37,7 +37,7 @@ class Validator
     }
 
     /**
-     * Verifica se a senha atende o tamanho minímo desejado
+     * Verifica se a senha atende o tamanho mínimo desejado
      *
      * @param string $password
      * @return bool

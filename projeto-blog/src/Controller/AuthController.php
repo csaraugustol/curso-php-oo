@@ -12,7 +12,7 @@ use Blog\Authenticator\Authenticator;
 class AuthController
 {
     /**
-     * Método para refetuar login
+     * Efetua login no sistema
      *
      * @return redirect
      */
@@ -44,7 +44,7 @@ class AuthController
     }
 
     /**
-     * Método para encerrar uma sessão
+     * Encerra uma sessão
      *
      * @return redirect
      */

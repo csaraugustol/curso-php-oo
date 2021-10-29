@@ -7,14 +7,14 @@ use PDO;
 class Connection
 {
     /**
-     * Undocumented variable
+     * Instância da string de conexão
      *
      * @var PDO
      */
     private static $instance = null;
 
     /**
-     * Retorna conexão com o branco de dados
+     * Retorna conexão com o banco de dados
      *
      * @return PDO
      */

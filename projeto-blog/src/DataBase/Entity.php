@@ -139,7 +139,7 @@ abstract class Entity
     }
 
     /**
-     * Recebe o id de um registro para efetuar a remoção do banco
+     * Recebe o id de um registro para efetuar a remoção no banco
      *
      * @param int $id
      * @return boll

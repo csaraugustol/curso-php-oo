@@ -11,7 +11,7 @@ use Blog\Security\PasswordHash;
 class Authenticator
 {
     /**
-     * Usuário para atenticação
+     * Usuário para autenticação
      *
      * @var User
      */
@@ -28,8 +28,8 @@ class Authenticator
     }
 
     /**
-     * Método para validar login e senha do usuário
-     * e permitir acesso ao sistema
+     * valida login e senha do usuário
+     * para permitir acesso ao sistema
      *
      * @param array $credentials
      * @return bool
@@ -63,7 +63,7 @@ class Authenticator
     }
 
     /**
-     * Método para remover usuário da sessão e sair do sistema
+     * Remove usuário da sessão e realiza logout do sistema
      *
      * @return void
      */

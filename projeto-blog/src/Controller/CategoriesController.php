@@ -78,7 +78,7 @@ class CategoriesController
     }
 
     /**
-     * Edição de uma categoria
+     * Edita uma categoria
      *
      * @param int|null $id
      * @return redirect

@@ -7,7 +7,7 @@ use Exception;
 class Flash
 {
     /**
-     * Envia a mensagem do alerta da sessão
+     * Envia a mensagem do alerta para a sessão
      *
      * @param string $keySession
      * @param string $message

@@ -38,7 +38,7 @@ class PostsController
     }
 
     /**
-     * Cria um novo post
+     * Cria um post
      *
      * @return redirect
      */
@@ -84,7 +84,7 @@ class PostsController
     }
 
     /**
-     * Edição de um post
+     * Edita um post
      *
      * @param int|null $id
      * @return redirect

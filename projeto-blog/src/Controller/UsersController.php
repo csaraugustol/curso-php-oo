@@ -36,7 +36,7 @@ class UsersController
     }
 
     /**
-     * Cria um novo usuário
+     * Cria um usuário
      *
      * @return redirect
      */
@@ -94,7 +94,7 @@ class UsersController
     }
 
     /**
-     * Edição de um usuário
+     * Edita um usuário
      *
      * @param int|null $id
      * @return redirect
