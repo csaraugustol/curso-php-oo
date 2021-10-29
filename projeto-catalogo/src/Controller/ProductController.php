@@ -12,13 +12,14 @@ class ProductController
      * Exibe os detalhes do Produto
      *
      * @param int $id
-     * @return string
+     * @return redirect
      */
-    public function index(int $id): string
+    public function index(int $id)
     {
         $connection = Connection::getInstance();
         $view = new View('site/product.phtml');
         $view->product = (new Product($connection))->findProductById($id);
+
         return $view->render();
     }
 }

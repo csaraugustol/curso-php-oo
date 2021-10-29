@@ -6,6 +6,11 @@ use PDO;
 
 class Connection
 {
+    /**
+     * Instância de conexão
+     *
+     * @var PDO
+     */
     private static $instance = null;
 
     /**
@@ -19,6 +24,7 @@ class Connection
             self::$instance = new PDO('mysql:dbname=;host=', '', '');
             self::$instance->exec('SET NAMES UTF8');
         }
+
         return self::$instance;
     }
 }

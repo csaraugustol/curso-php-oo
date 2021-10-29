@@ -4,7 +4,18 @@ namespace Catalogo\View;
 
 class View
 {
+    /**
+     * Caminho URL
+     *
+     * @var string
+     */
     private $view;
+
+    /**
+     * Dados para retorno
+     *
+     * @var array
+     */
     private $data = [];
 
     /**

@@ -6,6 +6,11 @@ use PDO;
 
 abstract class Entity
 {
+    /**
+     * Conexão com o banco
+     *
+     * @var PDO
+     */
     private $connection;
 
     /**

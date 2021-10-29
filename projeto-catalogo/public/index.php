@@ -11,13 +11,17 @@ $controller = isset($url[0]) && $url[0] ? $url[0] : 'home';
 $action     = isset($url[1]) && $url[1] ? $url[1] : 'index';
 $param      = isset($url[2]) && $url[2] ? $url[2] : null;
 
-//Verifica se a classe existe
+/**
+ * Verifica se existe o Controller
+ */
 if (!class_exists($controller = "Catalogo\Controller\\" . ucfirst($controller) . 'Controller')) {
     print (new View('404.phtml'))->render();
     die;
 }
 
-//Verfica se existe método, se não, chama a index
+/**
+ * Verfica se existe método, se não, chama a index
+ */
 if (!method_exists($controller, $action)) {
     $action = 'index';
     $param = $url[1];

@@ -11,13 +11,14 @@ class HomeController
     /**
      * Retorna página principal
      *
-     * @return string
+     * @return redirect
      */
-    public function index(): string
+    public function index()
     {
         $connection = Connection::getInstance();
         $view = new View('site/index.phtml');
         $view->products = (new Product($connection))->findAllProducts();
+
         return $view->render();
     }
 }
