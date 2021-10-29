@@ -20,14 +20,14 @@ class Session
     /**
      * Adiciona usuário logado na sessão
      *
-     * @param string $keySession
+     * @param string $keyUserSession
      * @param array $value
      * @return void
      */
-    public static function addUserLoggedSession(string $keySession, array $value): void
+    public static function addUserLoggedSession(string $keyUserSession, array $value): void
     {
         self::sessionStart();
-        $_SESSION[$keySession] = $value;
+        $_SESSION[$keyUserSession] = $value;
     }
 
     /**
@@ -96,12 +96,12 @@ class Session
     /**
      * Retorna usuário da sessão
      *
-     * @param string $keySession
+     * @param string $keyUserSession
      * @return array
      */
-    public static function returnUserSession(string $keySession): array
+    public static function returnUserSession(string $keyUserSession): array
     {
         self::sessionStart();
-        return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : null;
+        return isset($_SESSION[$keyUserSession]) ? $_SESSION[$keyUserSession] : null;
     }
 }
