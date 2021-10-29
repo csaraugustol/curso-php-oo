@@ -4,7 +4,6 @@ namespace GGP\View;
 
 class View
 {
-
     /**
      * Caminho para URL
      *
