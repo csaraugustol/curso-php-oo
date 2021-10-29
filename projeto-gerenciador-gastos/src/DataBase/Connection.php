@@ -7,7 +7,7 @@ use PDO;
 class Connection
 {
     /**
-     * Undocumented variable
+     * Cria uma instância da conexão com o banco
      *
      * @var PDO
      */

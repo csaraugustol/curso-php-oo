@@ -140,7 +140,7 @@ abstract class Entity
     }
 
     /**
-     * para preparar querys para consulta
+     * Prepara querys para consulta
      *
      * @param string $sqlInsert
      * @param array $data

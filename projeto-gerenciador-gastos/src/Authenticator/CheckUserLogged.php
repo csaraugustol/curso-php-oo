@@ -7,7 +7,7 @@ use GGP\Session\Session;
 class CheckUserLogged
 {
     /**
-     * Método para verificar se existe um usuário autenticado
+     * Verifica se existe um usuário autenticado
      * para permitir acesso aos endpoints
      *
      * @return bool

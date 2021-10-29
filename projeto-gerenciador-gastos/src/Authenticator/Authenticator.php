@@ -59,7 +59,7 @@ class Authenticator
     }
 
     /**
-     * Remove usuário da sessão e sai do sistema
+     * Remove usuário da sessão e efetua logout do sistema
      *
      * @return void
      */

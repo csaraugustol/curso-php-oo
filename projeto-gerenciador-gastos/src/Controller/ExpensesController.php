@@ -14,7 +14,7 @@ use GGP\DataBase\Connection;
 class ExpensesController
 {
     /**
-     * Lista todas as despesas
+     * Lista todas as despesas do usuário logado
      *
      * @return redirect
      */
