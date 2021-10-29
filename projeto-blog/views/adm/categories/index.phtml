@@ -1,0 +1,33 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="container">
+    <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
+    <h1>Categorias - <small>Gerencie suas categorias</small> </h1>
+    <a class="btn btn-warning" href="<?= HOME; ?>/categories/new">Nova Categoria</a>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Criado em</th>
+                <th>Ação</th>
+            </tr>
+        <tbody>
+            <?php foreach ($this->categories as $category) : ?>
+                <tr>
+                    <td><?= $category['id']; ?></td>
+                    <td><?= $category['name']; ?></td>
+                    <td><?= date('d/m/Y H:i:s', strtotime($category['created_at'])); ?></td>
+                    <td>
+                        <a href="<?= HOME; ?>/categories/edit/<?= $category['id']; ?>" class="btn btn-primary">Editar</a>
+                        <a href="<?= HOME; ?>/categories/remove/<?= $category['id']; ?>" class="btn btn-danger">Apagar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+        </thead>
+    </table>
+</div>
+
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>

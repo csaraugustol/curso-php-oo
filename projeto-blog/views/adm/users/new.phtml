@@ -1,0 +1,36 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="container">
+    <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
+    <h1>Cadastrar Novo Usuário</h1>
+    <hr>
+    <form method="POST" action="<?= HOME; ?>/users/new">
+        <div class="form-group">
+            <label for="first_name">Nome</label>
+            <input type="text" class="form-control" id="first_name" placeholder="Nome do usuário" name="first_name">
+        </div>
+        <div class="form-group">
+            <label for="last_name">Sobrenome</label>
+            <input type="text" class="form-control" id="last_name" placeholder="Sobrenome do usuário" name="last_name">
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Username do usuário" name="username">
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="text" class="form-control" id="email" placeholder="E-mail do usuário" name="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="text" class="form-control" id="password" placeholder="Senha do usuário" name="password">
+        </div>
+        <div class="form-group">
+            <label for="password_confirm">Confirmar Senha</label>
+            <input type="text" class="form-control" id="password_confirm" placeholder="Confirmar senha do usuário" name="password_confirm">
+        </div>
+        <button type="submit" class="btn btn-success">Salvar Usuário</button>
+    </form>
+</div>
+
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>

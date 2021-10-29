@@ -1,0 +1,21 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="col-md-7">
+    <div class="row">
+        <h1><?= $this->category['name']; ?></h1>
+        <hr>
+    </div>
+    <?php foreach ($this->posts as $post) : ?>
+        <div class="">
+            <h2>
+                <a href="<?= HOME . '/post/' . $post['slug']; ?>">
+                    <?= $post['title']; ?>
+                </a>
+            </h2>
+            <small>Criado em <?= date('d/m/Y H:i:s', strtotime($post['created_at'])); ?></small>
+            <p><?= $post['description']; ?></p>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>

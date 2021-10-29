@@ -1,0 +1,37 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="container">
+    <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
+    <div class="col-md-12">
+        <div class="nav nav-pills">
+            <?php foreach ($this->categories as $category) : ?>
+                <li class="active">
+                    <a class="nav-link" href="<?= HOME . '/category/' . $category['slug']; ?>">
+                        <?= $category['name']; ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <hr>
+    <div class="jumbotron">
+        <h1>Posts</h1>
+        <p class="lead">Projeto criado no curso de PHP Orientado a Objetos da Code Experts Learning.</p>
+        <a class="btn btn-lg btn-primary" target="blank" href="https://codeexperts.com.br/" role="button">Saiba mais &raquo;</a>
+    </div>
+    <div class="col-md-12">
+        <?php foreach ($this->posts as $post) : ?>
+            <div class="col-md-4">
+                <h2>
+                    <a href="<?= HOME . '/post/' . $post['slug']; ?>">
+                        <?= $post['title']; ?>
+                    </a>
+                </h2>
+                <small>Criado em <?= date('d/m/Y H:i:s', strtotime($post['created_at'])); ?></small>
+                <p><?= $post['description']; ?></p>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>

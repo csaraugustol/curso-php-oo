@@ -1,0 +1,33 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="container">
+    <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
+    <h1>Posts - <small>Gerencie suas postagens</small> </h1>
+    <a class="btn btn-warning" href="<?= HOME; ?>/posts/new">Novo Post</a>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Título</th>
+                <th>Criado em</th>
+                <th>Ação</th>
+            </tr>
+        <tbody>
+            <?php foreach ($this->posts as $post) : ?>
+                <tr>
+                    <td><?= $post['id']; ?></td>
+                    <td><?= $post['title']; ?></td>
+                    <td><?= date('d/m/Y H:i:s', strtotime($post['created_at'])); ?></td>
+                    <td>
+                        <a href="<?= HOME; ?>/posts/edit/<?= $post['id']; ?>" class="btn btn-primary">Editar</a>
+                        <a href="<?= HOME; ?>/posts/remove/<?= $post['id']; ?>" class="btn btn-danger">Apagar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+        </thead>
+    </table>
+</div>
+
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>
