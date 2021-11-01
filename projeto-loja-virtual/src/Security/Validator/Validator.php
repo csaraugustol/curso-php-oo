@@ -4,7 +4,12 @@ namespace LojaVirtual\Security\Validator;
 
 class Validator
 {
-    //Verifica se há um campo vazio
+    /**
+     * Verifica se há um campo vazio
+     *
+     * @param array $data
+     * @return boolean
+     */
     public static function validateRequiredFields(array $data): bool
     {
         foreach ($data as $param => $value) {
@@ -17,20 +22,38 @@ class Validator
         return true;
     }
 
-    //Verifica igual de senha
-    public static function validatePasswordConfirm($password, $passwordConfirm): bool
-    {
+    /**
+     * Verifica igualdade de senha
+     *
+     * @param string $password
+     * @param string $passwordConfirm
+     * @return boolean
+     */
+    public static function validatePasswordConfirm(
+        string $password,
+        string $passwordConfirm
+    ): bool {
         return $password === $passwordConfirm;
     }
 
-    //Verifica o tamanho minímo da senha
-    public static function validatePasswordMinStringLenght($password): bool
+    /**
+     * Verifica o tamanho mínimo da senha
+     *
+     * @param string $password
+     * @return boolean
+     */
+    public static function validatePasswordMinStringLenght(string $password): bool
     {
         return strlen($password) >= 6;
     }
 
-    //Verifica o tipo do arquivo da imagem
-    public static function validateImagesFileType($files = []): bool
+    /**
+     * Verifica o tipo da extensão da imagem
+     *
+     * @param array $files
+     * @return boolean
+     */
+    public static function validateImagesFileType(array $files = []): bool
     {
         $isValideImages = true;
         $allowedImagesFile = ['image/jpeg', 'image/png', 'image/jpg'];

@@ -4,9 +4,21 @@ namespace LojaVirtual\Upload;
 
 class Upload
 {
+    /**
+     * Caminho das imagens
+     *
+     * @var string
+     */
     private $folder = '';
 
-    public function setFolder($folder)
+    /**
+     * Verifica se existe pasta e se não existir
+     * a pasta será criada junto com seu caminho
+     *
+     * @param string $folder
+     * @return void
+     */
+    public function setFolder(string $folder): void
     {
         if (!is_dir($folder)) {
             mkdir($folder, 0777, true);
@@ -15,7 +27,13 @@ class Upload
         $this->folder = $folder;
     }
 
-    public function doUpload($files = [])
+    /**
+     * Faz upload das imagens realacionadas aos produtos
+     *
+     * @param array $files
+     * @return array
+     */
+    public function doUpload(array $files = []): array
     {
         $arrayImagesName = [];
         for ($i = 0; $i < count($files['name']); $i++) {
@@ -30,7 +48,13 @@ class Upload
         return $arrayImagesName;
     }
 
-    private function renameImage($imageName)
+    /**
+     * Renomea imagem para evitar repetição de nomes
+     *
+     * @param string $imageName
+     * @return string
+     */
+    private function renameImage(string $imageName): string
     {
         return sha1($imageName . uniqid() . time());
     }
