@@ -6,14 +6,19 @@ use PDO;
 
 class Connection
 {
+    /**
+     * String de conexão com banco
+     *
+     * @var PDO
+     */
     private static $instance = null;
 
-    private function __construct()
-    {
-    }
-
-    //Método de conexão com o banco de dados
-    public static function getInstance()
+    /**
+     * Método de conexão com o banco de dados
+     *
+     * @return PDO
+     */
+    public static function getInstance(): PDO
     {
         if (is_null(self::$instance)) {
             self::$instance = new PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASSWORD);

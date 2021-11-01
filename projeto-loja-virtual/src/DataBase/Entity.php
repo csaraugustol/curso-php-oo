@@ -4,50 +4,88 @@ namespace LojaVirtual\DataBase;
 
 use PDO;
 use Exception;
+use PDOStatement;
 
 abstract class Entity
 {
+    /**
+     * Conexão com o banco
+     *
+     * @var PDO
+     */
     protected $connection;
+
+    /**
+     * Nome da tabela
+     *
+     * @var string
+     */
     protected $table;
+
+    /**
+     * Verifica se será necessaŕio utilizar
+     * o created_at / updated_at
+     *
+     * @var boolean
+     */
     protected $timestamps = true;
 
-    //Recebe a conexão do banco de dados por parânmetro
+    /**
+     * Recebe a conexão do banco de dados por parânmetro
+     *
+     * @param PDO $connection
+     */
     public function __construct(PDO $connection)
     {
         $this->connection = $connection;
     }
 
-    //Retorna uma lista de uma entidade
-    public function findAll($fields = '*'): array
+    /**
+     * Retorna todos os dados de uma entidade
+     *
+     * @param string $fields
+     * @return array
+     */
+    public function findAll(string $fields = '*'): array
     {
         $findAll = 'SELECT ' . $fields . ' FROM ' . $this->table;
-
         $findResult = $this->connection->query($findAll);
 
         return $findResult->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Retorna uma busca pelo id
-    public function findById(int $id, $fields = '*'): array
+    /**
+     * Retorna uma busca pelo id
+     *
+     * @param integer $id
+     * @param string $fields
+     * @return array
+     */
+    public function findById(int $id, string $fields = '*'): array
     {
         return $this->filterWithConditions(['id' => $id], '', $fields);
     }
 
-    //Método para busca filtrada de uma entidade
-    public function filterWithConditions(array $conditions, $operator = ' AND ', $fields = '*'): array
-    {
+    /**
+     * Realiza busca filtrada de uma entidade
+     *
+     * @param array $conditions
+     * @param string $operator
+     * @param string $fields
+     * @return array
+     */
+    public function filterWithConditions(
+        array $conditions,
+        string $operator = 'AND',
+        string $fields = '*'
+    ): array {
         $sqlFilter = 'SELECT ' . $fields . ' FROM ' . $this->table . ' WHERE ';
-
         $binds = array_keys($conditions);
-
         $where = null;
 
         foreach ($binds as $bind) {
-            if (is_null($where)) {
-                $where .= $bind . ' = :' . $bind;
-            } else {
-                $where .= $operator . $bind . ' = :' . $bind;
-            }
+            is_null($where) ? $where .= $bind . ' = :' . $bind :
+                $where .= ' ' . $operator . ' ' . $bind . ' = :' . $bind;
         }
 
         $sqlFilter .= $where;
@@ -66,7 +104,13 @@ abstract class Entity
         return $object->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insert($data): array
+    /**
+     * Inserção no banco de dados
+     *
+     * @param array $data
+     * @return array
+     */
+    public function insert(array $data): array
     {
 
         $binds = array_keys($data);
@@ -83,7 +127,13 @@ abstract class Entity
         return $this->findById($this->connection->lastInsertId());
     }
 
-    public function update($data): bool
+    /**
+     * Atualiza dados no banco
+     *
+     * @param array $data
+     * @return boolean
+     */
+    public function update(array $data): bool
     {
         if (!array_key_exists('id', $data)) {
             throw new Exception("É preciso informar um ID válido para realização do update.");
@@ -107,7 +157,13 @@ abstract class Entity
         return $update->execute();
     }
 
-    public function delete($id): bool
+    /**
+     * Remove um dado do banco
+     *
+     * @param integer $id
+     * @return boolean
+     */
+    public function delete(int $id): bool
     {
         if (is_array($id)) {
             $bind = $id;
@@ -116,14 +172,21 @@ abstract class Entity
             $bind = ['id' => $id];
             $field = 'id';
         }
-        $sqlDelete = 'DELETE FROM ' . $this->table . ' WHERE ' . $field . ' = :' . $field;
 
+        $sqlDelete = 'DELETE FROM ' . $this->table . ' WHERE ' . $field . ' = :' . $field;
         $delete = $this->bind($sqlDelete, $bind);
 
         return $delete->execute();
     }
 
-    private function bind($sqlInsert, $data)
+    /**
+     * Retorna query
+     *
+     * @param string $sqlInsert
+     * @param array $data
+     * @return PDOStatement
+     */
+    private function bind(string $sqlInsert, array $data): PDOStatement
     {
         $bind = $this->connection->prepare($sqlInsert);
 

@@ -351,3 +351,6 @@
 01/11/2021 15:00:23 PagSeguro.Session[info]: Begin
 01/11/2021 15:00:23 PagSeguro.Session[info]: POST: https://ws.sandbox.pagseguro.uol.com.br/v2/sessions?email=cesar.leitejm%40hotmail.com&token=838E600E8D96489083EF3A51F3ACBDF3
 01/11/2021 15:00:24 PagSeguro.Session[info]: Session ID: effdaaaa96e041878e4908e118fa0df1
+01/11/2021 15:14:46 PagSeguro.Session[info]: Begin
+01/11/2021 15:14:46 PagSeguro.Session[info]: POST: https://ws.sandbox.pagseguro.uol.com.br/v2/sessions?email=cesar.leitejm%40hotmail.com&token=838E600E8D96489083EF3A51F3ACBDF3
+01/11/2021 15:14:47 PagSeguro.Session[info]: Session ID: 8ff7103e099c4a33b137a36baa00767c
