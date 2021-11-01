@@ -20,7 +20,7 @@ if (!class_exists($controller = "Catalogo\Controller\\" . ucfirst($controller) .
 }
 
 /**
- * Verfica se existe método, se não, chama a index
+ * Verifica se existe método, se não, chama a index
  */
 if (!method_exists($controller, $action)) {
     $action = 'index';
