@@ -4,6 +4,7 @@ namespace LojaVirtual\Controller;
 
 use Exception;
 use LojaVirtual\View\View;
+use LojaVirtual\Session\Flash;
 use LojaVirtual\Session\Session;
 use LojaVirtual\Entity\UserOrder;
 use LojaVirtual\DataBase\Connection;
@@ -13,6 +14,12 @@ use LojaVirtual\Payment\PagSeguro\SessionPagSeguro;
 
 class CheckoutController
 {
+    /**
+     * Prepara acesso para concluir
+     * compra do usuário
+     *
+     * @return redirect
+     */
     public function index()
     {
         if (!Session::hasUserSession('user')) {
@@ -36,38 +43,56 @@ class CheckoutController
         return $view->render();
     }
 
+    /**
+     * Finaliza o processo de compra
+     *
+     * @return redirect
+     */
     public function proccess()
     {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            return json_encode(['data' => ['error' => 'Método não suportado!']]);
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                return json_encode(['data' => ['error' => 'Método não suportado!']]);
+            }
+
+            $items = Session::verifyExistsKey('cart');
+            $data = $_POST;
+            $user = Session::verifyExistsKey('user');
+            $reference = sha1($user['id'] . $user['email']) . uniqid() . '_LOJA_VIRTUAL';
+
+            $creditCardPayment = new CreditCard($reference, $items, $data, $user);
+            $result = $creditCardPayment->doPayment();
+
+            $userOrder = new UserOrder(Connection::getInstance());
+            $userOrder = $userOrder->createOrder([
+                'user_id'          => $user['id'],
+                'reference'        => $reference,
+                'pagseguro_code'   => $result->getCode(),
+                'pagseguro_status' => $result->getStatus(),
+                'items'            => serialize($items)
+            ]);
+
+            Session::removeUserSession('pagseguro_session');
+            Session::removeUserSession('cart');
+
+            return json_encode(['data' => [
+                'ref_order' => $userOrder['reference'],
+                'message'   => 'Transação concluída com sucesso!'
+            ]]);
+        } catch (Exception $exception) {
+            Flash::returnExceptionErrorMessage(
+                $exception,
+                'Ocorreu um erro interno e não foi possível finalizar a compra!'
+            );
         }
-
-        $items = Session::verifyExistsKey('cart');
-        $data = $_POST;
-        $user = Session::verifyExistsKey('user');
-        $reference = sha1($user['id'] . $user['email']) . uniqid() . '_LOJA_VIRTUAL';
-
-        $creditCardPayment = new CreditCard($reference, $items, $data, $user);
-        $result = $creditCardPayment->doPayment();
-
-        $userOrder = new UserOrder(Connection::getInstance());
-        $userOrder = $userOrder->createOrder([
-            'user_id'          => $user['id'],
-            'reference'        => $reference,
-            'pagseguro_code'   => $result->getCode(),
-            'pagseguro_status' => $result->getStatus(),
-            'items'            => serialize($items)
-        ]);
-
-        Session::removeUserSession('pagseguro_session');
-        Session::removeUserSession('cart');
-
-        return json_encode(['data' => [
-            'ref_order' => $userOrder['reference'],
-            'message'   => 'Transação concluída com sucesso!'
-        ]]);
     }
 
+    /**
+     * Envia menssagem de agradecimento
+     * com a referência do pedido
+     *
+     * @return redirect
+     */
     public function thanks()
     {
         if (!isset($_GET['ref'])) {
@@ -84,10 +109,20 @@ class CheckoutController
 
             return $view->render();
         } catch (Exception $exception) {
+            Flash::returnExceptionErrorMessage(
+                $exception,
+                'Ocorreu um erro interno!'
+            );
+
             return header('Location ' . HOME);
         }
     }
 
+    /**
+     * Envia notificação
+     *
+     * @return redirect
+     */
     public function notification()
     {
         try {
@@ -108,13 +143,18 @@ class CheckoutController
             }
 
             http_response_code(204);
-            return json_encode([]);
 
+            return json_encode([]);
         } catch (Exception $exception) {
             http_response_code(500);
-            return json_encode(['data' => [
-                'error' => 'Erro a receber a notificação',
-            ]]);
+            Flash::returnExceptionErrorMessage(
+                $exception,
+                json_encode(['data' => [
+                    'error' => 'Erro a receber a notificação',
+                ]])
+            );
+
+            return header('Location ' . HOME);
         }
     }
 }

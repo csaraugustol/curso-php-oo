@@ -2,6 +2,7 @@
 
 namespace LojaVirtual\Controller;
 
+use Exception;
 use LojaVirtual\View\View;
 use LojaVirtual\Entity\User;
 use LojaVirtual\Session\Flash;
@@ -14,9 +15,19 @@ use LojaVirtual\Security\Validator\Validator;
 
 class StoreController
 {
+    /**
+     * Exibe tela de login para finalizar compra
+     *
+     * @return redirect
+     */
     public function login()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('site/login.phtml');
+
+                return $view->render();
+            }
             $user = new User(Connection::getInstance());
             $authenticator = new Authenticator($user);
 
@@ -26,49 +37,68 @@ class StoreController
             }
 
             Flash::sendMessageSession("success", "Usuário logado com suceso!");
-            return header("Location: " . HOME . '/checkout');
+        } catch (Exception $exception) {
+            Flash::returnExceptionErrorMessage(
+                $exception,
+                'Erro interno ao realizar login. Tente novamente!'
+            );
+
+            return header("Location: " . HOME . '/store/login');
         }
 
-        $view = new View('site/login.phtml');
-        return $view->render();
+        return header("Location: " . HOME . '/checkout');
     }
 
+    /**
+     * Cadastra um usuário para finalizar compra
+     *
+     * @return redirect
+     */
     public function register()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $_POST;
-            $data = Sanitizer::sanitizeData($data, User::$filters);
+        try {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = $_POST;
+                $data = Sanitizer::sanitizeData($data, User::$filters);
 
-            if (!Validator::validateRequiredFields($data)) {
-                Flash::sendMessageSession('warning', 'Preencha todos os campos!');
-                return header('Location: ' . HOME . '/store/login');
+                if (!Validator::validateRequiredFields($data)) {
+                    Flash::sendMessageSession('warning', 'Preencha todos os campos!');
+                    return header('Location: ' . HOME . '/store/login');
+                }
+
+                if (!Validator::validatePasswordMinStringLenght($data['password'])) {
+                    Flash::sendMessageSession('warning', 'Senha deve conter pelo menos 6 caracteres!');
+                    return header('Location: ' . HOME . '/store/login');
+                }
+
+                if (!Validator::validatePasswordConfirm($data['password'], $data['password_confirm'])) {
+                    Flash::sendMessageSession('warning', 'Senhas não conferem!');
+                    return header('Location: ' . HOME . '/store/login');
+                }
+
+                $newUser = new User(Connection::getInstance());
+
+                $data['password'] = PasswordHash::hashPassword($data['password']);
+                $data['is_active'] = 1;
+                unset($data['password_confirm']);
+
+                if (!$user = $newUser->insert($data)) {
+                    Flash::sendMessageSession('error', 'Erro ao criar usuário!');
+                    return header('Location: ' . HOME . '/store/login');
+                }
+
+                unset($user['password']);
+                Session::addUserSession('user', $user);
             }
+        } catch (Exception $exception) {
+            Flash::returnExceptionErrorMessage(
+                $exception,
+                'Erro interno ao realizar cadastro. Tente novamente!'
+            );
 
-            if (!Validator::validatePasswordMinStringLenght($data['password'])) {
-                Flash::sendMessageSession('warning', 'Senha deve conter pelo menos 6 caracteres!');
-                return header('Location: ' . HOME . '/store/login');
-            }
-
-            if (!Validator::validatePasswordConfirm($data['password'], $data['password_confirm'])) {
-                Flash::sendMessageSession('warning', 'Senhas não conferem!');
-                return header('Location: ' . HOME . '/store/login');
-            }
-
-
-            $newUser = new User(Connection::getInstance());
-
-            $data['password'] = PasswordHash::hashPassword($data['password']);
-            $data['is_active'] = 1;
-            unset($data['password_confirm']);
-
-            if (!$user = $newUser->insert($data)) {
-                Flash::sendMessageSession('error', 'Erro ao criar usuário!');
-                return header('Location: ' . HOME . '/store/login');
-            }
-
-            unset($user['password']);
-            Session::addUserSession('user', $user);
-            return header('Location: ' . HOME . '/cart/checkout');
+            return header("Location: " . HOME . '/store/login');
         }
+
+        return header('Location: ' . HOME . '/cart/checkout');
     }
 }

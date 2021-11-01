@@ -14,7 +14,6 @@ if ($url[0] == 'admin') {
     $action     = isset($url[2]) && $url[2] ? $url[2] : 'index';
     $param      = isset($url[3]) && $url[3] ? $url[3] : null;
 }
-
 if ($url[0] == 'admin') {
     $controller = "LojaVirtual\Controller\Admin\\" . ucfirst($controller) . 'Controller';
 } else {

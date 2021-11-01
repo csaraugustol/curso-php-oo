@@ -2,9 +2,9 @@
 
 namespace LojaVirtual\Payment\PagSeguro;
 
-use PagSeguro\Services\Session;
-use PagSeguro\Configuration\Configure;
 use LojaVirtual\Session\Session as PagSession;
+use PagSeguro\Configuration\Configure;
+use PagSeguro\Services\Session;
 
 class SessionPagSeguro
 {

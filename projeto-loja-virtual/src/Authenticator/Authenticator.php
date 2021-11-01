@@ -2,9 +2,11 @@
 
 namespace LojaVirtual\Authenticator;
 
+use Exception;
 use LojaVirtual\Entity\User;
 use LojaVirtual\Session\Session;
 use LojaVirtual\Security\PasswordHash;
+use LojaVirtual\Session\Flash;
 
 class Authenticator
 {
@@ -14,7 +16,7 @@ class Authenticator
     private $user;
 
     /**
-     * Recebe um usuário por parâmetro
+     * Recebe um usuário
      *
      * @param User|null $user
      */
@@ -24,26 +26,36 @@ class Authenticator
     }
 
     /**
-     * Verifica credênciais para efetuar login
+     * Verifica usuário e senha
      *
      * @param array $credentials
-     * @return boolean
+     * @return bool
      */
     public function login(array $credentials): bool
     {
-        $user = $this->user->filterWithConditions([
-            'email' => $credentials['email'],
-        ]);
+        try {
+            $user = $this->user->filterWithConditions([
+                'email' => $credentials['email'],
+            ]);
 
-        if (!$user) {
+            if (!$user) {
+                return false;
+            }
+            if (!PasswordHash::checkPassword($credentials['password'], $user['password'])) {
+                return false;
+            }
+
+            unset($user['password']);
+            Session::addUserSession('user', $user);
+        } catch (Exception $exception) {
+            Flash::returnExceptionErrorMessage(
+                $exception,
+                'Erro ao logar. Verifique as credênciais!'
+            );
+
             return false;
         }
-        if (!PasswordHash::checkPassword($credentials['password'], $user['password'])) {
-            return false;
-        }
 
-        unset($user['password']);
-        Session::addUserSession('user', $user);
         return true;
     }
 

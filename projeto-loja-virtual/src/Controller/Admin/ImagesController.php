@@ -9,7 +9,13 @@ use LojaVirtual\Entity\ProductImage;
 
 class ImagesController
 {
-    public function remove($id)
+    /**
+     * Remove uma imagem do produto
+     *
+     * @param integer $id
+     * @return redirect
+     */
+    public function remove(int $id)
     {
         try {
             $image = new ProductImage(Connection::getInstance());
@@ -22,14 +28,15 @@ class ImagesController
             $image->delete($id);
 
             Flash::sendMessageSession('success', 'Imagem removida com sucesso!');
-            return header('Location: ' . HOME . '/admin/products/edit/' . $imageData['product_id']);
         } catch (Exception $exception) {
-            if (APP_DEBUG) {
-                Flash::sendMessageSession('error', $exception->getMessage());
-                return header('Location: ' . HOME . '/admin/products/edit/' . $imageData['product_id']);
-            }
-            Flash::sendMessageSession('error', 'Ocorreu um problema interno, por favor contacte o admin.');
+            Flash::returnExceptionErrorMessage(
+                $exception,
+                'Ocorreu um erro interno ao remover imagem, por favor contate o administrador.'
+            );
+
             return header('Location: ' . HOME . '/admin/products/edit/' . $imageData['product_id']);
         }
+
+        return header('Location: ' . HOME . '/admin/products/edit/' . $imageData['product_id']);
     }
 }
