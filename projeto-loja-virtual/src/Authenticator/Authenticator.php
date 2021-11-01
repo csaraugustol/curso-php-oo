@@ -13,12 +13,23 @@ class Authenticator
      */
     private $user;
 
+    /**
+     * Recebe um usuário por parâmetro
+     *
+     * @param User|null $user
+     */
     public function __construct(User $user = null)
     {
         $this->user = $user;
     }
 
-    public function login(array $credentials)
+    /**
+     * Verifica credênciais para efetuar login
+     *
+     * @param array $credentials
+     * @return boolean
+     */
+    public function login(array $credentials): bool
     {
         $user = $this->user->filterWithConditions([
             'email' => $credentials['email'],
@@ -36,7 +47,12 @@ class Authenticator
         return true;
     }
 
-    public function logout()
+    /**
+     * Efetua logout do sistema
+     *
+     * @return void
+     */
+    public function logout(): void
     {
         if (Session::hasUserSession('user')) {
             Session::removeUserSession('user');

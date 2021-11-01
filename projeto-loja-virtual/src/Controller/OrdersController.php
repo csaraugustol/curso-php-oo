@@ -2,20 +2,17 @@
 
 namespace LojaVirtual\Controller;
 
-use LojaVirtual\Authenticator\CheckUserLogged;
-use LojaVirtual\DataBase\Connection;
-use LojaVirtual\Entity\UserOrder;
-use LojaVirtual\Session\Session;
 use LojaVirtual\View\View;
+use LojaVirtual\Session\Session;
+use LojaVirtual\Entity\UserOrder;
+use LojaVirtual\DataBase\Connection;
+use LojaVirtual\Authenticator\CheckUserLogged;
 
 class OrdersController
 {
-    use CheckUserLogged;
-
     public function my()
     {
-
-        if (!$this->checkAuthenticator()) {
+        if (!CheckUserLogged::checkAuthenticator()) {
             return header('Location: ' . HOME);
         }
 

@@ -3,17 +3,16 @@
 namespace LojaVirtual\Controller;
 
 use Exception;
-use LojaVirtual\DataBase\Connection;
+use LojaVirtual\View\View;
+use LojaVirtual\Session\Session;
 use LojaVirtual\Entity\UserOrder;
+use LojaVirtual\DataBase\Connection;
 use LojaVirtual\Payment\PagSeguro\CreditCard;
 use LojaVirtual\Payment\PagSeguro\Notification;
 use LojaVirtual\Payment\PagSeguro\SessionPagSeguro;
-use LojaVirtual\Session\Session;
-use LojaVirtual\View\View;
 
 class CheckoutController
 {
-
     public function index()
     {
         if (!Session::hasUserSession('user')) {

@@ -2,9 +2,9 @@
 
 namespace LojaVirtual\Payment\PagSeguro;
 
+use PagSeguro\Helpers\Xhr;
 use InvalidArgumentException;
 use PagSeguro\Configuration\Configure;
-use PagSeguro\Helpers\Xhr;
 use PagSeguro\Services\Transactions\Notification as TransactionsNotification;
 
 class Notification

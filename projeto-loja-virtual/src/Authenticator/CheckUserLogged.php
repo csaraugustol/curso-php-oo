@@ -4,10 +4,15 @@ namespace LojaVirtual\Authenticator;
 
 use LojaVirtual\Session\Session;
 
-trait CheckUserLogged
+class CheckUserLogged
 {
-    //Método para verificar se existe um usuário autenticado
-    public function checkAuthenticator()
+    /**
+     * Verifica a autenticação do usuário
+     * para ter acesso aos endpoints
+     *
+     * @return boolean
+     */
+    public static function checkAuthenticator(): bool
     {
         return Session::hasUserSession('user');
         /*-if (Session::hasUserSession('user')) {

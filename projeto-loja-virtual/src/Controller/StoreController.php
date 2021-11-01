@@ -5,12 +5,12 @@ namespace LojaVirtual\Controller;
 use LojaVirtual\View\View;
 use LojaVirtual\Entity\User;
 use LojaVirtual\Session\Flash;
+use LojaVirtual\Session\Session;
 use LojaVirtual\DataBase\Connection;
 use LojaVirtual\Security\PasswordHash;
 use LojaVirtual\Authenticator\Authenticator;
 use LojaVirtual\Security\Validator\Sanitizer;
 use LojaVirtual\Security\Validator\Validator;
-use LojaVirtual\Session\Session;
 
 class StoreController
 {

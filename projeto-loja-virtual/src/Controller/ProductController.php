@@ -2,9 +2,9 @@
 
 namespace LojaVirtual\Controller;
 
-use LojaVirtual\DataBase\Connection;
-use LojaVirtual\Entity\Product;
 use LojaVirtual\View\View;
+use LojaVirtual\Entity\Product;
+use LojaVirtual\DataBase\Connection;
 
 class ProductController
 {

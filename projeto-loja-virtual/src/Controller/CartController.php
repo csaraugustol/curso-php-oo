@@ -2,9 +2,9 @@
 
 namespace LojaVirtual\Controller;
 
+use LojaVirtual\View\View;
 use LojaVirtual\Session\Flash;
 use LojaVirtual\Session\Session;
-use LojaVirtual\View\View;
 
 class CartController
 {
