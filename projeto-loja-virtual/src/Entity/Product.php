@@ -7,8 +7,18 @@ use LojaVirtual\DataBase\Entity;
 
 class Product extends Entity
 {
+    /**
+     * Nome da tabela
+     *
+     * @var string
+     */
     protected $table = 'products';
 
+    /**
+     * Filtragem dos dados recebidos
+     *
+     * @var array
+     */
     public static $filters = [
         'name'        => FILTER_SANITIZE_STRING,
         'description' => FILTER_SANITIZE_STRING,
@@ -17,7 +27,14 @@ class Product extends Entity
         'content'     => FILTER_SANITIZE_STRING,
     ];
 
-    public function returnProductWithImages($product, $isSlug = false)
+    /**
+     * Retorna um produto
+     *
+     * @param $product
+     * @param boolean $isSlug
+     * @return array
+     */
+    public function returnProductWithImages($product, bool $isSlug = false): array
     {
         $sqlQuery = 'select
         p.*, pi.id as image_id, pi.image
@@ -51,7 +68,12 @@ class Product extends Entity
         return $productData;
     }
 
-    public function returnAllProductsWithThumb()
+    /**
+     * Retorna as imagens de um produto
+     *
+     * @return array
+     */
+    public function returnAllProductsWithThumb(): array
     {
         $sqlQuery = '
             SELECT products.*,
