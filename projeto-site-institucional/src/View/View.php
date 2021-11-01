@@ -5,7 +5,7 @@ namespace Instituicao\View;
 class View
 {
     /**
-     * Caminho da URl
+     * Caminho da URL
      *
      * @var string
      */
