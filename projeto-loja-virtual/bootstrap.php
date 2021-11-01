@@ -11,7 +11,7 @@ define('APP_DEBUG', true);
 define('UPLOAD_PATH', __DIR__ . '/public/uploads/');
 
 /**
- * Configução banco
+ * Configuração banco
  */
 define('DB_NAME', '');
 define('DB_HOST', '');
@@ -22,10 +22,10 @@ define('DB_CHARSET', 'UTF8');
 /**
  * PagSeguro Environment
  */
- putenv('PAGSEGURO_ENV=');
- putenv('PAGSEGURO_EMAIL=');
- putenv('PAGSEGURO_TOKEN_SANDBOX=');
- putenv('PAGSEGURO_CHARSET=UTF-8');
+putenv('PAGSEGURO_ENV=');
+putenv('PAGSEGURO_EMAIL=');
+putenv('PAGSEGURO_TOKEN_SANDBOX=');
+putenv('PAGSEGURO_CHARSET=UTF-8');
 
 \PagSeguro\Library::initialize();
 \PagSeguro\Library::cmsVersion()->setName("Nome")->setRelease("1.0.0");

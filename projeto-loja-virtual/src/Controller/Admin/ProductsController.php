@@ -29,11 +29,12 @@ class ProductsController
         $product = new Product(Connection::getInstance());
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $_POST;
-
             try {
+                $data = $_POST;
                 $images = $_FILES['images'];
                 $categories = $data['categories'];
+                //unset($data['categories']);
+
 
                 $data = Sanitizer::sanitizeData($data, Product::$filters);
 
@@ -70,7 +71,6 @@ class ProductsController
                         $productImagens->insert($imagesData);
                     }
                 }
-
 
                 if (count($categories)) {
                     foreach ($categories as $category) {
