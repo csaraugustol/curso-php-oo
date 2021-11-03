@@ -6,6 +6,13 @@ use PDO;
 
 abstract class Entity
 {
+     /**
+     * Nome tabela
+     *
+     * @var string
+     */
+    protected $tableName;
+
     /**
      * Conexão com o banco
      *
@@ -30,7 +37,7 @@ abstract class Entity
      */
     public function findAllProducts(): array
     {
-        $findAllProducts = 'SELECT * FROM products';
+        $findAllProducts = 'SELECT * FROM ' . $this->tableName;
         $products = $this->connection->query($findAllProducts);
         return $products->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -43,7 +50,7 @@ abstract class Entity
      */
     public function findProductById(int $id): array
     {
-        $findOneProduct = 'SELECT * FROM products WHERE id = :id';
+        $findOneProduct = 'SELECT * FROM ' . $this->tableName . ' WHERE id = :id';
         $product = $this->connection->prepare($findOneProduct);
         $product->bindValue(':id', $id, PDO::PARAM_INT);
         $product->execute();
