@@ -5,7 +5,7 @@ namespace Instituicao\View;
 class View
 {
     /**
-     * Caminho da URL
+     * Caminho para o pacote da view que foi solicitada no controller
      *
      * @var string
      */
