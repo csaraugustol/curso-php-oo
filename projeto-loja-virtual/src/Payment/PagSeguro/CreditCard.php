@@ -7,12 +7,35 @@ use PagSeguro\Domains\Requests\DirectPayment\CreditCard as DirectPaymentCreditCa
 
 class CreditCard
 {
+    /**
+     * Referência do pedido
+     *
+     * @var string
+     */
     private $reference;
+
+    /**
+     * Itens comprados
+     *
+     * @var array
+     */
     private $items;
+
+    /**
+     * Dados do cartão
+     *
+     * @var array
+     */
     private $data;
+
+    /**
+     * Dados do usuário
+     *
+     * @var array
+     */
     private $user;
 
-    public function __construct($reference, $items, $data, $user)
+    public function __construct(string $reference, array $items, array $data, array $user)
     {
         $this->reference = $reference;
         $this->items = $items;
@@ -20,7 +43,12 @@ class CreditCard
         $this->user = $user;
     }
 
-    public function doPayment()
+    /**
+     * Retorna o resultado da transação
+     *
+     * @return string
+     */
+    public function doPayment(): string
     {
         // \PagSeguro\Domains\Requests\DirectPayment\
         $creditCard = new DirectPaymentCreditCard();
@@ -37,7 +65,9 @@ class CreditCard
             );
         }
 
-        //Necessário passar domínio de e-mail: @sandbox.pagseguro.com.br
+        /**
+         * Necessário passar domínio de e-mail: @sandbox.pagseguro.com.br
+         */
         $name = $this->user['first_name'] . ' ' . $this->user['last_name'];
         $email = getenv('PAGSEGURO_ENV') == 'sandbox' ? 'email@sandbox.pagseguro.com.br' : $this->user['email'];
         $creditCard->setSender()->setName($name);

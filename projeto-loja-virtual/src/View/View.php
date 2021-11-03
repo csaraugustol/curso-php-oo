@@ -29,7 +29,7 @@ class View
     }
 
     /**
-     * Recebe a entidade e seus dados
+     * Recebe uma variável e seus dados
      *
      * @param string $index
      * @param array $value
@@ -40,7 +40,7 @@ class View
         $this->data[$index] = $value;
     }
 
-   /**
+    /**
      * Realiza retorno do caminho da URL
      *
      * @param string $index

@@ -64,7 +64,7 @@
                 success: function(res) {
                     divBrand.innerHTML = '<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/' +
                         res.brand.name + '.png" alt="Bandeira cartão ' + res.brand.name + ' ">';
-                    getInstallments(<?= $this->totalSumCart; ?>, res.brand.name);
+                    getInstallments(<?= implode($this->totalSumCart); ?>, res.brand.name);
                     document.querySelector('input[name=card_brand]').value = res.brand.name;
                 },
                 error: function(err) {

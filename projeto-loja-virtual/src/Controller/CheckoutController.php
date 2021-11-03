@@ -39,7 +39,7 @@ class CheckoutController
 
         SessionPagSeguro::createSession();
         $view = new View('site/checkout.phtml');
-        $view->totalSumCart =  $totalSumCart;
+        $view->totalSumCart =  array($totalSumCart);
         return $view->render();
     }
 
