@@ -5,7 +5,7 @@ namespace GGP\View;
 class View
 {
     /**
-     * Caminho para URL
+     * Caminho para o pacote da view que foi solicitada no controller
      *
      * @var string
      */
