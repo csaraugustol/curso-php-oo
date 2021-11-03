@@ -15,17 +15,13 @@ $param      = isset($url[2]) && $url[2] ? $url[2] : null;
 
 $path = "GGP\Controller\\";
 
-/**
- * Verifica se o Controller existe
- */
+//Verifica se o Controller existe
 if (!class_exists($controller = $path . ucfirst($controller) . 'Controller')) {
     print (new View('404.phtml'))->render();
     die;
 }
 
-/**
- * Realiza a autenticação
- */
+//Verifica se o usuário está logado para acessar os endpoints
 if (in_array($controller, [$path . 'ExpensesController'])) {
     $isLogged = CheckUserLogged::checkController();
     if (!$isLogged) {
@@ -35,9 +31,7 @@ if (in_array($controller, [$path . 'ExpensesController'])) {
     }
 }
 
-/**
- * Verifica se existe método, se não, chama a index
- */
+//Verifica se existe método, se não, chama a index
 if (!method_exists($controller, $action)) {
     $action = 'index';
     $param = $url[1];
