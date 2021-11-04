@@ -27,7 +27,7 @@ class Flash
     public static function returnMessageSession(string $keySession): string
     {
         $message = Session::verifyExistsKey($keySession);
-        Session::removeUserSession($keySession);
+        Session::removeKeySession($keySession);
         return $message;
     }
 

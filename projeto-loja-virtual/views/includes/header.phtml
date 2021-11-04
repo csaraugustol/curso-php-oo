@@ -33,9 +33,9 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="<?=HOME;?>/cart" class="nav-link">
-                    <?php if(\LojaVirtual\Session\Session::hasUserSession('cart')) : ?>
+                    <?php if(\LojaVirtual\Session\Session::hasKeySession('cart')) : ?>
                         <span class="bagge badge-danger">
-                            <?= count(\LojaVirtual\Session\Session::verifyExistsKeyAndAddInCart('cart')) ;?>
+                            <?= count(\LojaVirtual\Session\Session::verifyExistsKeyOfArray('cart')) ;?>
                         </span>
                     <?php endif;?>
                         <i class="fa fa-2x fa-shopping-cart"></i>

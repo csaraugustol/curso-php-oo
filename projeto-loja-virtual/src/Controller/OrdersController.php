@@ -18,7 +18,7 @@ class OrdersController
      */
     public function my()
     {
-        $userId = Session::verifyExistsKeyAndAddInCart('user')['id'];
+        $userId = Session::verifyExistsKeyOfArray('user')['id'];
 
         try {
             $userOrders = (new UserOrder(Connection::getInstance()))

@@ -16,7 +16,7 @@ class SessionPagSeguro
      */
     public static function createSession(): void
     {
-        if (!PagSession::hasUserSession('pagseguro_session')) {
+        if (!PagSession::hasKeySession('pagseguro_session')) {
             $sessionCode = Session::create(
                 Configure::getAccountCredentials()
             );

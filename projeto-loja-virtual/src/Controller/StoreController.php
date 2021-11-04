@@ -88,7 +88,7 @@ class StoreController
                 }
 
                 unset($user['password']);
-                Session::addUserSession('user', $user);
+                Session::addKeySession('user', $user);
             }
         } catch (Exception $exception) {
             Flash::returnExceptionErrorMessage(

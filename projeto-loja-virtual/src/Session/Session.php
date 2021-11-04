@@ -24,7 +24,7 @@ class Session
      * @param array $value
      * @return void
      */
-    public static function addUserSession(string $keySession, array $value): void
+    public static function addKeySession(string $keySession, array $value): void
     {
         self::sessionStart();
         $_SESSION[$keySession] = $value;
@@ -62,7 +62,7 @@ class Session
      * @param string $keySession
      * @return void
      */
-    public static function removeUserSession(string $keySession): void
+    public static function removekeySession(string $keySession): void
     {
         self::sessionStart();
 
@@ -76,7 +76,7 @@ class Session
      *
      * @return void
      */
-    public static function clearUserSession(): void
+    public static function clearKeySession(): void
     {
         self::sessionStart();
         session_destroy();
@@ -90,7 +90,7 @@ class Session
      * @param string $keySession
      * @return bool
      */
-    public static function hasUserSession(string $keySession): bool
+    public static function hasKeySession(string $keySession): bool
     {
         self::sessionStart();
         return isset($_SESSION[$keySession]);
@@ -110,12 +110,12 @@ class Session
     }
 
     /**
-     * Verifica se existe o carrinho na sessão
+     * Verifica se existe uma chave tipo array na sessão
      *
      * @param string $keySession
      * @return array
      */
-    public static function verifyExistsKeyAndAddInCart(string $keySession): array
+    public static function verifyExistsKeyOfArray(string $keySession): array
     {
         self::sessionStart();
         return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : $cart = [];

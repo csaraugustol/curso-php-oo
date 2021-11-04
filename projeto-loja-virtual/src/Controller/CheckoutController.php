@@ -22,15 +22,15 @@ class CheckoutController
      */
     public function index()
     {
-        if (!Session::hasUserSession('user')) {
+        if (!Session::hasKeySession('user')) {
             return header('Location: ' . HOME . '/store/login');
         }
 
-        if (!Session::hasUserSession('cart')) {
+        if (!Session::hasKeySession('cart')) {
             return header("Lacation: " . HOME);
         }
 
-        $cart = Session::verifyExistsKeyAndAddInCart('cart');
+        $cart = Session::verifyExistsKeyOfArray('cart');
 
         $cart = array_map(function ($line) {
             return $line['price'] * $line['qtd'];
@@ -55,9 +55,9 @@ class CheckoutController
                 return json_encode(['data' => ['error' => 'Método não suportado!']]);
             }
 
-            $items = Session::verifyExistsKeyAndAddInCart('cart');
+            $items = Session::verifyExistsKeyOfArray('cart');
             $data = $_POST;
-            $user = Session::verifyExistsKeyAndAddInCart('user');
+            $user = Session::verifyExistsKeyOfArray('user');
             $reference = sha1($user['id'] . $user['email']) . uniqid() . '_LOJA_VIRTUAL';
 
             $creditCardPayment = new CreditCard($reference, $items, $data, $user);
@@ -72,8 +72,8 @@ class CheckoutController
                 'items'            => serialize($items)
             ]);
 
-            Session::removeUserSession('pagseguro_session');
-            Session::removeUserSession('cart');
+            Session::removekeySession('pagseguro_session');
+            Session::removekeySession('cart');
 
             return json_encode(['data' => [
                 'ref_order' => $userOrder['reference'],

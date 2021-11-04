@@ -46,7 +46,7 @@ class Authenticator
             }
 
             unset($user['password']);
-            Session::addUserSession('user', $user);
+            Session::addKeySession('user', $user);
         } catch (Exception $exception) {
             Flash::returnExceptionErrorMessage(
                 $exception,
@@ -66,9 +66,9 @@ class Authenticator
      */
     public function logout(): void
     {
-        if (Session::hasUserSession('user')) {
-            Session::removeUserSession('user');
+        if (Session::hasKeySession('user')) {
+            Session::removeKeySession('user');
         }
-        Session::clearUserSession();
+        Session::clearKeySession();
     }
 }

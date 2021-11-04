@@ -3,7 +3,7 @@
     <hr>
     Experts Learning Projeto &copy; Todos os Direitos Reservados - <?= date('Y'); ?>
 </div>
-<?php if (\LojaVirtual\Session\Session::hasUserSession('pagseguro_session')) : ?>
+<?php if (\LojaVirtual\Session\Session::hasKeySession('pagseguro_session')) : ?>
     <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
     <script>
         const sessionId = '<?= \LojaVirtual\Session\Session::verifyExistsKey('pagseguro_session'); ?>';

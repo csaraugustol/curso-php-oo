@@ -17,7 +17,7 @@ class CartController
     public function index()
     {
         $view = new View('site/cart.phtml');
-        $view->cart = Session::verifyExistsKeyAndAddInCart('cart');
+        $view->cart = Session::verifyExistsKeyOfArray('cart');
 
         return $view->render();
     }
@@ -33,9 +33,9 @@ class CartController
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product = $_POST;
 
-                $cart = Session::verifyExistsKeyAndAddInCart('cart');
+                $cart = Session::verifyExistsKeyOfArray('cart');
                 $cart[] = $product;
-                Session::addUserSession('cart', $cart);
+                Session::addKeySession('cart', $cart);
 
                 Flash::sendMessageSession('success', 'Produto adicionado ao carrinho!');
             }
@@ -60,7 +60,7 @@ class CartController
     public function remove(string $slug)
     {
         try {
-            $cart = Session::verifyExistsKeyAndAddInCart('cart');
+            $cart = Session::verifyExistsKeyOfArray('cart');
 
             if (is_null($cart)) {
                 return header('Location: ' . HOME);
@@ -73,11 +73,11 @@ class CartController
             $cart = count($cart) == 0 ? null : $cart;
             if (is_null($cart)) {
                 $cart = [];
-                Session::addUserSession('cart', $cart);
+                Session::addKeySession('cart', $cart);
                 return header('Location: ' . HOME);
             }
 
-            Session::addUserSession('cart', $cart);
+            Session::addKeySession('cart', $cart);
         } catch (Exception $exception) {
             Flash::returnExceptionErrorMessage(
                 $exception,
@@ -97,7 +97,7 @@ class CartController
      */
     public function cancel()
     {
-        Session::removeUserSession('cart');
+        Session::removekeySession('cart');
         Flash::sendMessageSession('warning', 'O seu carrinho foi limpo!');
         return header('Location: ' . HOME . '/cart');
     }
