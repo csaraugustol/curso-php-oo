@@ -30,7 +30,7 @@ class CheckoutController
             return header("Lacation: " . HOME);
         }
 
-        $cart = Session::verifyExistsKey('cart');
+        $cart = Session::verifyExistsKeyAndAddInCart('cart');
 
         $cart = array_map(function ($line) {
             return $line['price'] * $line['qtd'];
@@ -55,9 +55,9 @@ class CheckoutController
                 return json_encode(['data' => ['error' => 'Método não suportado!']]);
             }
 
-            $items = Session::verifyExistsKey('cart');
+            $items = Session::verifyExistsKeyAndAddInCart('cart');
             $data = $_POST;
-            $user = Session::verifyExistsKey('user');
+            $user = Session::verifyExistsKeyAndAddInCart('user');
             $reference = sha1($user['id'] . $user['email']) . uniqid() . '_LOJA_VIRTUAL';
 
             $creditCardPayment = new CreditCard($reference, $items, $data, $user);

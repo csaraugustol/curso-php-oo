@@ -2,17 +2,13 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-/**
- * Configução views
- */
+//Configução views
 define('HOME', 'http://localhost:3000');
 define('VIEWS_PATH', __DIR__ . '/views/');
 define('APP_DEBUG', true);
 define('UPLOAD_PATH', __DIR__ . '/public/uploads/');
 
-/**
- * Configuração banco
- */
+//Configuração banco
 define('DB_NAME', '');
 define('DB_HOST', '');
 define('DB_USER', '');
@@ -20,9 +16,7 @@ define('DB_PASSWORD', '');
 define('DB_CHARSET', 'UTF8');
 
 
-/**
- * PagSeguro Environment
- */
+//PagSeguro Environment
 putenv('PAGSEGURO_ENV=');
 putenv('PAGSEGURO_EMAIL=');
 putenv('PAGSEGURO_TOKEN_SANDBOX=');

@@ -35,7 +35,7 @@
                     <a href="<?=HOME;?>/cart" class="nav-link">
                     <?php if(\LojaVirtual\Session\Session::hasUserSession('cart')) : ?>
                         <span class="bagge badge-danger">
-                            <?= count(\LojaVirtual\Session\Session::verifyExistsKey('cart')) ;?>
+                            <?= count(\LojaVirtual\Session\Session::verifyExistsKeyAndAddInCart('cart')) ;?>
                         </span>
                     <?php endif;?>
                         <i class="fa fa-2x fa-shopping-cart"></i>

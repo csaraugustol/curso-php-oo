@@ -7,6 +7,7 @@ use LojaVirtual\View\View;
 use LojaVirtual\Session\Flash;
 use LojaVirtual\Entity\Product;
 use LojaVirtual\DataBase\Connection;
+use LojaVirtual\Session\Session;
 
 class HomeController
 {

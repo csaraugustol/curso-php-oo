@@ -17,7 +17,7 @@ class CartController
     public function index()
     {
         $view = new View('site/cart.phtml');
-        $view->cart = Session::verifyExistsKey('cart');
+        $view->cart = Session::verifyExistsKeyAndAddInCart('cart');
         return $view->render();
     }
 
@@ -31,9 +31,7 @@ class CartController
         try {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product = $_POST;
-
-                $cart = Session::verifyExistsKey('cart');
-
+                $cart = Session::verifyExistsKeyAndAddInCart('cart');
                 if (!is_null($cart)) {
                     array_push($cart, $product);
                 } else {
@@ -64,7 +62,7 @@ class CartController
     public function remove(string $slug)
     {
         try {
-            $cart = Session::verifyExistsKey('cart');
+            $cart = Session::verifyExistsKeyAndAddInCart('cart');
 
             if (is_null($cart)) {
                 return header('Location: ' . HOME);
@@ -75,6 +73,11 @@ class CartController
             });
 
             $cart = count($cart) == 0 ? null : $cart;
+            if (is_null($cart)) {
+                $cart = [];
+                Session::addUserSession('cart', $cart);
+                return header('Location: ' . HOME);
+            }
 
             Session::addUserSession('cart', $cart);
         } catch (Exception $exception) {

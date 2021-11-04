@@ -20,7 +20,7 @@ class SessionPagSeguro
             $sessionCode = Session::create(
                 Configure::getAccountCredentials()
             );
-            PagSession::addUserSession('pagseguro_session', $sessionCode->getResult());
+            PagSession::addMessageSession('pagseguro_session', $sessionCode->getResult());
         }
     }
 }

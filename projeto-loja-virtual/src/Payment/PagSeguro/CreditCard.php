@@ -45,10 +45,8 @@ class CreditCard
 
     /**
      * Retorna o resultado da transação
-     *
-     * @return string
      */
-    public function doPayment(): string
+    public function doPayment()
     {
         // \PagSeguro\Domains\Requests\DirectPayment\
         $creditCard = new DirectPaymentCreditCard();
