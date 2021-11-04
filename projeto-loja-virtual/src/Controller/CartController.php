@@ -18,6 +18,7 @@ class CartController
     {
         $view = new View('site/cart.phtml');
         $view->cart = Session::verifyExistsKeyAndAddInCart('cart');
+
         return $view->render();
     }
 
@@ -31,14 +32,11 @@ class CartController
         try {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product = $_POST;
-                $cart = Session::verifyExistsKeyAndAddInCart('cart');
-                if (!is_null($cart)) {
-                    array_push($cart, $product);
-                } else {
-                    $cart[] = $product;
-                }
 
+                $cart = Session::verifyExistsKeyAndAddInCart('cart');
+                $cart[] = $product;
                 Session::addUserSession('cart', $cart);
+
                 Flash::sendMessageSession('success', 'Produto adicionado ao carrinho!');
             }
         } catch (Exception $exception) {
@@ -89,6 +87,18 @@ class CartController
             return header('Location: ' . HOME . '/cart');
         }
 
+        return header('Location: ' . HOME . '/cart');
+    }
+
+    /**
+     * Limpa todos os produtos do carrinho
+     *
+     * @return redirect
+     */
+    public function cancel()
+    {
+        Session::removeUserSession('cart');
+        Flash::sendMessageSession('warning', 'O seu carrinho foi limpo!');
         return header('Location: ' . HOME . '/cart');
     }
 }

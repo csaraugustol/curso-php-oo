@@ -88,7 +88,7 @@ class Session
      * um boleano
      *
      * @param string $keySession
-     * @return boolean
+     * @return bool
      */
     public static function hasUserSession(string $keySession): bool
     {
@@ -118,7 +118,6 @@ class Session
     public static function verifyExistsKeyAndAddInCart(string $keySession): array
     {
         self::sessionStart();
-
-        return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : null;
+        return isset($_SESSION[$keySession]) ? $_SESSION[$keySession] : $cart = [];
     }
 }

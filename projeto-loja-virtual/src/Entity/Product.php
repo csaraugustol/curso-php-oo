@@ -31,7 +31,7 @@ class Product extends Entity
      * Retorna um produto
      *
      * @param $product
-     * @param boolean $isSlug
+     * @param bool $isSlug
      * @return array
      */
     public function returnProductWithImages($product, bool $isSlug = false): array

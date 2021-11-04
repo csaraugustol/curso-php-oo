@@ -8,7 +8,7 @@ class Validator
      * Verifica se há um campo vazio
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      */
     public static function validateRequiredFields(array $data): bool
     {
@@ -27,7 +27,7 @@ class Validator
      *
      * @param string $password
      * @param string $passwordConfirm
-     * @return boolean
+     * @return bool
      */
     public static function validatePasswordConfirm(
         string $password,
@@ -40,7 +40,7 @@ class Validator
      * Verifica o tamanho mínimo da senha
      *
      * @param string $password
-     * @return boolean
+     * @return bool
      */
     public static function validatePasswordMinStringLenght(string $password): bool
     {
@@ -51,7 +51,7 @@ class Validator
      * Verifica o tipo da extensão da imagem
      *
      * @param array $files
-     * @return boolean
+     * @return bool
      */
     public static function validateImagesFileType(array $files = []): bool
     {

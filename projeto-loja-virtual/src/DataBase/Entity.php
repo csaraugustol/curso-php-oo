@@ -26,7 +26,7 @@ abstract class Entity
      * Verifica se será necessaŕio utilizar
      * o created_at / updated_at
      *
-     * @var boolean
+     * @var bool
      */
     protected $timestamps = true;
 
@@ -131,7 +131,7 @@ abstract class Entity
      * Atualiza dados no banco
      *
      * @param array $data
-     * @return boolean
+     * @return bool
      */
     public function update(array $data): bool
     {
@@ -161,7 +161,7 @@ abstract class Entity
      * Remove um dado do banco
      *
      * @param integer $id
-     * @return boolean
+     * @return bool
      */
     public function delete(int $id): bool
     {

@@ -10,17 +10,9 @@ use LojaVirtual\DataBase\Connection;
 use LojaVirtual\Security\PasswordHash;
 use LojaVirtual\Security\Validator\Sanitizer;
 use LojaVirtual\Security\Validator\Validator;
-use LojaVirtual\Authenticator\CheckUserLogged;
 
 class UsersController
 {
-    use CheckUserLogged;
-
-    public function __construct()
-    {
-        if (!$this->checkAuthenticator()) return header('Location: ' . HOME . '/auth/login');
-    }
-
     /**
      * Lista todos os usuários
      *

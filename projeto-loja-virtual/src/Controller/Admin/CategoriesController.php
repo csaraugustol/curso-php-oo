@@ -10,17 +10,9 @@ use LojaVirtual\DataBase\Connection;
 use Ausi\SlugGenerator\SlugGenerator;
 use LojaVirtual\Security\Validator\Sanitizer;
 use LojaVirtual\Security\Validator\Validator;
-use LojaVirtual\Authenticator\CheckUserLogged;
 
 class CategoriesController
 {
-    use CheckUserLogged;
-
-    public function __construct()
-    {
-        if (!$this->checkAuthenticator()) return header('Location: ' . HOME . '/auth/login');
-    }
-
     /**
      * Listagem de categorias
      *

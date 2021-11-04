@@ -17,7 +17,7 @@ class ProductCategory extends Entity
      * Verifica se será necessaŕio utilizar
      * o created_at / updated_at
      *
-     * @var boolean
+     * @var bool
      */
     protected $timestamps = false;
 

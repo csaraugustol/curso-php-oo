@@ -4,9 +4,9 @@ namespace LojaVirtual\Authenticator;
 
 use Exception;
 use LojaVirtual\Entity\User;
+use LojaVirtual\Session\Flash;
 use LojaVirtual\Session\Session;
 use LojaVirtual\Security\PasswordHash;
-use LojaVirtual\Session\Flash;
 
 class Authenticator
 {

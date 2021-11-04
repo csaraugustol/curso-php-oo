@@ -1,5 +1,9 @@
 <?php
 
+use LojaVirtual\View\View;
+use LojaVirtual\Session\Flash;
+use LojaVirtual\Authenticator\CheckUserLogged;
+
 require __DIR__ . '/../bootstrap.php';
 $url = substr($_SERVER['REQUEST_URI'], 1);
 $url = parse_url($url)['path'];
@@ -14,10 +18,35 @@ if ($url[0] == 'admin') {
     $action     = isset($url[2]) && $url[2] ? $url[2] : 'index';
     $param      = isset($url[3]) && $url[3] ? $url[3] : null;
 }
+
+$pathAdmin = "LojaVirtual\Controller\Admin\\";
+$pathNormalUser = "LojaVirtual\Controller\\";
+
 if ($url[0] == 'admin') {
-    $controller = "LojaVirtual\Controller\Admin\\" . ucfirst($controller) . 'Controller';
+    $controller = $pathAdmin . ucfirst($controller) . 'Controller';
 } else {
-    $controller = "LojaVirtual\Controller\\" . ucfirst($controller) . 'Controller';
+    $controller = $pathNormalUser . ucfirst($controller) . 'Controller';
+}
+
+//Verifica se o usuário tem autorização para acesso
+if (
+    in_array(
+        $controller,
+        [
+            $pathAdmin      . 'CategoriesController',
+            $pathAdmin      . 'ImagesController',
+            $pathAdmin      . 'ProductsController',
+            $pathAdmin      . 'UsersController',
+            $pathNormalUser . 'OrdersController',
+        ]
+    )
+) {
+    $logged = CheckUserLogged::checkAuthenticator();
+    if (!$logged) {
+        Flash::sendMessageSession('danger', 'Efetue o login para ter acesso!');
+        print (new View('auth/index.phtml'))->render();
+        die;
+    }
 }
 
 if (!method_exists($controller, $action)) {

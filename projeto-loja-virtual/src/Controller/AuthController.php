@@ -48,7 +48,7 @@ class AuthController
     }
 
     /**
-     * efetua logout do sistema
+     * Efetua logout do sistema
      *
      * @return redirect
      */
@@ -56,6 +56,7 @@ class AuthController
     {
         $auth = (new Authenticator())->logout();
         Flash::sendMessageSession('success', 'Usuário deslogado com sucesso!');
+
         return header("Location: " . HOME);
     }
 }
