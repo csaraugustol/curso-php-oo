@@ -11,5 +11,5 @@ class Product extends Entity
      *
      * @var string
      */
-    protected $tableName = 'produtos';
+    protected $tableName = 'products';
 }
