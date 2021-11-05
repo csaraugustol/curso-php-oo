@@ -1,0 +1,16 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="col-md-12">
+    <?php $product = $this->product ?>
+
+    <div class="col-md-12">
+        <img src="http://via.placeholder.com/350x150?text=<?= $product['name']; ?>" alt="" class="img-responsive">
+        <h2><?= $product['name']; ?></h2>
+        <p><?= $product['description']; ?></p>
+        <p>R$ <?= number_format($product['price'], 2, ',', '.'); ?></p>
+    </div>
+
+</div>
+
+</div>
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>
