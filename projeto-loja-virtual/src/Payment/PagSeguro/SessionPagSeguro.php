@@ -2,9 +2,9 @@
 
 namespace LojaVirtual\Payment\PagSeguro;
 
-use PagSeguro\Services\Session;
+use PagSeguro\Services\Session as PagSession;
 use PagSeguro\Configuration\Configure;
-use LojaVirtual\Session\Session as PagSession;
+use LojaVirtual\Session\Session;
 
 class SessionPagSeguro
 {
@@ -16,11 +16,11 @@ class SessionPagSeguro
      */
     public static function createSession(): void
     {
-        if (!PagSession::hasKeySession('pagseguro_session')) {
-            $sessionCode = Session::create(
+        if (!Session::hasKeySession('pagseguro_session')) {
+            $sessionCode = PagSession::create(
                 Configure::getAccountCredentials()
             );
-            PagSession::addMessageSession('pagseguro_session', $sessionCode->getResult());
+            Session::addMessageSession('pagseguro_session', $sessionCode->getResult());
         }
     }
 }

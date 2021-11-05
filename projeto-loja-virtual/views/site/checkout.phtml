@@ -45,7 +45,7 @@
 
             <div class="row">
                 <div class="form-group col-md-12">
-                        <button class="btn btn-lg btn-success sendPayment">Realizar Pagamento</button>
+                    <button class="btn btn-lg btn-success sendPayment">Realizar Pagamento</button>
                 </div>
             </div>
         </form>
@@ -62,15 +62,17 @@
             PagSeguroDirectPayment.getBrand({
                 cardBin: cardNumber.value.substr(0, 6),
                 success: function(res) {
+                    console.log('success', res);
                     divBrand.innerHTML = '<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/' +
                         res.brand.name + '.png" alt="Bandeira cartão ' + res.brand.name + ' ">';
                     getInstallments(<?= implode($this->totalSumCart); ?>, res.brand.name);
                     document.querySelector('input[name=card_brand]').value = res.brand.name;
                 },
                 error: function(err) {
-                    console.log(err);
+                    console.log('error', err);
                 },
                 complete: function(res) {
+                    console.log('complete', res);
 
                 }
             });
@@ -91,19 +93,22 @@
             expirationMonth: document.querySelector('input[name=card_month]').value,
             expirationYear: document.querySelector('input[name=card_year]').value,
             success: function(d) {
+                console.log('token', d.card.token);
+                console.log('Payment', PagSeguroDirectPayment.getSenderHash());
                 proccessPayment(d.card.token, PagSeguroDirectPayment.getSenderHash())
             },
             error: function(err) {
-
+                console.log('error carregando', err);
             },
             complete: function(res) {
-
+                console.log('Final carregando', res);
             }
         });
     });
 
     function proccessPayment(cardToken, senderHash) {
-        let data = {
+
+       let data = {
             'card_name': document.querySelector('input[name=card_name]').value,
             'card_token': cardToken,
             'hash': senderHash,
@@ -115,9 +120,17 @@
             url: '/checkout/proccess',
             data: data,
             dataType: 'json',
-            seccess: function(res) {
-                document.querySelector('div.message').innerHTML = showMessage('res.data.message', 'success');
-               window.location.href = `/checkout/tranks?ref=${res.data.ref_order}`;
+            success: function(res) {
+                console.log('Success payment', res);
+                let resp = res.data.message;
+                document.querySelector('div.message').innerHTML = showMessage('success', resp);
+                window.location.href = `/checkout/tranks?ref=${res.data.ref_order}`;
+            },
+            error: function(err) {
+                console.log('Erro payment', err);
+            },
+            complete: function(res){
+                console.log('Complete payment', res);
             }
         });
     }
@@ -156,8 +169,8 @@
         return select;
     }
 
-    function shoeMessage(message, messageType) {
-        return `<div class="alert alert-${messageType}">${massage}</div>`;
+    function showMessage(messageType, message) {
+        return `<div class="alert alert-${messageType}">${message}</div>`;
     }
 </script>
 

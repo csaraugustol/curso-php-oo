@@ -74,17 +74,17 @@ class CheckoutController
 
             Session::removekeySession('pagseguro_session');
             Session::removekeySession('cart');
-
-            return json_encode(['data' => [
-                'ref_order' => $userOrder['reference'],
-                'message'   => 'Transação concluída com sucesso!'
-            ]]);
         } catch (Exception $exception) {
             Flash::returnExceptionErrorMessage(
                 $exception,
                 'Ocorreu um erro interno e não foi possível finalizar a compra!'
             );
         }
+
+        return json_encode(['data' => [
+            'ref_order' => $userOrder['reference'],
+            'message'   => 'Transação concluída com sucesso!'
+        ]]);
     }
 
     /**
@@ -105,7 +105,7 @@ class CheckoutController
                 ->filterWithConditions(['reference' => $reference]);
 
             $view = new View('site/thanks.phtml');
-            $view->reference = $$userOrder['reference'];
+            $view->reference = $userOrder['reference'];
 
             return $view->render();
         } catch (Exception $exception) {

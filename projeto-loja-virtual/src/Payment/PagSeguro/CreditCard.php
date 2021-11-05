@@ -45,6 +45,8 @@ class CreditCard
 
     /**
      * Retorna o resultado da transação
+     *
+     *
      */
     public function doPayment()
     {
