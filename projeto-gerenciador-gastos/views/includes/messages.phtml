@@ -1,0 +1,17 @@
+<?php if (\GGP\Session\Session::hasKeySession('success')) : ?>
+    <div class="alert alert-success">
+        <?= \GGP\Session\Flash::returnMessageSession('success'); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (\GGP\Session\Session::hasKeySession('warning')) : ?>
+    <div class="alert alert-warning">
+        <?= \GGP\Session\Flash::returnMessageSession('warning'); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (\GGP\Session\Session::hasKeySession('danger')) : ?>
+    <div class="alert alert-danger">
+        <?= \GGP\Session\Flash::returnMessageSession('danger'); ?>
+    </div>
+<?php endif; ?>

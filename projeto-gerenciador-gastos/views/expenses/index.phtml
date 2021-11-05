@@ -1,0 +1,37 @@
+<?php require VIEWS_PATH . 'includes/header.phtml'; ?>
+
+<div class="container">
+    <h1>Suas Despesas</h1>
+    <a class="btn btn-warning" href="<?= HOME; ?>/expenses/new">Nova Dispesa</a>
+    <hr>
+    <div class="col-md-12">
+        <?php require VIEWS_PATH . 'includes/messages.phtml'; ?>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Criado em</th>
+                <th>Ação</th>
+            </tr>
+        <tbody>
+            <?php foreach ($this->expenses as $expense) : ?>
+                <tr>
+                    <td><?= $expense['id']; ?></td>
+                    <td><?= $expense['description']; ?></td>
+                    <td>R$ <?= number_format($expense['value'], 2, ',', '.'); ?></td>
+                    <td><?= date('d/m/Y H:i:s', strtotime($expense['created_at'])); ?></td>
+                    <td>
+                        <a href="<?= HOME; ?>/expenses/edit/<?= $expense['id']; ?>" class="btn btn-primary">Editar</a>
+                        <a href="<?= HOME; ?>/expenses/remove/<?= $expense['id']; ?>" class="btn btn-danger">Apagar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+        </thead>
+    </table>
+</div>
+
+<?php require VIEWS_PATH . 'includes/footer.phtml'; ?>
