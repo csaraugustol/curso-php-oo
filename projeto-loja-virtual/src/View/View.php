@@ -54,7 +54,7 @@ class View
     /**
      * Faz a view ser renderizada
      *
-     * @return void
+     * @return string
      */
     public function render(): string
     {

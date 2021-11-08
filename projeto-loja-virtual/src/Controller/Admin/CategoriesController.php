@@ -80,14 +80,14 @@ class CategoriesController
     /**
      * Edita uma categoria
      *
-     * @param integer|null $id
+     * @param integer $id
      * @return redirect
      */
-    public function edit(int $id = null)
+    public function edit(int $id)
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                $view = new View('admin/admin/categories/edit.phtml');
+                $view = new View('admin/categories/edit.phtml');
                 $view->category = (new Category(Connection::getInstance()))->findById($id);
 
                 return $view->render();
@@ -121,16 +121,16 @@ class CategoriesController
             return header('Location: ' . HOME . '/admin/categories');
         }
 
-        return header('Location: ' . HOME . '/admin/categories/edit/' . $id);
+        return header('Location: ' . HOME . '/admin/categories');
     }
 
     /**
      * Remove uma categoria
      *
-     * @param integer|null $id
+     * @param integer $id
      * @return redirect
      */
-    public function remove(int $id = null)
+    public function remove(int $id)
     {
         try {
             $post = new Category(Connection::getInstance());

@@ -46,15 +46,16 @@ class ProductsController
      */
     public function new()
     {
-        $product = new Product(Connection::getInstance());
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $view = new View('admin/products/new.phtml');
-            $view->categories = (new Category(Connection::getInstance()))->findAll();
-
-            return $view->render();
-        }
         try {
+            $product = new Product(Connection::getInstance());
+
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('admin/products/new.phtml');
+                $view->categories = (new Category(Connection::getInstance()))->findAll();
+
+                return $view->render();
+            }
+
             $data = $_POST;
             $images = $_FILES['images'];
             $categories = $data['categories'];
@@ -70,7 +71,9 @@ class ProductsController
             $data['price'] = str_replace('.', '', $data['price']);
             $data['price'] = str_replace(',', '.', $data['price']);
             $data['is_active'] = $data['is_active'] === 'A' ? 1 : 0;
-            $productId = $product->insert($data);
+            $productSave = $product->insert($data);
+            $productId = $productSave['id'];
+
             if (!$productId) {
                 Flash::sendMessageSession('error', 'Erro ao criar produto!');
                 return header('Location: ' . HOME . '/admin/products/new');
@@ -98,7 +101,7 @@ class ProductsController
             if (count($categories)) {
                 foreach ($categories as $category) {
                     $productCategory = new ProductCategory(Connection::getInstance());
-                    $productCategory->insert([
+                    $productCategory->insertCategories([
                         'product_id'  => $productId,
                         'category_id' => $category
                     ]);
@@ -121,27 +124,27 @@ class ProductsController
     /**
      * Edita um produto
      *
-     * @param integer|null $id
+     * @param integer $id
      * @return redirect
      */
-    public function edit(int $id = null)
+    public function edit(int $id)
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $view = new View('admin/products/edit.phtml');
-            $view->product = (new Product(Connection::getInstance()))->returnProductWithImages($id);
-
-            $view->productCategories = (new ProductCategory(Connection::getInstance()))
-                ->filterWithConditions(['product_id' => $id]);
-            $view->productCategories = array_map(function ($line) {
-                return $line['category_id'];
-            }, $view->productCategories);
-
-            $view->categories = (new Category(Connection::getInstance()))->findAll();
-            return $view->render();
-        }
-        $data = $_POST;
-
         try {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                $view = new View('admin/products/edit.phtml');
+                $view->product = (new Product(Connection::getInstance()))->returnProductWithImages($id);
+
+                $view->productCategories = (new ProductCategory(Connection::getInstance()))
+                    ->filterWithConditions(['product_id' => $id]);
+                $view->productCategories = array_map(function ($line) {
+                    return $line['category_id'];
+                }, $view->productCategories);
+
+                $view->categories = (new Category(Connection::getInstance()))->findAll();
+                return $view->render();
+            }
+            $data = $_POST;
+
             $images = $_FILES['images'];
             $categories = $data['categories'];
 
@@ -164,9 +167,6 @@ class ProductsController
                 return header('Location: ' . HOME . '/admin/products/edit/' . $id);
             }
 
-            $productCategory = new ProductCategory(Connection::getInstance());
-            $productCategory->sync($id, $categories);
-
             if (isset($images['name'][0]) && $images['name'][0]) {
                 if (!Validator::validateImagesFileType($images)) {
                     Flash::sendMessageSession('danger', 'Formato de imagem inválido!');
@@ -186,6 +186,9 @@ class ProductsController
                 }
             }
 
+            $productCategory = new ProductCategory(Connection::getInstance());
+            $productCategory->syncCategoriesOfProduct($id, $categories);
+
             Flash::sendMessageSession('success', 'Produto editado com sucesso!');
         } catch (Exception $exception) {
             Flash::returnExceptionErrorMessage(
@@ -202,10 +205,10 @@ class ProductsController
     /**
      * Remove um produto
      *
-     * @param integer|null $id
+     * @param integer $id
      * @return redirect
      */
-    public function remove(int $id = null)
+    public function remove(int $id)
     {
         try {
             $post = new Product(Connection::getInstance());

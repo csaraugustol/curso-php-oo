@@ -23,14 +23,6 @@ abstract class Entity
     protected $table;
 
     /**
-     * Verifica se será necessaŕio utilizar
-     * o created_at / updated_at
-     *
-     * @var bool
-     */
-    protected $timestamps = true;
-
-    /**
      * Recebe a conexão do banco de dados por parânmetro
      *
      * @param PDO $connection
@@ -57,7 +49,7 @@ abstract class Entity
     /**
      * Retorna uma busca pelo id
      *
-     * @param integer $id
+     * @param int $id
      * @param string $fields
      * @return array
      */
@@ -112,19 +104,29 @@ abstract class Entity
      */
     public function insert(array $data): array
     {
-
         $binds = array_keys($data);
 
-        $timestampsFields = $this->timestamps ? ', created_at, updated_at' : '';
-        $timestampsValues = $this->timestamps ? ', NOW(), NOW()' : '';
-        $sqlInsert = 'INSERT INTO ' . $this->table . '(' . implode(', ', $binds) . $timestampsFields .
-            ') VALUES(:' . implode(', :', $binds) . $timestampsValues . ')';
+        $sqlInsert = 'INSERT INTO ' . $this->table . '(' . implode(', ', $binds) .
+            ', created_at, updated_at) VALUES(:' . implode(', :', $binds) . ', NOW(), NOW())';
 
         $insert = $this->bind($sqlInsert, $data);
-
         $insert->execute();
 
         return $this->findById($this->connection->lastInsertId());
+    }
+
+    /**
+     * Insere as categorias do produto no banco de dados
+     *
+     * @param array $data
+     * @return void
+     */
+    public function insertCategories(array $data): void
+    {
+        $sqlInsert = 'INSERT INTO products_categories(product_id, category_id)
+                      VALUES(:product_id, :category_id)';
+        $insert = $this->bind($sqlInsert, $data);
+        $insert->execute();
     }
 
     /**
@@ -160,20 +162,34 @@ abstract class Entity
     /**
      * Remove um dado do banco
      *
-     * @param integer $id
+     * @param int $id
      * @return bool
      */
     public function delete(int $id): bool
     {
-        if (is_array($id)) {
-            $bind = $id;
-            $field = array_keys($id)[0];
-        } else {
-            $bind = ['id' => $id];
-            $field = 'id';
-        }
+        $bind = ['id' => $id];
+        $field = 'id';
 
         $sqlDelete = 'DELETE FROM ' . $this->table . ' WHERE ' . $field . ' = :' . $field;
+        $delete = $this->bind($sqlDelete, $bind);
+
+        return $delete->execute();
+    }
+
+    /**
+     * Remove da tabela 'products_categories' todas
+     * as categorias relacionadas ao produto
+     * para fazer nova inserção no banco
+     *
+     * @param array $id
+     * @return bool
+     */
+    public function deleteCategoriesOfProduct(array $id): bool
+    {
+        $bind = $id;
+        $field = array_keys($id)[0];
+        $sqlDelete = 'DELETE FROM ' . $this->table . ' WHERE ' . $field . ' = :' . $field;
+
         $delete = $this->bind($sqlDelete, $bind);
 
         return $delete->execute();

@@ -124,7 +124,7 @@
                 console.log('Success payment', res);
                 let resp = res.data.message;
                 document.querySelector('div.message').innerHTML = showMessage('success', resp);
-                window.location.href = `/checkout/tranks?ref=${res.data.ref_order}`;
+                window.location.href = `/checkout/thanks?ref=${res.data.ref_order}`;
             },
             error: function(err) {
                 console.log('Erro payment', err);

@@ -13,7 +13,7 @@ $controller = isset($url[0]) && $url[0] ? $url[0] : 'home';
 $action     = isset($url[1]) && $url[1] ? $url[1] : 'index';
 $param      = isset($url[2]) && $url[2] ? $url[2] : null;
 
-if ($url[0] == 'admin') {
+if ($url[0] === 'admin') {
     $controller = isset($url[1]) && $url[1] ? $url[1] : 'home';
     $action     = isset($url[2]) && $url[2] ? $url[2] : 'index';
     $param      = isset($url[3]) && $url[3] ? $url[3] : null;
@@ -22,11 +22,8 @@ if ($url[0] == 'admin') {
 $pathAdmin = "LojaVirtual\Controller\Admin\\";
 $pathNormalUser = "LojaVirtual\Controller\\";
 
-if ($url[0] == 'admin') {
-    $controller = $pathAdmin . ucfirst($controller) . 'Controller';
-} else {
-    $controller = $pathNormalUser . ucfirst($controller) . 'Controller';
-}
+$url[0] === 'admin' ? $controller = $pathAdmin . ucfirst($controller) . 'Controller' :
+$controller = $pathNormalUser . ucfirst($controller) . 'Controller';
 
 //Verifica se o usuário tem autorização para acesso
 if (

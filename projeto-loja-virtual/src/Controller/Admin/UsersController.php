@@ -93,15 +93,16 @@ class UsersController
     /**
      * Edita um usuário
      *
-     * @param integer|null $id
+     * @param integer $id
      * @return redirect
      */
-    public function edit(int $id = null)
+    public function edit(int $id)
     {
         try {
+            $userEdit = (new User(Connection::getInstance()))->findById($id);
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 $view = new View('admin/users/edit.phtml');
-                $view->user = (new User(Connection::getInstance()))->findById($id);
+                $view->user = $userEdit;
 
                 return $view->render();
             }
@@ -109,12 +110,7 @@ class UsersController
             $data = $_POST;
             $data = Sanitizer::sanitizeData($data, User::$filters);
             $data['id'] = (int) $id;
-
-            if (!Validator::validateRequiredFields($data)) {
-                Flash::sendMessageSession('warning', 'Preencha todos os campos!');
-                return header('Location: ' . HOME . '/admin/users/edit/' . $id);
-            }
-
+            $data['email'] = $userEdit['email'];
             $post = new User(Connection::getInstance());
 
             if ($data['password']) {
@@ -133,6 +129,11 @@ class UsersController
                 unset($data['password']);
             }
             unset($data['password_confirm']);
+
+            if (!Validator::validateRequiredFields($data)) {
+                Flash::sendMessageSession('warning', 'Preencha todos os campos!');
+                return header('Location: ' . HOME . '/admin/users/edit/' . $id);
+            }
 
             if (!$post->update($data)) {
                 Flash::sendMessageSession('error', 'Erro ao atualizar usuário!');
@@ -155,10 +156,10 @@ class UsersController
     /**
      * Remove um usuário
      *
-     * @param integer|null $id
+     * @param integer $id
      * @return redirect
      */
-    public function remove(int $id = null)
+    public function remove(int $id)
     {
         try {
             $post = new User(Connection::getInstance());

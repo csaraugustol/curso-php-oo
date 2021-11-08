@@ -46,9 +46,9 @@ class CreditCard
     /**
      * Retorna o resultado da transação
      *
-     *
+     * @return object
      */
-    public function doPayment()
+    public function doPayment(): object
     {
         // \PagSeguro\Domains\Requests\DirectPayment\
         $creditCard = new DirectPaymentCreditCard();
@@ -128,10 +128,10 @@ class CreditCard
 
         $creditCard->setMode('DEFAULT');
 
-        $result = $creditCard->register(
+        $this->result = $creditCard->register(
             Configure::getAccountCredentials()
         );
 
-        return $result;
+        return $this->result;
     }
 }

@@ -14,30 +14,22 @@ class ProductCategory extends Entity
     protected $table = 'products_categories';
 
     /**
-     * Verifica se será necessaŕio utilizar
-     * o created_at / updated_at
-     *
-     * @var bool
-     */
-    protected $timestamps = false;
-
-    /**
      * Deleta todas as referências existentes e insere as novas passadas
      *
-     * @param integer $productId
+     * @param int $productId
      * @param array $data
      * @return void
      */
-    public function sync(int $productId, array $data): void
+    public function syncCategoriesOfProduct(int $productId, array $dataCategories): void
     {
-        $this->delete($productId);
+        $this->deleteCategoriesOfProduct(['product_id' => $productId]);
 
-        foreach ($data as $dataInsert) {
-            $saveManyToMany = [
+        foreach ($dataCategories as $categoryId) {
+            $saveCategorie = [
                 'product_id'  => $productId,
-                'category_id' => $dataInsert
+                'category_id' => $categoryId
             ];
-            $this->insert($saveManyToMany);
+            $this->insertCategories($saveCategorie);
         }
     }
 }

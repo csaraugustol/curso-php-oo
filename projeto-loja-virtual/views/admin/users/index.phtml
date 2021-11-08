@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<h1>
             Usuário - <small>Gerencie seus usuários</small>
-            <a href="<?=HOME . '/users/new';?>" class="btn btn-success pull-right">Criar Novo Usuário</a>
+            <a href="<?=HOME . '/admin/users/new';?>" class="btn btn-success pull-right">Criar Novo Usuário</a>
         </h1>
 		<hr>
 	</div>
@@ -29,10 +29,10 @@
 				<td><?=$user['first_name'];?></td>
 				<td><?=date('d/m/Y H:i:s', strtotime($user['created_at']));?></td>
 				<td>
-					<a href="<?=HOME;?>/users/edit/<?=$user['id'];?>" class="btn btn-default">
+					<a href="<?=HOME;?>/admin/users/edit/<?=$user['id'];?>" class="btn btn-default">
 						Editar
 					</a>
-					<a href="<?=HOME;?>/users/remove/<?=$user['id'];?>" class="btn btn-danger">
+					<a href="<?=HOME;?>/admin/users/remove/<?=$user['id'];?>" class="btn btn-danger">
 						Excluir
 					</a>
 				</td>

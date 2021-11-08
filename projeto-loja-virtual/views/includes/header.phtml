@@ -34,6 +34,7 @@
                 <li class="nav-item">
                     <a href="<?=HOME;?>/cart" class="nav-link">
                     <?php if(\LojaVirtual\Session\Session::hasKeySession('cart')) : ?>
+                        <a href="<?=HOME;?>/orders/my" class="nav-link">
                         <span class="bagge badge-danger">
                             <?= count(\LojaVirtual\Session\Session::verifyExistsKeyOfArray('cart')) ;?>
                         </span>

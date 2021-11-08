@@ -9,7 +9,6 @@ use LojaVirtual\Session\Session;
 use LojaVirtual\Entity\UserOrder;
 use LojaVirtual\DataBase\Connection;
 use LojaVirtual\Payment\PagSeguro\CreditCard;
-use LojaVirtual\Payment\PagSeguro\Notification;
 use LojaVirtual\Payment\PagSeguro\SessionPagSeguro;
 
 class CheckoutController
@@ -105,53 +104,13 @@ class CheckoutController
                 ->filterWithConditions(['reference' => $reference]);
 
             $view = new View('site/thanks.phtml');
-            $view->reference = $userOrder['reference'];
+            $view->reference = array($userOrder['reference']);
 
             return $view->render();
         } catch (Exception $exception) {
             Flash::returnExceptionErrorMessage(
                 $exception,
                 'Ocorreu um erro interno!'
-            );
-
-            return header('Location ' . HOME);
-        }
-    }
-
-    /**
-     * Envia notificação
-     *
-     * @return redirect
-     */
-    public function notification()
-    {
-        try {
-            $notification = new Notification();
-            $notification = $notification->returnNotificationTransaction();
-
-            $userOrder = new UserOrder(Connection::getInstance());
-            $orderId = $userOrder->filterWithConditions(['reference' => $notification->getReference()])['id'];
-
-            $userOrder->update([
-                'pagseguro_status' => $notification->getStatus(),
-                'id' => $orderId
-            ]);
-
-            if ($notification->getStatus() == 3) {
-                //Envia a notficação para o cliente
-                //sobre o status da compra
-            }
-
-            http_response_code(204);
-
-            return json_encode([]);
-        } catch (Exception $exception) {
-            http_response_code(500);
-            Flash::returnExceptionErrorMessage(
-                $exception,
-                json_encode(['data' => [
-                    'error' => 'Erro a receber a notificação',
-                ]])
             );
 
             return header('Location ' . HOME);
