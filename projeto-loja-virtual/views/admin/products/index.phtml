@@ -30,7 +30,7 @@
                         <td><?= $product['name']; ?></td>
                         <td><?= number_format($product['price'], '2', ',', '.'); ?></td>
                         <td>
-                            <?php if ($product['is_active'] == 1) : ?>
+                            <?php if ($product['is_active'] === 1) : ?>
                                <span class="label label-success">Ativo</span>
                             <?php else : ?>
                                 <span class="label label-danger">Inativo</span>

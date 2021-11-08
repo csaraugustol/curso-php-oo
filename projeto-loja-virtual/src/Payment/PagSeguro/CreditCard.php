@@ -69,7 +69,7 @@ class CreditCard
          * Necessário passar domínio de e-mail: @sandbox.pagseguro.com.br
          */
         $name = $this->user['first_name'] . ' ' . $this->user['last_name'];
-        $email = getenv('PAGSEGURO_ENV') == 'sandbox' ? 'email@sandbox.pagseguro.com.br' : $this->user['email'];
+        $email = getenv('PAGSEGURO_ENV') === 'sandbox' ? 'email@sandbox.pagseguro.com.br' : $this->user['email'];
         $creditCard->setSender()->setName($name);
         $creditCard->setSender()->setEmail($email);
 

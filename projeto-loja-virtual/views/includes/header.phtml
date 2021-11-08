@@ -25,6 +25,11 @@
                     <li class="nav-item">
                         <a href="<?= HOME; ?>/" class="nav-link">Home</a>
                     </li>
+                    <?php if (\LojaVirtual\Session\Session::hasKeySession('user')) : ?>
+                        <li class="nav-item">
+                            <a href="<?= HOME; ?>/orders/my" class="nav-link">Meus Pedidos</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -32,15 +37,14 @@
         <div class="float-right">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="<?=HOME;?>/cart" class="nav-link">
-                    <?php if(\LojaVirtual\Session\Session::hasKeySession('cart')) : ?>
-                        <a href="<?=HOME;?>/orders/my" class="nav-link">
-                        <span class="bagge badge-danger">
-                            <?= count(\LojaVirtual\Session\Session::verifyExistsKeyOfArray('cart')) ;?>
-                        </span>
-                    <?php endif;?>
+                    <?php if (\LojaVirtual\Session\Session::hasKeySession('cart')) : ?>
+                        <a href="<?= HOME; ?>/cart" class="nav-link">
+                            <span class="bagge badge-danger">
+                                <?= count(\LojaVirtual\Session\Session::verifyExistsKeyOfArray('cart')); ?>
+                            </span>
+                        <?php endif; ?>
                         <i class="fa fa-2x fa-shopping-cart"></i>
-                    </a>
+                        </a>
                 </li>
             </ul>
         </div>

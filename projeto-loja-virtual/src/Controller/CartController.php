@@ -30,7 +30,7 @@ class CartController
     public function add()
     {
         try {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $product = $_POST;
 
                 $cart = Session::verifyExistsKeyOfArray('cart');
@@ -70,7 +70,7 @@ class CartController
                 return $item['slug'] != $slug;
             });
 
-            $cart = count($cart) == 0 ? null : $cart;
+            $cart = count($cart) === 0 ? null : $cart;
             if (is_null($cart)) {
                 $cart = [];
                 Session::addKeySession('cart', $cart);

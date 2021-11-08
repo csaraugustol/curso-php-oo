@@ -57,7 +57,7 @@ class StoreController
     public function register()
     {
         try {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $data = $_POST;
                 $data = Sanitizer::sanitizeData($data, User::$filters);
 

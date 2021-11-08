@@ -89,7 +89,7 @@ abstract class Entity
             throw new Exception('Não obteve valor para consulta!');
         }
 
-        if ($object->rowCount() == 1) {
+        if ($object->rowCount() === 1) {
             return $object->fetch(PDO::FETCH_ASSOC);
         }
 
@@ -207,7 +207,7 @@ abstract class Entity
         $bind = $this->connection->prepare($sqlInsert);
 
         foreach ($data as $key => $value) {
-            gettype($value) == 'int' ? $bind->bindValue(':' . $key, $value, PDO::PARAM_INT)
+            gettype($value) === 'int' ? $bind->bindValue(':' . $key, $value, PDO::PARAM_INT)
                 : $bind->bindValue(':' . $key, $value, PDO::PARAM_STR);
         }
 

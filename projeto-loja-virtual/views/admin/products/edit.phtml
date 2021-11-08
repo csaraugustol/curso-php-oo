@@ -88,7 +88,7 @@
                 <img src="<?= HOME; ?>/uploads/products/<?= $image['image']; ?>" alt="Imagem do produto <?= $this->product['name']; ?>" class="img-responsive">
                 <a href="<?= HOME; ?>/admin/images/remove/<?= $image['id']; ?>" class="btn-sm btn-danger">X</a>
             </div>
-            <?php if (($key + 1) % 3 == 0) : ?>
+            <?php if (($key + 1) % 3 === 0) : ?>
     </div>
     <div class="row">
     <?php endif; ?>
