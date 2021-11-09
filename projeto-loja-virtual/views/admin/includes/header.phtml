@@ -26,20 +26,20 @@
                 <ul class="nav navbar-nav">
                     <?php if (\LojaVirtual\Session\Session::hasKeySession('user')) : ?>
                         <li>
-                            <a href="<?= HOME; ?>/admin/categories">Categorias</a>
+                            <a href="<?= HOME; ?>/admin/categories" class="nav-link">Categorias</a>
                         </li>
                         <li>
-                            <a href="<?= HOME; ?>/admin/products">Produtos</a>
+                            <a href="<?= HOME; ?>/admin/products" class="nav-link">Produtos</a>
                         </li>
                         <li>
-                            <a href="<?= HOME; ?>/admin/users">Usuários</a>
+                            <a href="<?= HOME; ?>/admin/users" class="nav-link">Usuários</a>
                         </li>
                         <li>
-                            <a href="<?= HOME; ?>/auth/logout">Deslogar</a>
+                            <a href="<?= HOME; ?>/auth/logout" class="nav-link">Deslogar</a>
                         </li>
                     <?php else : ?>
                         <li>
-                            <a href="<?= HOME; ?>/">Ir para site</a>
+                            <a href="<?= HOME; ?>/" class="nav-link">Ir para site</a>
                         </li>
                     <?php endif; ?>
                 </ul>

@@ -10,7 +10,7 @@ class CheckUserLogged
      * Verifica se existe um usuário na sessão para verificar
      * suas permissões de acesso ao sistema
      *
-     * @return boolean
+     * @return bool
      */
     public static function checkAuthenticator(): bool
     {

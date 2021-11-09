@@ -93,7 +93,7 @@ class UsersController
     /**
      * Edita um usuário
      *
-     * @param integer $id
+     * @param int $id
      * @return redirect
      */
     public function edit(int $id)
@@ -156,7 +156,7 @@ class UsersController
     /**
      * Remove um usuário
      *
-     * @param integer $id
+     * @param int $id
      * @return redirect
      */
     public function remove(int $id)

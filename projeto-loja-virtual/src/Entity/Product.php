@@ -43,11 +43,9 @@ class Product extends Entity
         left join
         products_images pi on pi.product_id = p.id';
 
-        if ($isSlug) {
-            $sqlQuery .= " where p.slug = :product";
-        } else {
-            $sqlQuery .= " where p.id = :product";
-        }
+        $isSlug ? $sqlQuery .= " where p.slug = :product" :
+                  $sqlQuery .= " where p.id = :product";
+
 
         $select = $this->connection->prepare($sqlQuery);
         $select->bindValue(':product', $product, $isSlug ? PDO::PARAM_STR : PDO::PARAM_INT);

@@ -124,7 +124,7 @@ class ProductsController
     /**
      * Edita um produto
      *
-     * @param integer $id
+     * @param int $id
      * @return redirect
      */
     public function edit(int $id)
@@ -205,7 +205,7 @@ class ProductsController
     /**
      * Remove um produto
      *
-     * @param integer $id
+     * @param int $id
      * @return redirect
      */
     public function remove(int $id)

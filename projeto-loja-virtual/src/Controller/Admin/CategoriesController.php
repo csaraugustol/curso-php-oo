@@ -80,7 +80,7 @@ class CategoriesController
     /**
      * Edita uma categoria
      *
-     * @param integer $id
+     * @param int $id
      * @return redirect
      */
     public function edit(int $id)
@@ -127,7 +127,7 @@ class CategoriesController
     /**
      * Remove uma categoria
      *
-     * @param integer $id
+     * @param int $id
      * @return redirect
      */
     public function remove(int $id)

@@ -12,7 +12,7 @@ class ImagesController
     /**
      * Remove uma imagem do produto
      *
-     * @param integer $id
+     * @param int $id
      * @return redirect
      */
     public function remove(int $id)
