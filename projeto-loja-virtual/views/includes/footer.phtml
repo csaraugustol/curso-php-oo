@@ -1,0 +1,18 @@
+</div>
+<div class="container text-center">
+    <hr>
+    Experts Learning Projeto &copy; Todos os Direitos Reservados - <?= date('Y'); ?>
+</div>
+<?php if (\LojaVirtual\Session\Session::hasKeySession('pagseguro_session')) : ?>
+    <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+    <script>
+        const sessionId = '<?= \LojaVirtual\Session\Session::verifyExistsKey('pagseguro_session'); ?>';
+        console.log(sessionId);
+        PagSeguroDirectPayment.setSessionId(sessionId);
+    </script>
+<?php endif; ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

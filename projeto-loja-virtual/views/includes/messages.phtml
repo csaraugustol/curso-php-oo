@@ -1,0 +1,18 @@
+<?php if(\LojaVirtual\Session\Session::hasKeySession('success')): ?>
+	<div class="alert alert-success">
+		<?=\LojaVirtual\Session\Flash::returnMessageSession('success');?>
+	</div>
+<?php endif;?>
+
+<?php if(\LojaVirtual\Session\Session::hasKeySession('warning')): ?>
+	<div class="alert alert-warning">
+		<?=\LojaVirtual\Session\Flash::returnMessageSession('warning');?>
+	</div>
+<?php endif;?>
+
+
+<?php if(\LojaVirtual\Session\Session::hasKeySession('danger')): ?>
+	<div class="alert alert-danger">
+		<?=\LojaVirtual\Session\Flash::returnMessageSession('danger');?>
+	</div>
+<?php endif;?>
